@@ -4,15 +4,16 @@ import bcrypt from 'bcryptjs'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const userId = parseInt(params.id)
     const { username, password, account_type, status } = await request.json()
 
     if (isNaN(userId)) {
       return NextResponse.json(
-        { error: 'Invalid user ID' },
+        { success: false, error: 'Invalid user ID' },
         { status: 400 }
       )
     }
@@ -43,7 +44,10 @@ export async function PUT(
 
     if (error) {
       console.error('❌ Update error:', error)
-      throw error
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 500 }
+      )
     }
 
     console.log('✅ User updated successfully')
@@ -55,7 +59,7 @@ export async function PUT(
   } catch (error: any) {
     console.error('❌ Error in update user API:', error)
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     )
   }
