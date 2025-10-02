@@ -56,7 +56,12 @@ export default function UsersPage() {
       setLoading(true)
       console.log('🔍 Fetching users from API route...')
       
-      const response = await fetch('/api/users')
+      const response = await fetch('/api/users', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       const result = await response.json()
       
       if (!response.ok) {
