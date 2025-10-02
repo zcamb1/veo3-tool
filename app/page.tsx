@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 interface User {
@@ -13,10 +14,12 @@ interface User {
 }
 
 export default function UsersPage() {
+  const router = useRouter()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [authenticated, setAuthenticated] = useState(false)
   
   // Form states
   const [formData, setFormData] = useState({
@@ -47,9 +50,27 @@ export default function UsersPage() {
     }
   }, [editingUser])
 
+  // Check authentication on mount
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/check')
+        const result = await response.json()
+
+        if (response.ok && result.authenticated) {
+          setAuthenticated(true)
+          fetchUsers()
+        } else {
+          router.push('/login')
+        }
+      } catch (error) {
+        console.error('❌ Auth check failed:', error)
+        router.push('/login')
+      }
+    }
+
+    checkAuth()
+  }, [router])
 
   const fetchUsers = async () => {
     try {
@@ -232,7 +253,18 @@ export default function UsersPage() {
     }
   }
 
-  if (loading) {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      router.push('/login')
+    } catch (error) {
+      console.error('❌ Logout failed:', error)
+      // Force redirect anyway
+      router.push('/login')
+    }
+  }
+
+  if (loading || !authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
         <div className="text-white text-xl">Loading...</div>
@@ -248,12 +280,20 @@ export default function UsersPage() {
             <h1 className="text-4xl font-bold text-white mb-2">KZ Tool - Admin Dashboard</h1>
             <p className="text-white/70">Quản lý users và device binding</p>
           </div>
-          <button 
-            onClick={() => setShowAddModal(true)}
-            className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition shadow-lg"
-          >
-            ➕ Add User
-          </button>
+          <div className="flex gap-3">
+            <button 
+              onClick={handleLogout}
+              className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition shadow-lg"
+            >
+              🚪 Logout
+            </button>
+            <button 
+              onClick={() => setShowAddModal(true)}
+              className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition shadow-lg"
+            >
+              ➕ Add User
+            </button>
+          </div>
         </div>
 
         <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl">
