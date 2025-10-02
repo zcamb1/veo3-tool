@@ -88,7 +88,7 @@ export default function UsersPage() {
       
       const result = await response.json()
       
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to toggle status')
       }
       
@@ -96,7 +96,7 @@ export default function UsersPage() {
       fetchUsers()
     } catch (error: any) {
       console.error('❌ Error toggling status:', error)
-      alert(error.message || 'Failed to toggle status')
+      alert(`❌ Error: ${error.message || 'Failed to toggle status'}`)
     }
   }
 
@@ -125,7 +125,7 @@ export default function UsersPage() {
       
       const result = await response.json()
       
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to update user')
       }
       
@@ -156,9 +156,15 @@ export default function UsersPage() {
         method: 'DELETE'
       })
       
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response')
+      }
+      
       const result = await response.json()
       
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to delete user')
       }
       
@@ -167,7 +173,7 @@ export default function UsersPage() {
       fetchUsers()
     } catch (error: any) {
       console.error('❌ Error deleting user:', error)
-      alert(error.message || 'Failed to delete user')
+      alert(`❌ Error: ${error.message || 'Failed to delete user'}`)
     }
   }
 
@@ -199,13 +205,14 @@ export default function UsersPage() {
       }
 
       console.log('✅ User created successfully!')
+      alert('✅ User created successfully!')
       
       // Reset form
       setFormData({ username: '', password: '', account_type: 'all', status: 'active' })
       setShowAddModal(false)
       
       // Refresh users list
-      fetchUsers()
+      await fetchUsers()
     } catch (error: any) {
       console.error('❌ Error creating user:', error)
       setFormError(error.message || 'Có lỗi xảy ra khi tạo user')
