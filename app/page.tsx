@@ -56,17 +56,23 @@ export default function UsersPage() {
       setLoading(true)
       console.log('🔍 Fetching users from API route...')
       
-      const response = await fetch('/api/users', {
+      // Force fresh data with timestamp to bust cache
+      const timestamp = new Date().getTime()
+      const response = await fetch(`/api/users?t=${timestamp}`, {
         cache: 'no-store',
         headers: {
-          'Cache-Control': 'no-cache'
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         }
       })
-      const result = await response.json()
       
       if (!response.ok) {
+        const result = await response.json()
         throw new Error(result.error || 'Failed to fetch users')
       }
+      
+      const result = await response.json()
       
       console.log('✅ Users fetched:', result.users?.length || 0)
       setUsers(result.users || [])
