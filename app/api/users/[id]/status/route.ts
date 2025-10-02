@@ -3,22 +3,23 @@ import { supabaseAdmin } from '@/lib/supabase'
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params
     const userId = parseInt(params.id)
     const { status } = await request.json()
 
     if (isNaN(userId)) {
       return NextResponse.json(
-        { error: 'Invalid user ID' },
+        { success: false, error: 'Invalid user ID' },
         { status: 400 }
       )
     }
 
     if (!['active', 'inactive', 'banned'].includes(status)) {
       return NextResponse.json(
-        { error: 'Invalid status' },
+        { success: false, error: 'Invalid status' },
         { status: 400 }
       )
     }
@@ -33,7 +34,10 @@ export async function PATCH(
 
     if (error) {
       console.error('❌ Update error:', error)
-      throw error
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 500 }
+      )
     }
 
     console.log('✅ User status updated successfully')
@@ -45,7 +49,7 @@ export async function PATCH(
   } catch (error: any) {
     console.error('❌ Error in update user status API:', error)
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
     )
   }
