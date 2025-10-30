@@ -8,7 +8,7 @@ interface User {
   id: number
   username: string
   device_id: string | null
-  account_type: 'trial' | 'veo3' | 'whisk' | 'all'
+  account_type: 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all'
   status: 'active' | 'inactive' | 'banned'
   created_at: string
 }
@@ -25,7 +25,7 @@ export default function UsersPage() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    account_type: 'all' as 'trial' | 'veo3' | 'whisk' | 'all',
+    account_type: 'all' as 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all',
     status: 'active' as 'active' | 'inactive' | 'banned'
   })
   const [formLoading, setFormLoading] = useState(false)
@@ -325,6 +325,7 @@ export default function UsersPage() {
                         user.account_type === 'all' ? 'bg-purple-500 text-white' :
                         user.account_type === 'trial' ? 'bg-yellow-500 text-white' :
                         user.account_type === 'veo3' ? 'bg-blue-500 text-white' :
+                        user.account_type === 'minimax' ? 'bg-pink-500 text-white' :
                         'bg-green-500 text-white'
                       }`}>
                         {user.account_type.toUpperCase()}
@@ -424,6 +425,7 @@ export default function UsersPage() {
                     <option value="trial">Trial (Full access - Trial account)</option>
                     <option value="veo3">Veo3 (Video only)</option>
                     <option value="whisk">Whisk (Image only)</option>
+                    <option value="minimax">Minimax (Voice only)</option>
                     <option value="all">All (Full access - Paid account)</option>
                   </select>
                 </div>
@@ -502,6 +504,7 @@ export default function UsersPage() {
                     <option value="trial">Trial (Full access - Trial account)</option>
                     <option value="veo3">Veo3 (Video only)</option>
                     <option value="whisk">Whisk (Image only)</option>
+                    <option value="minimax">Minimax (Voice only)</option>
                     <option value="all">All (Full access - Paid account)</option>
                   </select>
                 </div>
