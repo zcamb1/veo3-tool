@@ -4821,15 +4821,10 @@ async function waitForVoiceModelReady() {
         document.body.appendChild(reminder);
     }
 
-    // =================================================================
-    // == AUTO RELOAD ĐÃ TẮT - KHÔNG CẦN RELOAD LIÊN TỤC NỮA ==
-    // =================================================================
-    
-    /*
-    // ĐÃ TẮT: Tên khóa điều khiển vòng lặp reload
+    // Tên khóa điều khiển vòng lặp reload
     const RELOAD_LOOP_KEY = 'mmx_auto_reload_until_gmail_login_v1';
     
-    // ĐÃ TẮT: Nếu trước đó đã bật vòng lặp reload và vẫn chưa đăng nhập -> tiếp tục reload ngay
+    // Nếu trước đó đã bật vòng lặp reload và vẫn chưa đăng nhập -> tiếp tục reload ngay
     try {
         if (localStorage.getItem(RELOAD_LOOP_KEY) === '1' && !checkGmailLogin()) {
             location.reload();
@@ -4839,7 +4834,7 @@ async function waitForVoiceModelReady() {
         }
     } catch (e) {}
 
-    // ĐÃ TẮT: Chờ 3 giây rồi mới kiểm tra đăng nhập Gmail
+    // Chờ 3 giây rồi mới kiểm tra đăng nhập Gmail
     setTimeout(() => {
         if (checkGmailLogin()) {
             try { localStorage.removeItem(RELOAD_LOOP_KEY); } catch (e) {}
@@ -4852,18 +4847,18 @@ async function waitForVoiceModelReady() {
     }, 3000);
 
     // =================================================================
-    // == CƠ CHẾ TỰ ĐỘNG RESET KHI PHÁT HIỆN LỖI 403 (ĐÃ TẮT) ==
+    // == CƠ CHẾ TỰ ĐỘNG RESET KHI PHÁT HIỆN LỖI 403 ==
     // =================================================================
     
-    // ĐÃ TẮT: Khóa điều khiển cơ chế auto reset 403
+    // Khóa điều khiển cơ chế auto reset 403
     const AUTO_RESET_403_KEY = 'mmx_auto_reset_403_v1';
     
-    // ĐÃ TẮT: Biến theo dõi trạng thái cơ chế
+    // Biến theo dõi trạng thái cơ chế
     let autoReset403Active = false;
     let autoReset403Timer = null;
     let error403Count = 0;
     
-    // ĐÃ TẮT: Hàm kiểm tra và xử lý lỗi 403
+    // Hàm kiểm tra và xử lý lỗi 403
     function handle403Error() {
         if (!autoReset403Active) return;
         
@@ -4879,7 +4874,7 @@ async function waitForVoiceModelReady() {
         }
     }
     
-    // ĐÃ TẮT: Hàm bắt đầu cơ chế auto reset 403
+    // Hàm bắt đầu cơ chế auto reset 403
     function startAutoReset403() {
         if (autoReset403Active) return;
         
@@ -4894,7 +4889,7 @@ async function waitForVoiceModelReady() {
         }, 5000);
     }
     
-    // ĐÃ TẮT: Hàm dừng cơ chế auto reset 403
+    // Hàm dừng cơ chế auto reset 403
     function stopAutoReset403() {
         if (!autoReset403Active) return;
         
@@ -4913,7 +4908,7 @@ async function waitForVoiceModelReady() {
         console.log('[AUTO RESET 403] Đã tắt cơ chế tự động reset');
     }
     
-    // ĐÃ TẮT: Override XMLHttpRequest để bắt lỗi 403
+    // Override XMLHttpRequest để bắt lỗi 403
     const originalXHROpen = XMLHttpRequest.prototype.open;
     const originalXHRSend = XMLHttpRequest.prototype.send;
     
@@ -4941,7 +4936,7 @@ async function waitForVoiceModelReady() {
         return originalXHRSend.apply(this, arguments);
     };
     
-    // ĐÃ TẮT: Override fetch để bắt lỗi 403
+    // Override fetch để bắt lỗi 403
     const originalFetch = window.fetch;
     window.fetch = function(url, options) {
         return originalFetch.apply(this, arguments).then(response => {
@@ -4959,7 +4954,7 @@ async function waitForVoiceModelReady() {
         });
     };
     
-    // ĐÃ TẮT: Kiểm tra nếu đang trong vòng lặp auto reset 403
+    // Kiểm tra nếu đang trong vòng lặp auto reset 403
     try {
         if (localStorage.getItem(AUTO_RESET_403_KEY) === '1') {
             // Đang trong vòng lặp auto reset, bắt đầu cơ chế ngay
@@ -4967,18 +4962,10 @@ async function waitForVoiceModelReady() {
         }
     } catch (e) {}
     
-    // ĐÃ TẮT: Bắt đầu cơ chế auto reset 403 sau khi trang load xong
+    // Bắt đầu cơ chế auto reset 403 sau khi trang load xong
     setTimeout(() => {
         startAutoReset403();
     }, 1000);
-    */
-    
-    // Xóa các key cũ nếu còn tồn tại
-    try {
-        localStorage.removeItem('mmx_auto_reload_until_gmail_login_v1');
-        localStorage.removeItem('mmx_auto_reset_403_v1');
-        console.log('✅ Đã xóa cache auto-reload cũ');
-    } catch (e) {}
     
     // Observer để theo dõi các thông báo lỗi 403 trên trang
     function observeErrorMessages() {
