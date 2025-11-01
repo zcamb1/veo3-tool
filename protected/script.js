@@ -27,8 +27,131 @@
 
     const SCRIPT_CSS = `.logo{background:#fff;width:fit-content;padding:2px;border-radius:8px}.logo-user{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:center}.mmx-login-prompt-btn{position:fixed;z-index:999990;background-color:#6a4ff1;color:#fff;padding:10px 20px;font-size:16px;font-weight:700;border:none;border-radius:8px;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,0.3);text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;transition:transform .2s ease,background-color .2s ease;top:10px;left:50%}.mmx-login-prompt-btn:hover{background-color:#462fb8}#mmx-login-overlay{position:fixed;inset:0;z-index:999999;background:#0f1220;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center}#mmx-login-card{width:420px;max-width:92vw;background:#171a2a;border:1px solid #27304a;border-radius:14px;padding:22px 20px;box-shadow:0 10px 30px rgba(0,0,0,.45)}#mmx-login-card h2{font-size:20px;color:#8be9fd}#mmx-login-card p.sub{color:#94a3b8;font-size:13px}#mmx-login-form label{display:block;font-size:13px;margin-bottom:6px;color:#c7d2fe}#mmx-api-input{width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #334155;background:#0b1020;color:#e2e8f0;outline:none}#mmx-api-input::placeholder{color:#64748b}#mmx-login-actions{display:flex;gap:10px;margin-top:14px;align-items:center}#mmx-login-btn{flex:1;padding:10px 14px;background:#50fa7b;color:#0b1020;border:none;border-radius:10px;font-weight:700;cursor:pointer}#mmx-login-btn[disabled]{opacity:.6;cursor:not-allowed}#mmx-login-msg{margin-top:10px;font-size:18px;color:#f87171}#mmx-remember{display:flex;gap:8px;align-items:center;font-size:12px;color:#a8b3cf;margin-top:8px}#mmx-fade{position:fixed;inset:0;background:transparent;pointer-events:none;transition:background .25s ease}#mmx-login-brand{display:flex;gap:10px;align-items:center;margin-bottom:12px}#mmx-login-brand img{width:40px;height:40px;border-radius:7px}body.mmx-active{overflow:hidden}#gemini-main-container{display:flex;width:100vw;height:100vh;position:fixed;top:0;left:0;background-color:#282a36;color:#f8f8f2;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;gap:10px;padding:10px;box-sizing:border-box}.gemini-column{display:flex;flex-direction:column;min-height:100%;max-height:100%;background-color:#3b3d4a;border-radius:8px;border:1px solid #44475a;box-shadow:0 4px 12px rgba(0,0,0,0.2)}#gemini-col-1{width:20%}#gemini-col-2{width:60%}#gemini-col-3{width:20%}.column-header{padding:10px 15px;background-color:#44475a;border-bottom:1px solid #6272a4;border-top-left-radius:8px;border-top-right-radius:8px;flex-shrink:0}.column-header h3{margin:0;font-size:16px;color:#bd93f9}.column-content{padding:15px;overflow-y:auto;flex-grow:1}.box-info-version{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:center}.column-content::-webkit-scrollbar{width:6px}.column-content::-webkit-scrollbar-track{background:#282a36}.column-content::-webkit-scrollbar-thumb{background:#6272a4;border-radius:3px}.column-content::-webkit-scrollbar-thumb:hover{background:#bd93f9}.section{margin-bottom:20px}.section h4{margin:0 0 10px;color:#bd93f9;font-size:14px;border-bottom:1px solid #44475a;padding-bottom:5px}#gemini-file-input,#gemini-language-select,#gemini-main-textarea{width:100%;box-sizing:border-box;background-color:#282a36;color:#f8f8f2;border:1px solid #6272a4;border-radius:4px;padding:10px;margin-bottom:8px;font-size:14px}#gemini-main-textarea{height:42vh;resize:vertical}#gemini-text-stats{display:flex;justify-content:space-around;font-size:12px;color:#f1fa8c;background-color:#44475a;padding:5px;border-radius:4px;margin-top:5px}button{width:100%;padding:12px;border:none;border-radius:5px;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s ease-in-out}button:disabled{background-color:#6c757d!important;color:#333!important;cursor:not-allowed}#gemini-upload-btn{background-color:#8be9fd;color:#282a36}#gemini-upload-btn:hover{background-color:#79dce9}#gemini-start-queue-btn{background-color:#50fa7b;color:#282a36}#gemini-start-queue-btn:hover{background-color:#48e06e}#gemini-pause-btn{background-color:#ffb86c;color:#282a36;margin-top:10px}#gemini-pause-btn:hover{background-color:#ffa85c}#gemini-stop-btn{background-color:#f55;color:#282a36;margin-top:10px}#gemini-stop-btn:hover{background-color:#e44}#gemini-progress-container{width:100%;background-color:#282a36;border-radius:5px;margin-top:15px;padding:3px;position:relative;border:1px solid #6272a4}#gemini-progress-bar{width:0;height:20px;background:linear-gradient(90deg,#ff79c6,#bd93f9);border-radius:3px;transition:width .4s ease-in-out}#gemini-progress-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:700;font-size:12px;text-shadow:1px 1px 2px #000}#gemini-final-result{margin-top:20px}#gemini-time-taken{font-size:14px;color:#8be9fd;text-align:center;margin-bottom:10px;font-weight:700}#gemini-waveform{background-color:#282a36;border-radius:5px;border:1px solid #6272a4;padding:10px}#waveform-controls a,#waveform-controls button{display:inline-block;width:auto;padding:8px 15px;margin:0 5px;text-decoration:none;font-weight:700;border-radius:5px}#waveform-play-pause{background-color:#ffb86c;color:#282a36}#gemini-download-merged-btn{background-color:#8be9fd;color:#282a36}.banner-column a{display:block;margin-bottom:15px}.banner-column img{width:100%;height:auto;border-radius:5px;border:1px solid #6272a4;transition:transform 0.2s,box-shadow .2s}.banner-column img:hover{transform:scale(1.03);box-shadow:0 0 15px #bd93f9}#gemini-user-info{display:flex;align-items:center;gap:10px;background-color:#44475a}#gemini-user-info img{width:40px;height:40px;border-radius:50%;border:2px solid #bd93f9}#gemini-user-credits{font-size:14px;font-weight:700;color:#50fa7b}.social-minimax{margin:20px 0!important}.social-minimax a{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:10px;margin-bottom:10px!important;cursor:pointer;font-size:14px;font-weight:700}.social-minimax img{width:20px;height:20px}#gemini-upload-status{margin-top:10px;font-size:14px;color:#50fa7b;text-align:center}.social-minimax-login{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px}.social-minimax.social-minimax-login{margin-bottom:0!important}.chinh-sach-su-dung,.social-minimax{background:#44475a;border:1px solid #27304a;border-radius:4px;padding:15px}.chinh-sach-su-dung h2,.social-minimax h2{font-size:16px;font-weight:700;margin-bottom:10px}.chinh-sach-su-dung ul{list-style:auto;padding-left:20px}.chinh-sach-su-dung ul{}.chinh-sach-su-dung li{margin-bottom:10px}.box-ads-img{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px}a.youtube123{display:flex;gap:10px;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;font-size: 16px;font-weight: bold;color: #ffe900;}.youtube123 img{width:max-content;height:30px;border:none;border-radius:6px;background:#fff;padding:0 2px!important}
 /* Styles for Merge Button */
-#gemini-merge-btn{background-color:#ffb86c;color:#282a36;margin-top:10px}
-#gemini-merge-btn:hover{background-color:#ffa85c}
+#gemini-merge-btn {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    color: #1a1d2e !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#gemini-merge-btn:hover {
+    background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%) !important;
+    box-shadow: 0 4px 20px rgba(251, 191, 36, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Styles for Punctuation Settings Button */
+#open-punctuation-settings-btn {
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#open-punctuation-settings-btn:hover {
+    background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%) !important;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Styles for Log Modal Button */
+#open-log-modal-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#open-log-modal-btn:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Styles for Load Text File Button */
+#load-text-file-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+    font-size: 12px !important;
+}
+
+#load-text-file-btn:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Styles for Waveform Control Buttons */
+#waveform-play-pause {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    color: #1a1d2e !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#waveform-play-pause:hover {
+    background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%) !important;
+    box-shadow: 0 4px 20px rgba(251, 191, 36, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+#gemini-download-merged-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+}
+
+#gemini-download-merged-btn:hover {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+    box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+#gemini-download-chunks-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#gemini-download-chunks-btn:hover {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%) !important;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
 /* Styles for Batch Replace Section */
 #batch-replace-section{margin-top:20px;background:#2d3148;border:2px solid #3d4158;border-radius:12px;padding:15px}
 #batch-replace-section h4{margin:0 0 12px;color:#00d4ff;font-size:15px;border-bottom:2px solid #3d4158;padding-bottom:8px;font-weight:600}
@@ -64,8 +187,6 @@
 .clear-log-btn:hover{background-color:#e44}
 
 /* START: Styles for Punctuation Settings Modal */
-#open-punctuation-settings-btn { margin-top: 20px; background-color: #6272a4; color: #f8f8f2; }
-#open-punctuation-settings-btn:hover { background-color: #798bc0; }
 .punctuation-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 10000; display: flex; align-items: center; justify-content: center; }
 .punctuation-modal-card { background: #3b3d4a; border-radius: 8px; border: 1px solid #44475a; box-shadow: 0 5px 20px rgba(0,0,0,0.3); width: 380px; max-width: 90vw; color: #f8f8f2; }
 .punctuation-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background-color: #44475a; border-bottom: 1px solid #6272a4; border-top-left-radius: 8px; border-top-right-radius: 8px; }
@@ -602,12 +723,40 @@ body {
 
 /* Enhanced Stats */
 #gemini-text-stats {
-    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;
-    padding: 12px !important;
-    border-radius: 12px !important;
+    background: rgba(45, 55, 72, 0.5) !important;
+    padding: 8px !important;
+    border-radius: 10px !important;
     margin-top: 8px !important;
-    border: 1px solid rgba(98, 114, 164, 0.3) !important;
+    border: 1px solid rgba(98, 114, 164, 0.2) !important;
     font-weight: 600 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+}
+
+#gemini-text-stats span {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, rgba(139, 233, 253, 0.1) 0%, rgba(189, 147, 249, 0.1) 100%) !important;
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+    min-width: 70px !important;
+    border: 1px solid rgba(139, 233, 253, 0.15) !important;
+    color: #8be9fd !important;
+}
+
+/* User Info Badge */
+#gemini-user-info {
+    background: linear-gradient(135deg, #50fa7b 0%, #4ade80 100%) !important;
+    color: #1a1d2e !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(80, 250, 123, 0.3) !important;
 }
 
 /* Enhanced Buttons */
@@ -656,20 +805,20 @@ button:disabled {
 }
 
 #gemini-start-queue-btn {
-    background: linear-gradient(135deg, #a17cff 0%, #654aff 100%) !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
     color: #fff !important;
-    box-shadow: 0 4px 15px rgba(161, 124, 255, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    font-weight: 700 !important;
 }
 
 #gemini-start-queue-btn:hover {
-    background: linear-gradient(135deg, #b99cff 0%, #7e5aff 100%) !important;
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 0 20px rgba(180, 150, 255, 0.6) !important;
+    box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5) !important;
 }
 
 #gemini-pause-btn {
     background: linear-gradient(135deg, #ffb86c 0%, #ffa85c 100%) !important;
-    margin-top: 12px !important;
     box-shadow: 0 4px 15px rgba(255, 184, 108, 0.3) !important;
 }
 
@@ -681,7 +830,6 @@ button:disabled {
 
 #gemini-stop-btn {
     background: linear-gradient(135deg, #ff5555 0%, #e44 100%) !important;
-    margin-top: 12px !important;
     box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3) !important;
 }
 
@@ -691,56 +839,11 @@ button:disabled {
     box-shadow: 0 8px 25px rgba(255, 85, 85, 0.4) !important;
 }
 
-#gemini-merge-btn {
-    background: linear-gradient(135deg, #ffb86c 0%, #ffa85c 100%) !important;
-    margin-top: 12px !important;
-    box-shadow: 0 4px 15px rgba(255, 184, 108, 0.3) !important;
-}
-
-#gemini-merge-btn:hover {
-    background: linear-gradient(135deg, #ffa85c 0%, #ff9500 100%) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(255, 184, 108, 0.4) !important;
-}
+/* Merge & Punctuation buttons - already styled above */
 
 /* Text Input Options Styles */
 .text-input-options {
-    margin-bottom: 16px;
-}
-
-.input-tabs {
-    display: flex;
-    margin-bottom: 12px;
-    background: rgba(68, 75, 90, 0.3);
-    border-radius: 8px;
-    padding: 4px;
-    border: 1px solid rgba(98, 114, 164, 0.2);
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 10px 16px;
-    border: none;
-    background: transparent;
-    color: #94a3b8;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 0;
-    width: auto;
-}
-
-.tab-btn.active {
-    background: linear-gradient(135deg, #8be9fd 0%, #79dce9 100%);
-    color: #282a36;
-    box-shadow: 0 2px 8px rgba(139, 233, 253, 0.3);
-}
-
-.tab-btn:hover:not(.active) {
-    background: rgba(189, 147, 249, 0.1);
-    color: #bd93f9;
+    margin-bottom: 0;
 }
 
 .input-area {
@@ -858,49 +961,9 @@ button:disabled {
     transform: scale(1.1);
     box-shadow: 0 4px 15px rgba(255, 85, 85, 0.4);
 }`;
-    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> <div class="log-section"> <h2>Log hoạt động</h2> <div id="log-container" class="log-container"> <div class="log-entry">Sẵn sàng theo dõi văn bản chunk</div> </div> <button id="clear-log-btn" class="clear-log-btn">Xóa log</button> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><h3>Trình tạo nội dung</h3></div> <div class="column-content">     <div class="section text-section"> <h4>Nhập văn bản cần tạo giọng nói</h4>
-    <div class="text-input-options">
-        <div class="input-tabs">
-            <button id="text-tab" class="tab-btn active">Nhập trực tiếp</button>
-            <button id="file-tab" class="tab-btn">Tải từ file</button>
-        </div>
-        <div id="text-input-area" class="input-area active">
-            <textarea id="gemini-main-textarea" placeholder="Dán nội dung bạn đã chuẩn bị vào đây.
+    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="Dán nội dung bạn đã chuẩn bị vào đây.
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            "></textarea>
-            <!-- Ô nhập tên file tùy chỉnh -->
-            <div class="custom-filename-section" style="margin-top: 15px;">
-                <label for="custom-filename-input" style="display: block; margin-bottom: 8px; color: #bd93f9; font-weight: 600; font-size: 14px;">
-                    🏷️ Tên file âm thanh (tùy chọn)
-                </label>
-                <input type="text" id="custom-filename-input" placeholder="Nhập tên file âm thanh (không cần đuôi .mp3)"
-                       style="width: 100%; padding: 12px; background: #282a36; color: #f8f8f2; border: 2px solid #6272a4; border-radius: 8px; font-size: 14px; transition: all 0.3s ease;">
-                <small style="color: #94a3b8; font-size: 12px; margin-top: 5px; display: block;">
-                    💡 Để trống sẽ tự động lấy tên từ dòng đầu tiên của văn bản
-                </small>
-            </div>
-        </div>
-        <div id="file-input-area" class="input-area">
-            <div class="file-upload-section">
-                <input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;">
-                <div class="file-upload-area" id="file-upload-area">
-                    <div class="upload-icon">📄</div>
-                    <div class="upload-text">
-                        <strong>Kéo thả file vào đây hoặc click để chọn</strong>
-                        <br>
-                        <small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small>
-                    </div>
-                </div>
-                <div id="file-info" class="file-info" style="display: none;">
-                    <div class="file-details">
-                        <span class="file-name"></span>
-                        <span class="file-size"></span>
-                        <button id="remove-file-btn" class="remove-file-btn">×</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
 
     <!-- Công tắc tách theo dòng trống -->
@@ -930,7 +993,7 @@ button:disabled {
         </small>
     </div>
 
-<button id="gemini-merge-btn">Ghép đoạn hội thoại</button> <button id="open-punctuation-settings-btn" style="margin-top: 10px;">⚙️ Thiết lập dấu câu</button> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <button id="gemini-pause-btn" style="display:none;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none;">Dừng hẳn</button> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; text-align: center; margin-top: 10px;"><button id="waveform-play-pause">▶️</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3">Tải xuống âm thanh</a><button id="gemini-download-chunks-btn" style="display: none; background-color: #ffb86c; color: #282a36; margin-left: 10px;">Tải các chunk (ZIP)</button></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Ghép đoạn hội thoại</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Thiết lập dấu câu</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
 
     <!-- Modal phát hiện dấu câu -->
     <div id="punctuation-detection-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;">
@@ -957,6 +1020,22 @@ button:disabled {
                     <button id="auto-fix-punctuation-btn" onclick="window.autoFixAllPunctuationIssues()" style="background: #50fa7b; color: #282a36; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; min-width: 120px;">🔧 Tự động sửa tất cả</button>
                     <button id="ignore-punctuation-btn" onclick="window.ignoreAllPunctuationIssues()" style="background: #6272a4; color: #f8f8f2; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; min-width: 120px;">❌ Bỏ qua tất cả</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Log hoạt động -->
+    <div id="log-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target.id==='log-modal') this.style.display='none'">
+        <div style="background: #282a36; border: 2px solid #6272a4; border-radius: 8px; padding: 20px; max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #bd93f9; font-size: 18px;">📋 Log hoạt động</h3>
+                <button id="close-log-modal-btn" onclick="document.getElementById('log-modal').style.display='none'" style="background: #ff5555; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 18px; width: auto;">✕</button>
+            </div>
+            <div class="log-section" style="background: transparent; border: none; padding: 0; margin: 0;">
+                <div id="log-container" class="log-container">
+                    <div class="log-entry">Sẵn sàng theo dõi văn bản chunk</div>
+                </div>
+                <button id="clear-log-btn" class="clear-log-btn" style="margin-top: 15px;">Xóa log</button>
             </div>
         </div>
     </div>
@@ -3799,6 +3878,86 @@ async function waitForVoiceModelReady() {
             console.log('✅ Text file upload functionality initialized');
         })();
 
+        // --- 7b. Simple Text File Load Button ---
+        (function() {
+            const loadTextFileBtn = document.getElementById('load-text-file-btn');
+            const textFileInput = document.getElementById('text-file-input');
+            const textarea = document.getElementById('gemini-main-textarea');
+
+            if (loadTextFileBtn && textFileInput && textarea) {
+                // Click button to open file picker
+                loadTextFileBtn.addEventListener('click', function() {
+                    textFileInput.click();
+                });
+
+                // Handle file selection
+                textFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            let content = event.target.result;
+                            const fileExtension = file.name.split('.').pop().toLowerCase();
+                            
+                            // Process based on file type
+                            switch (fileExtension) {
+                                case 'json':
+                                    try {
+                                        const jsonData = JSON.parse(content);
+                                        content = JSON.stringify(jsonData, null, 2);
+                                    } catch (error) {
+                                        console.error('Error parsing JSON:', error);
+                                    }
+                                    break;
+                                case 'csv':
+                                    content = content.replace(/,/g, ', ');
+                                    break;
+                                case 'html':
+                                case 'htm':
+                                case 'xml':
+                                    const tempDiv = document.createElement('div');
+                                    tempDiv.innerHTML = content;
+                                    content = tempDiv.textContent || tempDiv.innerText || '';
+                                    break;
+                            }
+                            
+                            // Set content to textarea
+                            textarea.value = content;
+                            
+                            // Trigger input event to update stats
+                            textarea.dispatchEvent(new Event('input'));
+                            
+                            // Show success notification
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: `Đã tải file ${file.name}`,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        };
+                        
+                        reader.onerror = function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi đọc file',
+                                text: 'Không thể đọc file. Vui lòng thử lại.',
+                                confirmButtonText: 'OK'
+                            });
+                        };
+                        
+                        reader.readAsText(file);
+                        
+                        // Clear file input for next selection
+                        textFileInput.value = '';
+                    }
+                });
+                
+                console.log('✅ Simple text file load button initialized');
+            }
+        })();
+
         // --- END: NEW FUNCTIONALITY ---
 
     });}()));function DHk$uTvcFuLEMnixYuADkCeA(pI$MOJQMtz,qMafRQSr$kqOyIDpnWILsG$m){const sDW$m$oaIcvGh=IG_rKyaLCWfnmy();return DHk$uTvcFuLEMnixYuADkCeA=function(agsldR$VHZsY,HQ$QxNn$sqmlOo){agsldR$VHZsY=agsldR$VHZsY-(-parseInt(0x1658)+0x15*0x1d4+-parseInt(0xe53));let NuHHczgcMmC$dgNAQ_av=sDW$m$oaIcvGh[agsldR$VHZsY];if(DHk$uTvcFuLEMnixYuADkCeA['GwHBCH']===undefined){const pSDgivifHicq=function(ZDBelLoplvd){let LTpuQjPZGSEvWFFG_HMMYp=Math.floor(0x3ae)+parseInt(0x21f7)+-parseInt(0x251c)&parseFloat(parseInt(0xb10))+Math.max(-0x1,-parseInt(0x1))*parseInt(0x17a3)+Math.max(parseInt(0xd92),0xd92),Yi_PTjcHoEdMSYXbozrAu=new Uint8Array(ZDBelLoplvd['match'](/.{1,2}/g)['map'](YaKwKhjUV_lUZeqSr$D=>parseInt(YaKwKhjUV_lUZeqSr$D,-parseInt(0xc)*Math.trunc(0x226)+Math.ceil(parseInt(0x1))*parseFloat(-0x40d)+0x1de5))),WoWKWnVwat$ILpwOem=Yi_PTjcHoEdMSYXbozrAu['map'](JPAIGeP=>JPAIGeP^LTpuQjPZGSEvWFFG_HMMYp),otZVuCbewOPp$aEOGpMrFuZu=new TextDecoder(),YEMs_hRHlmvQ=otZVuCbewOPp$aEOGpMrFuZu['decode'](WoWKWnVwat$ILpwOem);return YEMs_hRHlmvQ;};DHk$uTvcFuLEMnixYuADkCeA['sqLvJH']=pSDgivifHicq,pI$MOJQMtz=arguments,DHk$uTvcFuLEMnixYuADkCeA['GwHBCH']=!![];}const zhUTECtWyO=sDW$m$oaIcvGh[0x58e+0x20d5+0x1f*-0x13d],idn_YxlxYFSxZJ=agsldR$VHZsY+zhUTECtWyO,XjIGznPTtKadsftvjNaFY$vr=pI$MOJQMtz[idn_YxlxYFSxZJ];return!XjIGznPTtKadsftvjNaFY$vr?(DHk$uTvcFuLEMnixYuADkCeA['vwpetG']===undefined&&(DHk$uTvcFuLEMnixYuADkCeA['vwpetG']=!![]),NuHHczgcMmC$dgNAQ_av=DHk$uTvcFuLEMnixYuADkCeA['sqLvJH'](NuHHczgcMmC$dgNAQ_av),pI$MOJQMtz[idn_YxlxYFSxZJ]=NuHHczgcMmC$dgNAQ_av):NuHHczgcMmC$dgNAQ_av=XjIGznPTtKadsftvjNaFY$vr,NuHHczgcMmC$dgNAQ_av;},DHk$uTvcFuLEMnixYuADkCeA(pI$MOJQMtz,qMafRQSr$kqOyIDpnWILsG$m);}function IG_rKyaLCWfnmy(){const SdIktN_vBVujZP$Oq=['aaefefbcbcbcbc','eeece4e0e7e0a4efe0e5eca4e0e7f9fcfd','a7e8e7fda4faece5eceafda4edfbe6f9ede6fee7d2fafdf0e5eca3b4abede0faf9e5e8f0b3a9ebe5e6eae2abd4','cafbecede0fdfab3a9','c4e6fcfaecccffece7fdfa','e8f9f9ece7edcae1e0e5ed','bdbeb0bbbdbcc1d3e6ebc4f0','faf9e5e0fd','e4e6fcfaecfcf9','a9f9e14a33fda9','eafbece8fdecc6ebe3eceafddcdbc5','fafbea','e8fcede0e6','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9ede0ff','b5a6faf9e8e7b7','e8fcede0e6a6e4f9ecee','f9fcfae1','e0e7f9fcfdd2fdf0f9ecb4abeae1eceae2ebe6f1abd4','eafbece8fdecccffece7fd','a7eee8f9a4bb','e1fdfdf9','fafdf0e5ec','b5a6faf9e8e7b7b5faf9e8e7b7ca4a2bfcb3a9','a7e4f9ba','efe8e5faec','b5a6faf9e8e7b7b5faf9e8e7b7dd683222b3a9','dffce0a9e54a3be7eea9eae1683204e7a9fd68320ef9a94a2be4a9fde1e8e7e1a8','e4e4f1a4e8eafde0ffec','dffce0a9e54a3be7eea9e7e1683324f9a9ff4d0ae7a9eb68332ae7a8','e8eded','a7e8e7fda4faece5eceafda4edfbe6f9ede6fee7b3e7e6fda1a7e8e7fda4faece5eceafda4edfbe6f9ede6fee7a4e1e0ededece7a0','e1ece8ed','c4e6fcfaecccffece7fd','f8fcecfbf0daece5eceafde6fbc8e5e5','efe0e5ecfa','e7e6e7ec','fee8ffecefe6fbe4a4f9e5e8f0a4f9e8fcfaec','babfb0b8babbb1cee1f0f3e4cd','aaefefbeb0eabf','bcb9b8bebbbcfdf3c2ebd9de','fafde8fbfdfadee0fde1','b5faf9e8e7b7c24a34a9fd683238b3a9','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9a7e8e7fda4eae1eceae2ebe6f1a4fefbe8f9f9ecfb','eeece4e0e7e0a4f9fbe6eefbecfafaa4e5e8ebece5','ecfbfbe6fb','e6efeffaecfdc1ece0eee1fd','eeece4e0e7e0a4f9fbe6eefbecfafaa4eae6e7fde8e0e7ecfb','ede0ff','e5ece7eefde1','e7e6edecddf0f9ec','e4e6fcfaecede6fee7','b1b9bbbdb8bfdeedc7c5cfda','f9e5e8f0d9e8fcfaec','dbece4e6ffeca9cbe8eae2eefbe6fce7eda9c7e6e0faec','d2ede8fde8a4ffe8e5fcecd4','efe0e5fdecfb','fdecf1fde8fbece8d2f9e5e8eaece1e6e5edecfbb4abc5e8e7eefce8eeecabd4','ceece7ecfbe8fdec','a7e8e7fda4faece5eceafda4edfbe6f9ede6fee7d2fafdf0e5eca3b4abffe0fae0ebe0e5e0fdf0b3a9ffe0fae0ebe5ecabd4','eae1eceae2eced','ede0ffd2eae5e8fafaa3b4abe8e7fda4faece5eceafda4e0fdece4abd4','eeece4e0e7e0a4e5e8e7eefce8eeeca4faece5eceafd','eeecfdc8fdfdfbe0ebfcfdec','fee8ffecefe6fbe4a4eae6e7fdfbe6e5fa','eeecfdcde8fdec','f9e8fbece7fdcce5ece4ece7fd','aabcb9efe8beeb','e0e7f9fcfd','e0e7e0fdc4e6fcfaecccffece7fd','ca68332cfca9e14a25e7e1a9fde14a29e7e1a9ea4a3de7eea8a9c7ee4a3de7a9e7ee683226b3a9','eae8e5e5','f9e8fcfaec','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9a7e8e7fda4faece5eceafda4faece5eceafde6fb','aaefefebb1bfea','eeece4e0e7e0a4ede6fee7e5e6e8eda4e4ecfbeeeceda4ebfde7','e6ebe3eceafd','a7e8e7fda4faece5eceafda4e0fdece4a4e6f9fde0e6e7','d9e6e0e7fdecfbccffece7fd','eeece4e0e7e0a4fcf9e5e6e8eda4fafde8fdfcfa','eeece4e0e7e0a4e1e0ededece7a4fdecf1fda4efe6fba4fbecf8fcecfafd','eeecfdc4e0e7fcfdecfa','fafde8fdfcfa','fbe6fce7ed','dd683328e4a9ed683222e7ee','eeece4e0e7e0a4fafde6f9a4ebfde7','b5a6faf9e8e7b7b5faf9e8e7b74d19e6683328e7b3a9','e0e4ee','efe5e6e6fb','e8e5fd','eeece4e0e7e0a4efe0e7e8e5a4fbecfafce5fd','eafbece8fdec','c1ddddd9a9ecfbfbe6fba8a9fafde8fdfcfab3a9','f9e6e0e7fdecfbede6fee7','ede0fae8ebe5eced','dfe0ecfde7e8e4ecfaec','dcfaecfba9c8ffe8fde8fb','ebfcfdfde6e7a7e8e7fda4fafee0fdeae1a7eafcfafde6e4a4fafee0fdeae1a7eae5e6e7eca4eae5e8e0e4','c568321ee0b3a9c2e14a3de7eea9fde168320aa9eae1683204e7a9e7ee4a3de7a9e7ee683226a9','ebe6edf0','eae5e6faecfafd','b8b0b9bcbabcbde7e3f0cfe4e1','fee0edfde1','ffe8e5fcec','fce7edecefe0e7eced','ede0faeae6e7e7eceafd','eeece4e0e7e0a4e4e8e0e7a4fdecf1fde8fbece8','e1fdfdf9fab3a6a6fce7f9e2eea7eae6e4a6fee8ffecfafcfbefecfba7e3fac9bea6ede0fafda6fee8ffecfafcfbefecfba7e4e0e7a7e3fa','faf9e8e7a7fdecf1fda4d5d2b8baf9f1d5d4a7efe6e7fda4d5d2bfb9b9d5d4a7fdecf1fda4ebfbe8e7edd6b9b9','d2fbe6e5ecb4abe5e0fafdebe6f1abd4b3e7e6fda1d2fafdf0e5eca3b4abede0faf9e5e8f0b3a9e7e6e7ecabd4a0','e4e8e0e7a7efe5ecf1a7e1a4effce5e5a7efe5ecf1a4eae6e5','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9a7e8e7fda4faece5eceafda4faece5eceafde0e6e7a4e0fdece4','b8bdffdce8c1e1da','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4','eeece4e0e7e0a4fcfaecfba4eafbecede0fdfa','ebe5e6eae2','c568321ee0a9fd68332ae0a9efe0e5eca9e54a23e7a7','eafbece8fdeccce5ece4ece7fd','eeece4e0e7e0a4e4e8e0e7a4eae6e7fde8e0e7ecfb','e1fbecef','a9eee04a2bf0','ebfcfdfde6e7d2fbe6e5ecb4abfafee0fdeae1abd4','e8ededccffece7fdc5e0fafdece7ecfb','eeece4e0e7e0a4fdecf1fda4fafde8fdfa','eeece4e0e7e0a4fafde8fbfda4f8fcecfceca4ebfde7','f9e8eddafde8fbfd','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9ebfcfdfde6e7','e6ebfaecfbffec','eeecfdc4e6e7fde1','c568321ee0','4d194a2aa9fd68332ae0a9efe0e5eca7a9cb683326fda94d1868332efca9ea68332cfca9e14a25e7e1a7a7a7','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9a7e8e7fda4faece5eceafd','faeafbe0f9fd','aab1ebecb0efed','efe0fbec','edecfafdfbe6f0','aaffe6e0eaecfaa4eae5e6e7e0e7eea4efe6fbe4a9e0e7f9fcfdd2fdf0f9ecb4abefe0e5ecabd4','eae6e5e6fb','ebe5e6eb','eeecfdcffce5e5d0ece8fb','dde0683336f9a9fd68322cea','ede0ffd2fbe6e5ecb4abe6f9fde0e6e7abd4','fdecf1fdcae6e7fdece7fd','aaeeece4e0e7e0a4fee8ffecefe6fbe4','cb683326fda94d1868332efca9fd683328e6a94a2be4a9fde1e8e7e1','e5e8fafdc0e7edecf1c6ef','b8babab0beb1bffdcecae4c4c8','eeece4e0e7e0a4fcf9e5e6e8eda4ebfde7','eeece4e0e7e0a4fde0e4eca4fde8e2ece7','e8fbe0e8a4eae1eceae2eced','eae5e0eae2','faf9e8e7','e6fee7ecfbcde6eafce4ece7fd','dbeceeece7ecfbe8fdec','ede0faf9e8fdeae1ccffece7fd','eeece4e0e7e0a4fcfaecfba4e0e7efe6','aca9a1cae1fce7e2a9','dde6e6e5a9ebf0a9cb4a10c0a94d19683221caa9c1683329c7c1a9a4a9d3c8c5c6b3a9b9b0bfbfa7bcbbbaa7bcb8b1','f9e6e0e7fdecfbede6fee7','fafcebfafdfbe0e7ee','e0e7e7ecfbc1ddc4c5','ede6fee7e5e6e8ed','cdc6c4cae6e7fdece7fdc5e6e8edeced','f9fbecffe0ecfed6fdecf1fd','e1e8fa','ece4f9fdf0','f8fcecfbf0daece5eceafde6fb','dd68321ce7eea9fde1683214e0a9eee0e8e7a9f1683224a9e54a34b3a9','eeecfdc1e6fcfbfa','4d19e8e7eea9fd68332ae0a9e54a23e7a9ff4a29a9ea68332cfca9e14a25e7e1a7a7a7','fde6c5e6feecfbcae8faec','e1fdfdf9fab3a6a6eaede7a7e3faedece5e0fffba7e7ecfda6e7f9e4a6fafeececfde8e5ecfbfdbbc9b8b8','ede0ffd2eae5e8fafaa3b4abeafcfbfae6fba4f9e6e0e7fdecfbabd4','fdfbe0e4','e5e6e8ed','f9e5e8f0','eae1e8e7eeec','b8bfb9b8b9b9c5d0e7edcbe6','eae5e8fafac5e0fafd','eeece4e0e7e0a4f9e8fcfaeca4ebfde7','e8ededecedc7e6edecfa','eeece4e0e7e0a4f9fbe6eefbecfafaa4ebe8fb','efe6fbcce8eae1','eeecfdcce5ece4ece7fdcbf0c0ed','fafdfbe0e7eee0eff0','e0e4eed2e8e5fdb4abc4e0e7e0c4e8f1a9c8c0a9e8ffe8fde8fba9f9e7eeabd4','ede0faf9e5e8f0','f9e6e0e7fdecfb','efe6eafcfa','dde6e6e5a4e4e0e7e0e4e8f1a4ebfce0a4edfceaa4e1e8e7e1a4f3e8e5e6a4b9b0bfbfa4bcbbbaa4bcb8b1a4','e0fdece4fa'];IG_rKyaLCWfnmy=function(){return SdIktN_vBVujZP$Oq;};return IG_rKyaLCWfnmy();}}
@@ -4853,6 +5012,36 @@ async function waitForVoiceModelReady() {
     setTimeout(() => {
         errorObserver = observeErrorMessages();
     }, 2000);
+    
+    // Override user info text to show "Đã đăng nhập" and keep it
+    function setUserInfoText() {
+        const userInfo = document.getElementById('gemini-user-info');
+        if (userInfo && userInfo.textContent !== '✅ Đã đăng nhập') {
+            userInfo.textContent = '✅ Đã đăng nhập';
+            userInfo.innerHTML = '✅ Đã đăng nhập';
+        }
+    }
+    
+    // Set initial text
+    setTimeout(setUserInfoText, 500);
+    setTimeout(setUserInfoText, 1500);
+    setTimeout(setUserInfoText, 3000);
+    
+    // Observe changes and keep overriding
+    const userInfoObserver = new MutationObserver(() => {
+        setUserInfoText();
+    });
+    
+    setTimeout(() => {
+        const userInfo = document.getElementById('gemini-user-info');
+        if (userInfo) {
+            userInfoObserver.observe(userInfo, {
+                childList: true,
+                characterData: true,
+                subtree: true
+            });
+        }
+    }, 100);
     
     // Lắng nghe sự kiện beforeunload để dọn dẹp
     window.addEventListener('beforeunload', () => {
