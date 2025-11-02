@@ -769,25 +769,40 @@ body {
 .column-content {
     padding: 20px !important;
     background: rgba(45, 55, 72, 0.3) !important;
+    overflow-y: auto !important;
+    height: calc(100vh - 120px) !important;
+    
+    /* Firefox scrollbar */
+    scrollbar-width: thin !important;
+    scrollbar-color: #6272a4 #2d3748 !important;
 }
 
+/* Webkit Scrollbar (Chrome, Edge, Safari) */
 .column-content::-webkit-scrollbar {
-    width: 8px !important;
+    width: 12px !important;
+    background: transparent !important;
 }
 
 .column-content::-webkit-scrollbar-track {
-    background: #2d3748 !important;
-    border-radius: 4px !important;
+    background: rgba(45, 55, 72, 0.8) !important;
+    border-radius: 6px !important;
+    margin: 4px 0 !important;
 }
 
 .column-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #6272a4, #bd93f9) !important;
-    border-radius: 4px !important;
+    background: linear-gradient(135deg, #6272a4 0%, #bd93f9 100%) !important;
+    border-radius: 6px !important;
+    border: 2px solid rgba(45, 55, 72, 0.8) !important;
     transition: all 0.3s ease !important;
 }
 
 .column-content::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #bd93f9, #ff79c6) !important;
+    background: linear-gradient(135deg, #bd93f9 0%, #ff79c6 100%) !important;
+    box-shadow: 0 0 10px rgba(189, 147, 249, 0.5) !important;
+}
+
+.column-content::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg, #ff79c6 0%, #bd93f9 100%) !important;
 }
 
 /* Enhanced Sections */
@@ -1078,34 +1093,7 @@ button:disabled {
             "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
 
-    <!-- Công tắc tách theo dòng trống -->
-    <div class="chunk-settings-section" style="margin-top: 15px; background: #44475a; border: 1px solid #27304a; border-radius: 8px; padding: 15px;">
-        <h4 style="margin: 0 0 10px; color: #bd93f9; font-size: 14px; border-bottom: 1px solid #6272a4; padding-bottom: 5px;">⚙️ Cài đặt chia chunk</h4>
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-            <label class="switch">
-                <input type="checkbox" id="enable-blank-line-chunking" checked>
-                <span class="slider round"></span>
-            </label>
-            <label for="enable-blank-line-chunking" style="color: #f8f8f2; font-size: 14px; cursor: pointer;">
-                Tách theo dòng trống (ưu tiên cao)
-            </label>
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <label class="switch">
-                <input type="checkbox" id="chunk-size-toggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="chunk-size-toggle" style="color: #f8f8f2; font-size: 14px; cursor: pointer;">
-                Chunk lớn (900 ký tự)
-            </label>
-        </div>
-        <small style="color: #94a3b8; font-size: 12px; margin-top: 5px; display: block;">
-            💡 Khi bật: Ưu tiên tách tại dòng trống. Khi tắt: Bỏ qua dòng trống, tách theo dấu câu.<br>
-            🔧 Chunk lớn: Bật = 900 ký tự, Tắt = 700 ký tự
-        </small>
-    </div>
-
-<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Ghép đoạn hội thoại</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Thiết lập dấu câu</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Tạo đoạn liền mạch</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Cài đặt</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
 
     <!-- Modal phát hiện dấu câu -->
     <div id="punctuation-detection-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;">
@@ -1152,74 +1140,116 @@ button:disabled {
         </div>
     </div>
 
-    <!-- Modal thiết lập dấu câu -->
+    <!-- Modal Cài đặt (Thiết lập dấu câu + Cài đặt chia chunk) -->
     <div id="punctuation-settings-modal" class="punctuation-modal" style="display:none;">
         <div class="punctuation-modal-card">
             <div class="punctuation-modal-header">
-                <h3>Thiết lập dấu câu</h3>
+                <h3>Cài đặt</h3>
                 <button class="punctuation-modal-close-btn">&times;</button>
             </div>
-            <div class="punctuation-modal-body">
-                <div class="punctuation-setting-row">
-                    <label for="pause-period">Dấu chấm [.]</label>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-period">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="punctuation-input-group" style="width: 120px;">
-                            <button class="adjust-btn" data-target="pause-period" data-step="-0.1">-</button>
-                            <input type="number" id="pause-period" step="0.1" min="0" style="width: 50px; font-size: 12px;">
-                            <button class="adjust-btn" data-target="pause-period" data-step="0.1">+</button>
+            
+            <!-- Tabs Navigation -->
+            <div class="settings-tabs" style="display: flex; border-bottom: 2px solid #6272a4; margin-bottom: 15px;">
+                <button class="settings-tab-btn active" data-tab="punctuation-tab" style="flex: 1; padding: 12px; background: transparent; border: none; color: #f8f8f2; cursor: pointer; border-bottom: 3px solid #bd93f9; font-weight: bold; transition: all 0.3s;">
+                    📝 Thiết lập dấu câu
+                </button>
+                <button class="settings-tab-btn" data-tab="chunk-tab" style="flex: 1; padding: 12px; background: transparent; border: none; color: #94a3b8; cursor: pointer; border-bottom: 3px solid transparent; font-weight: bold; transition: all 0.3s;">
+                    ⚙️ Cài đặt chia chunk
+                </button>
+            </div>
+            
+            <!-- Tab 1: Thiết lập dấu câu -->
+            <div id="punctuation-tab" class="settings-tab-content" style="display: block;">
+                <div class="punctuation-modal-body">
+                    <div class="punctuation-setting-row">
+                        <label for="pause-period">Dấu chấm [.]</label>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-period">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="punctuation-input-group" style="width: 120px;">
+                                <button class="adjust-btn" data-target="pause-period" data-step="-0.1">-</button>
+                                <input type="number" id="pause-period" step="0.1" min="0" style="width: 50px; font-size: 12px;">
+                                <button class="adjust-btn" data-target="pause-period" data-step="0.1">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="punctuation-setting-row">
+                        <label for="pause-comma">Dấu phẩy [,]</label>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-comma">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="punctuation-input-group" style="width: 120px;">
+                                <button class="adjust-btn" data-target="pause-comma" data-step="-0.1">-</button>
+                                <input type="number" id="pause-comma" step="0.1" min="0" style="width: 50px; font-size: 12px;">
+                                <button class="adjust-btn" data-target="pause-comma" data-step="0.1">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="punctuation-setting-row">
+                        <label for="pause-semicolon">Dấu chấm phẩy [;]</label>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-semicolon">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="punctuation-input-group" style="width: 120px;">
+                                <button class="adjust-btn" data-target="pause-semicolon" data-step="-0.1">-</button>
+                                <input type="number" id="pause-semicolon" step="0.1" min="0" style="width: 50px; font-size: 12px;">
+                                <button class="adjust-btn" data-target="pause-semicolon" data-step="0.1">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="punctuation-setting-row">
+                        <label for="pause-newline">Xuống dòng</label>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-newline">
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="punctuation-input-group" style="width: 120px;">
+                                <button class="adjust-btn" data-target="pause-newline" data-step="-0.1">-</button>
+                                <input type="number" id="pause-newline" step="0.1" min="0" style="width: 50px; font-size: 12px;">
+                                <button class="adjust-btn" data-target="pause-newline" data-step="0.1">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="punctuation-setting-row">
-                    <label for="pause-comma">Dấu phẩy [,]</label>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-comma">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="punctuation-input-group" style="width: 120px;">
-                            <button class="adjust-btn" data-target="pause-comma" data-step="-0.1">-</button>
-                            <input type="number" id="pause-comma" step="0.1" min="0" style="width: 50px; font-size: 12px;">
-                            <button class="adjust-btn" data-target="pause-comma" data-step="0.1">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="punctuation-setting-row">
-                    <label for="pause-semicolon">Dấu chấm phẩy [;]</label>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-semicolon">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="punctuation-input-group" style="width: 120px;">
-                            <button class="adjust-btn" data-target="pause-semicolon" data-step="-0.1">-</button>
-                            <input type="number" id="pause-semicolon" step="0.1" min="0" style="width: 50px; font-size: 12px;">
-                            <button class="adjust-btn" data-target="pause-semicolon" data-step="0.1">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="punctuation-setting-row">
-                    <label for="pause-newline">Xuống dòng</label>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-left: -10px;">
-                        <label class="switch">
-                            <input type="checkbox" id="toggle-newline">
-                            <span class="slider round"></span>
-                        </label>
-                        <div class="punctuation-input-group" style="width: 120px;">
-                            <button class="adjust-btn" data-target="pause-newline" data-step="-0.1">-</button>
-                            <input type="number" id="pause-newline" step="0.1" min="0" style="width: 50px; font-size: 12px;">
-                            <button class="adjust-btn" data-target="pause-newline" data-step="0.1">+</button>
-                        </div>
-                    </div>
+                <div class="punctuation-modal-footer">
+                    <button id="save-punctuation-settings-btn">Lưu thay đổi</button>
+                    <button id="default-punctuation-settings-btn">Mặc định</button>
                 </div>
             </div>
-            <div class="punctuation-modal-footer">
-                <button id="save-punctuation-settings-btn">Lưu thay đổi</button>
-                <button id="default-punctuation-settings-btn">Mặc định</button>
+            
+            <!-- Tab 2: Cài đặt chia chunk -->
+            <div id="chunk-tab" class="settings-tab-content" style="display: none;">
+                <div style="padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <label class="switch">
+                            <input type="checkbox" id="enable-blank-line-chunking" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <label for="enable-blank-line-chunking" style="color: #f8f8f2; font-size: 14px; cursor: pointer;">
+                            Tách theo dòng trống (ưu tiên cao)
+                        </label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <label class="switch">
+                            <input type="checkbox" id="chunk-size-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <label for="chunk-size-toggle" style="color: #f8f8f2; font-size: 14px; cursor: pointer;">
+                            Chunk lớn (900 ký tự)
+                        </label>
+                    </div>
+                    <small style="color: #94a3b8; font-size: 12px; display: block; padding: 12px; background: #44475a; border-radius: 6px; border: 1px solid #6272a4;">
+                        💡 <strong>Tách theo dòng trống:</strong> Khi bật - ưu tiên tách tại dòng trống. Khi tắt - bỏ qua dòng trống, tách theo dấu câu.<br><br>
+                        🔧 <strong>Chunk lớn:</strong> Bật = 900 ký tự, Tắt = 700 ký tự
+                    </small>
+                </div>
             </div>
         </div>
     </div>
@@ -2466,6 +2496,40 @@ async function waitForVoiceModelReady() {
                     startQueueBtn.style.display = 'none';
                 });
             }
+            
+            // ⭐ TAB SWITCHING LOGIC
+            const tabBtns = modal.querySelectorAll('.settings-tab-btn');
+            const tabContents = modal.querySelectorAll('.settings-tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    tabBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.color = '#94a3b8';
+                        b.style.borderBottom = '3px solid transparent';
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    this.style.color = '#f8f8f2';
+                    this.style.borderBottom = '3px solid #bd93f9';
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Show target tab content
+                    const targetContent = document.getElementById(targetTab);
+                    if (targetContent) {
+                        targetContent.style.display = 'block';
+                    }
+                });
+            });
+            
             const closeBtn = modal.querySelector('.punctuation-modal-close-btn');
             const saveBtn = document.getElementById('save-punctuation-settings-btn');
             const defaultBtn = document.getElementById('default-punctuation-settings-btn');
@@ -2602,14 +2666,16 @@ async function waitForVoiceModelReady() {
 
                 // Loại bỏ hàm pause cũ để tránh trùng lặp
                 textToProcess = textToProcess.replace(/<#[0-9.]+#>/g, '');
-                textToProcess = textToProcess.replace(/\s+/g, ' ').trim();
+                // ⭐ FIX: Chỉ replace nhiều spaces, KHÔNG replace xuống dòng
+                textToProcess = textToProcess.replace(/ {2,}/g, ' ');
 
                 // Thay thế dấu câu đã thiết lập
                 if (settings.periodEnabled && settings.period > 0) textToProcess = textToProcess.replace(/\./g, ` ${mapDurationToPauseString(settings.period)} `);
                 if (settings.commaEnabled && settings.comma > 0) textToProcess = textToProcess.replace(/,/g, ` ${mapDurationToPauseString(settings.comma)} `);
                 if (settings.semicolonEnabled && settings.semicolon > 0) textToProcess = textToProcess.replace(/;/g, ` ${mapDurationToPauseString(settings.semicolon)} `);
                 if (settings.newlineEnabled && settings.newline > 0) textToProcess = textToProcess.replace(/\n/g, ` ${mapDurationToPauseString(settings.newline)} `);
-                textToProcess = textToProcess.replace(/\s+/g, ' ').trim();
+                // ⭐ FIX: Chỉ replace nhiều spaces, KHÔNG replace xuống dòng
+                textToProcess = textToProcess.replace(/ {2,}/g, ' ');
                 mainTextarea.value = textToProcess;
                 mainTextarea.dispatchEvent(new Event('input', { bubbles: true }));
 
