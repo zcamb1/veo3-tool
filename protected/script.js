@@ -18,7 +18,119 @@
 (function () {
     'use strict';
 
-
+    // =================================================================
+    // == CHỐNG F12 / CHỐNG DEVTOOLS ==
+    // =================================================================
+    (function() {
+        'use strict';
+        
+        // 1. Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // 2. Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I (DevTools)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+C (Inspect Element)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.keyCode === 67)) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && (e.key === 'U' || e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
+        
+        // 3. Detect DevTools bằng cách check window size
+        let devtoolsOpen = false;
+        const threshold = 160;
+        
+        const detectDevTools = () => {
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            const orientation = widthThreshold ? 'vertical' : 'horizontal';
+            
+            if (!(heightThreshold && widthThreshold) && 
+                ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || 
+                 widthThreshold || heightThreshold)) {
+                if (!devtoolsOpen) {
+                    devtoolsOpen = true;
+                    console.clear();
+                    // Redirect về trang chủ nếu phát hiện DevTools
+                    if (window.location.href.includes('minimax.io/audio')) {
+                        window.location.href = 'https://www.minimax.io/audio/voices-cloning';
+                    }
+                }
+            } else {
+                devtoolsOpen = false;
+            }
+        };
+        
+        // 4. Detect DevTools bằng debugger statement
+        const detectDevToolsDebugger = () => {
+            const before = new Date().getTime();
+            debugger;
+            const after = new Date().getTime();
+            
+            if (after - before > 100) {
+                // DevTools detected
+                console.clear();
+                if (window.location.href.includes('minimax.io/audio')) {
+                    window.location.href = 'https://www.minimax.io/audio/voices-cloning';
+                }
+            }
+        };
+        
+        // 5. Clear console định kỳ
+        const clearConsoleInterval = setInterval(() => {
+            console.clear();
+        }, 1000);
+        
+        // 6. Check DevTools định kỳ
+        setInterval(detectDevTools, 1000);
+        
+        // 7. Protect console methods
+        const noop = () => {};
+        const methods = ['log', 'debug', 'info', 'warn', 'error', 'table', 'trace', 'dir', 'group', 'groupCollapsed', 'groupEnd', 'clear'];
+        methods.forEach(method => {
+            console[method] = noop;
+        });
+        
+        // 8. Detect DevTools using toString()
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function() {
+                devtoolsOpen = true;
+                if (window.location.href.includes('minimax.io/audio')) {
+                    window.location.href = 'https://www.minimax.io/audio/voices-cloning';
+                }
+            }
+        });
+        
+        console.log('%c', element);
+        
+        console.log('%c⚠️ CẢNH BÁO BẢO MẬT', 'color: red; font-size: 40px; font-weight: bold;');
+        console.log('%cNếu có người bảo bạn copy/paste code vào đây, đó có thể là lừa đảo!', 'color: yellow; font-size: 16px;');
+        
+    })();
 
 
     // =================================================================
@@ -3103,6 +3215,59 @@ async function waitForVoiceModelReady() {
             let detectedPunctuationIssues = [];
 
             // Hàm phát hiện dấu câu trùng lặp
+            // Hàm phát hiện các từ Tiếng Việt cần sửa (ai, im)
+            function detectVietnameseWordIssues(text) {
+                // Chỉ detect khi language = Tiếng Việt
+                const languageSelect = document.getElementById('gemini-language-select');
+                if (!languageSelect) return [];
+                
+                const selectedLanguage = languageSelect.value.toLowerCase();
+                
+                // Check nếu KHÔNG phải Tiếng Việt → không detect
+                if (!selectedLanguage.includes('việt') && !selectedLanguage.includes('viet') && !selectedLanguage.includes('vietnamese')) {
+                    return [];
+                }
+                
+                const issues = [];
+                
+                // Detect "ai" (word boundary)
+                const aiPattern = /\bai\b/gi;
+                let match;
+                
+                while ((match = aiPattern.exec(text)) !== null) {
+                    // Chỉ báo lỗi nếu là chữ thường "ai" (không phải "Ai" hoặc "AI")
+                    if (match[0] === 'ai') {
+                        issues.push({
+                            text: match[0],
+                            start: match.index,
+                            end: match.index + match[0].length,
+                            type: '⚠️ Từ Tiếng Việt hay bị đọc sai',
+                            suggestion: 'Ai',
+                            isVietnameseWord: true
+                        });
+                    }
+                }
+                
+                // Detect "im" (word boundary)
+                const imPattern = /\bim\b/gi;
+                
+                while ((match = imPattern.exec(text)) !== null) {
+                    // Chỉ báo lỗi nếu là chữ thường "im" (không phải "Im" hoặc "IM")
+                    if (match[0] === 'im') {
+                        issues.push({
+                            text: match[0],
+                            start: match.index,
+                            end: match.index + match[0].length,
+                            type: '⚠️ Từ Tiếng Việt hay bị đọc sai',
+                            suggestion: 'Im',
+                            isVietnameseWord: true
+                        });
+                    }
+                }
+                
+                return issues;
+            }
+
             function detectPunctuationIssues(text) {
                 if (!punctuationDetectionEnabled || !text) return [];
 
@@ -3140,6 +3305,10 @@ async function waitForVoiceModelReady() {
                         suggestion: getPunctuationSuggestion(matchedText)
                     });
                 }
+
+                // ⭐ THÊM MỚI: Merge Vietnamese word issues
+                const vietnameseIssues = detectVietnameseWordIssues(text);
+                issues.push(...vietnameseIssues);
 
                 return issues;
             }
@@ -3295,20 +3464,33 @@ async function waitForVoiceModelReady() {
                 let text = textarea.value;
                 console.log('Original text length:', text.length);
 
-                // Sắp xếp các lỗi theo thứ tự ngược để tránh ảnh hưởng đến index
-                const sortedIssues = [...detectedPunctuationIssues].sort((a, b) => b.start - a.start);
-                console.log('Issues to fix:', sortedIssues.length);
+                // Tách punctuation issues và Vietnamese word issues
+                const punctuationIssues = detectedPunctuationIssues.filter(issue => !issue.isVietnameseWord);
+                const vietnameseWordIssues = detectedPunctuationIssues.filter(issue => issue.isVietnameseWord);
 
-                sortedIssues.forEach((issue, index) => {
-                    console.log(`Fixing issue ${index + 1}:`, issue);
+                // Sắp xếp punctuation issues theo thứ tự ngược để tránh ảnh hưởng đến index
+                const sortedPunctuationIssues = [...punctuationIssues].sort((a, b) => b.start - a.start);
+                console.log('Punctuation issues to fix:', sortedPunctuationIssues.length);
+
+                sortedPunctuationIssues.forEach((issue, index) => {
+                    console.log(`Fixing punctuation issue ${index + 1}:`, issue);
                     const beforeText = text.substring(0, issue.start);
                     const afterText = text.substring(issue.end);
                     // Thay thế toàn bộ cụm dấu câu bằng dấu câu mặc định
                     text = beforeText + punctuationValue + afterText;
                 });
 
-                // ⭐ THÊM MỚI: Tự động sửa các từ Tiếng Việt hay bị đọc sai
-                text = fixVietnameseWords(text);
+                // Sắp xếp Vietnamese word issues theo thứ tự ngược
+                const sortedVietnameseIssues = [...vietnameseWordIssues].sort((a, b) => b.start - a.start);
+                console.log('Vietnamese word issues to fix:', sortedVietnameseIssues.length);
+
+                sortedVietnameseIssues.forEach((issue, index) => {
+                    console.log(`Fixing Vietnamese word issue ${index + 1}:`, issue);
+                    const beforeText = text.substring(0, issue.start);
+                    const afterText = text.substring(issue.end);
+                    // Thay thế bằng suggestion (Ai hoặc Im)
+                    text = beforeText + issue.suggestion + afterText;
+                });
 
                 textarea.value = text;
                 detectedPunctuationIssues = [];
@@ -3321,13 +3503,14 @@ async function waitForVoiceModelReady() {
                 textarea.dispatchEvent(new Event('input'));
 
                 // Hiển thị thông báo thành công
+                const totalIssues = sortedPunctuationIssues.length + sortedVietnameseIssues.length;
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
                         title: 'Đã sửa dấu câu & từ Tiếng Việt',
-                        text: `Đã tự động sửa ${sortedIssues.length} lỗi dấu câu và các từ "ai", "im"`,
+                        text: `Đã tự động sửa ${sortedPunctuationIssues.length} lỗi dấu câu và ${sortedVietnameseIssues.length} từ Tiếng Việt`,
                         showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true
