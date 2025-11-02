@@ -3205,6 +3205,55 @@ async function waitForVoiceModelReady() {
             }
 
             // Hàm tự động sửa tất cả lỗi dấu câu
+            // Hàm tự động sửa các từ Tiếng Việt hay bị đọc sai (ai, im)
+            function fixVietnameseWords(text) {
+                // Chỉ sửa khi language = Tiếng Việt
+                const languageSelect = document.getElementById('gemini-language-select');
+                if (!languageSelect) return text;
+                
+                const selectedLanguage = languageSelect.value.toLowerCase();
+                
+                // Check nếu KHÔNG phải Tiếng Việt → không sửa
+                if (!selectedLanguage.includes('việt') && !selectedLanguage.includes('viet') && !selectedLanguage.includes('vietnamese')) {
+                    console.log('Language not Vietnamese, skipping Vietnamese word fixes');
+                    return text;
+                }
+                
+                console.log('Applying Vietnamese word fixes for language:', selectedLanguage);
+                
+                let fixedText = text;
+                let fixCount = 0;
+                
+                // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
+                // \b = word boundary (đảm bảo từ đứng độc lập)
+                // Ví dụ: "ai đó" → "Ai đó" ✅
+                // Ví dụ: "bại hoại" → KHÔNG đổi ❌
+                const aiPattern = /\bai\b/g;
+                const aiMatches = fixedText.match(aiPattern);
+                if (aiMatches) {
+                    fixedText = fixedText.replace(aiPattern, 'Ai');
+                    fixCount += aiMatches.length;
+                    console.log(`Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
+                }
+                
+                // Fix "im" → "Im" (chỉ khi đứng độc lập)
+                // Ví dụ: "im lặng" → "Im lặng" ✅
+                // Ví dụ: "kim loại" → KHÔNG đổi ❌
+                const imPattern = /\bim\b/g;
+                const imMatches = fixedText.match(imPattern);
+                if (imMatches) {
+                    fixedText = fixedText.replace(imPattern, 'Im');
+                    fixCount += imMatches.length;
+                    console.log(`Fixed ${imMatches.length} occurrences of "im" → "Im"`);
+                }
+                
+                if (fixCount > 0) {
+                    console.log(`Total Vietnamese word fixes: ${fixCount}`);
+                }
+                
+                return fixedText;
+            }
+
             function autoFixAllPunctuationIssues() {
                 console.log('autoFixAllPunctuationIssues called');
 
@@ -3258,6 +3307,9 @@ async function waitForVoiceModelReady() {
                     text = beforeText + punctuationValue + afterText;
                 });
 
+                // ⭐ THÊM MỚI: Tự động sửa các từ Tiếng Việt hay bị đọc sai
+                text = fixVietnameseWords(text);
+
                 textarea.value = text;
                 detectedPunctuationIssues = [];
 
@@ -3274,8 +3326,8 @@ async function waitForVoiceModelReady() {
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Đã sửa dấu câu',
-                        text: `Đã tự động sửa ${sortedIssues.length} lỗi dấu câu`,
+                        title: 'Đã sửa dấu câu & từ Tiếng Việt',
+                        text: `Đã tự động sửa ${sortedIssues.length} lỗi dấu câu và các từ "ai", "im"`,
                         showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true
@@ -3303,6 +3355,7 @@ async function waitForVoiceModelReady() {
             // Thêm các hàm vào global scope để có thể gọi từ HTML
             window.autoFixAllPunctuationIssues = autoFixAllPunctuationIssues;
             window.ignoreAllPunctuationIssues = ignoreAllPunctuationIssues;
+            window.fixVietnameseWords = fixVietnameseWords; // ⭐ Expose để dùng ở nơi khác
 
             // Event listener cho textarea để phát hiện dấu câu
             const textarea = document.getElementById('gemini-main-textarea');
@@ -4662,7 +4715,32 @@ async function waitForVoiceModelReady() {
 
     if (startBtn) {
         startBtn.addEventListener('click', () => {
-            const text = mainTextarea.value.trim();
+            let text = mainTextarea.value.trim();
+            
+            // ⭐ THÊM MỚI: Tự động sửa "ai" → "Ai" và "im" → "Im" cho Tiếng Việt
+            if (typeof window.fixVietnameseWords === 'function') {
+                const fixedText = window.fixVietnameseWords(text);
+                if (fixedText !== text) {
+                    mainTextarea.value = fixedText;
+                    text = fixedText;
+                    console.log('✅ Auto-fixed Vietnamese words before starting audio generation');
+                    
+                    // Show notification (không chặn execution)
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Đã tự động sửa từ',
+                            text: 'Đã sửa "ai" → "Ai", "im" → "Im"',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                    }
+                }
+            }
+            
             if (!text) {
                 Swal.fire({ icon: 'warning', title: 'Chưa có nội dung', text: 'Vui lòng nhập văn bản cần tạo giọng nói.' });
                 return;
