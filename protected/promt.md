@@ -261,3 +261,6 @@ phần 4 thay đổi
 logic đã có sẵn trong tham khảo , b chỉ cần thêm đúng y như những phần tôi dã chụp đang có trong script js để thay đổi thành code tôi đã gửi từng phần ở trên , làm cẩn thận và chính xác , cứ đọc phần code tôi gửi và đọc tham kháo để ốp sang cho chuẩn@tham khao.js 
 ```
 
+
+<img width="498" height="434" alt="image" src="https://github.com/user-attachments/assets/d85dc872-d33e-45fa-abd8-f8398fa6e460" />
+
