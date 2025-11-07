@@ -3572,33 +3572,30 @@ async function waitForVoiceModelReady() {
                 let fixCount = 0;
                 
                 // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
-                // ⭐ FIX: Dùng lookaround thay \b vì \b không hoạt động với Unicode Tiếng Việt
-                // (?:^|[\s,;.!?]): đầu dòng HOẶC space/dấu câu
-                // (?=[\s,;.!?]|$): space/dấu câu HOẶC cuối dòng
+                // ⭐ FIX v2: Dùng negative lookaround để KHÔNG match khi nằm trong từ
+                // (?<![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái trước "ai"
+                // (?![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái sau "ai"
                 // Ví dụ: "ai đó" → "Ai đó" ✅, "ai cũng" → "Ai cũng" ✅
-                // Ví dụ: "bại hoại" → KHÔNG đổi ❌
-                const aiPattern = /(?:^|[\s,;.!?])ai(?=[\s,;.!?]|$)/g;
+                // Ví dụ: "bại hoại" → KHÔNG đổi ❌ (có chữ "ạ" trước)
+                // Ví dụ: "email" → KHÔNG đổi ❌ (có chữ "m" trước và "l" sau)
+                const aiPattern = /(?<![a-zA-ZÀ-ỹ])ai(?![a-zA-ZÀ-ỹ])/g;
                 const aiMatches = fixedText.match(aiPattern);
                 if (aiMatches) {
-                    // Replace nhưng giữ lại space/dấu câu
-                    fixedText = fixedText.replace(aiPattern, (match) => {
-                        return match.replace('ai', 'Ai');
-                    });
+                    fixedText = fixedText.replace(aiPattern, 'Ai');
                     fixCount += aiMatches.length;
                     console.log(`Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
                 }
                 
                 // Fix "im" → "Im" (chỉ khi đứng độc lập)
-                // ⭐ FIX: Dùng lookaround thay \b vì \b không hoạt động với Unicode Tiếng Việt
+                // ⭐ FIX v2: Dùng negative lookaround để KHÔNG match khi nằm trong từ
+                // (?<![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái trước "im"
+                // (?![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái sau "im"
                 // Ví dụ: "im lặng" → "Im lặng" ✅
-                // Ví dụ: "kim loại" → KHÔNG đổi ❌
-                const imPattern = /(?:^|[\s,;.!?])im(?=[\s,;.!?]|$)/g;
+                // Ví dụ: "kim loại" → KHÔNG đổi ❌ (có chữ "k" trước)
+                const imPattern = /(?<![a-zA-ZÀ-ỹ])im(?![a-zA-ZÀ-ỹ])/g;
                 const imMatches = fixedText.match(imPattern);
                 if (imMatches) {
-                    // Replace nhưng giữ lại space/dấu câu
-                    fixedText = fixedText.replace(imPattern, (match) => {
-                        return match.replace('im', 'Im');
-                    });
+                    fixedText = fixedText.replace(imPattern, 'Im');
                     fixCount += imMatches.length;
                     console.log(`Fixed ${imMatches.length} occurrences of "im" → "Im"`);
                 }
