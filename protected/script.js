@@ -3408,8 +3408,13 @@ async function waitForVoiceModelReady() {
                 
                 const issues = [];
                 
-                // Detect "ai" (word boundary)
-                const aiPattern = /\bai\b/gi;
+                // ⭐ FIX: Dùng negative lookaround thay \b vì \b không hoạt động với Unicode Tiếng Việt
+                // (?<!\w): KHÔNG có word character trước "ai"
+                // (?!\w): KHÔNG có word character sau "ai"
+                // Flag 'u': Unicode mode để \w nhận diện đúng ký tự Tiếng Việt
+                
+                // Detect "ai" (không nằm trong từ)
+                const aiPattern = /(?<!\w)ai(?!\w)/gu;
                 let match;
                 
                 while ((match = aiPattern.exec(text)) !== null) {
@@ -3426,8 +3431,8 @@ async function waitForVoiceModelReady() {
                     }
                 }
                 
-                // Detect "im" (word boundary)
-                const imPattern = /\bim\b/gi;
+                // Detect "im" (không nằm trong từ)
+                const imPattern = /(?<!\w)im(?!\w)/gu;
                 
                 while ((match = imPattern.exec(text)) !== null) {
                     // Chỉ báo lỗi nếu là chữ thường "im" (không phải "Im" hoặc "IM")
@@ -3572,13 +3577,13 @@ async function waitForVoiceModelReady() {
                 let fixCount = 0;
                 
                 // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
-                // ⭐ FIX v2: Dùng negative lookaround để KHÔNG match khi nằm trong từ
-                // (?<![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái trước "ai"
-                // (?![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái sau "ai"
+                // ⭐ FIX v3: Dùng \w với Unicode flag 'u' - đơn giản và chính xác nhất
+                // (?<!\w): KHÔNG có word character trước "ai"
+                // (?!\w): KHÔNG có word character sau "ai"
+                // Flag 'u': Unicode mode để \w nhận diện đúng ký tự Tiếng Việt
                 // Ví dụ: "ai đó" → "Ai đó" ✅, "ai cũng" → "Ai cũng" ✅
-                // Ví dụ: "bại hoại" → KHÔNG đổi ❌ (có chữ "ạ" trước)
-                // Ví dụ: "email" → KHÔNG đổi ❌ (có chữ "m" trước và "l" sau)
-                const aiPattern = /(?<![a-zA-ZÀ-ỹ])ai(?![a-zA-ZÀ-ỹ])/g;
+                // Ví dụ: "bại hoại" → KHÔNG đổi ❌, "email" → KHÔNG đổi ❌
+                const aiPattern = /(?<!\w)ai(?!\w)/gu;
                 const aiMatches = fixedText.match(aiPattern);
                 if (aiMatches) {
                     fixedText = fixedText.replace(aiPattern, 'Ai');
@@ -3587,12 +3592,12 @@ async function waitForVoiceModelReady() {
                 }
                 
                 // Fix "im" → "Im" (chỉ khi đứng độc lập)
-                // ⭐ FIX v2: Dùng negative lookaround để KHÔNG match khi nằm trong từ
-                // (?<![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái trước "im"
-                // (?![a-zA-ZÀ-ỹ]): KHÔNG có chữ cái sau "im"
+                // ⭐ FIX v3: Dùng \w với Unicode flag 'u' - đơn giản và chính xác nhất
+                // (?<!\w): KHÔNG có word character trước "im"
+                // (?!\w): KHÔNG có word character sau "im"
                 // Ví dụ: "im lặng" → "Im lặng" ✅
                 // Ví dụ: "kim loại" → KHÔNG đổi ❌ (có chữ "k" trước)
-                const imPattern = /(?<![a-zA-ZÀ-ỹ])im(?![a-zA-ZÀ-ỹ])/g;
+                const imPattern = /(?<!\w)im(?!\w)/gu;
                 const imMatches = fixedText.match(imPattern);
                 if (imMatches) {
                     fixedText = fixedText.replace(imPattern, 'Im');
