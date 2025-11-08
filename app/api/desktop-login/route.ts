@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 export const dynamic = 'force-dynamic'
+
+// ✅ JWT Secret from environment variables
+const JWT_SECRET = process.env.JWT_SECRET || ''
+
+if (!JWT_SECRET) {
+  console.error('❌ [CRITICAL] JWT_SECRET not found in environment variables!')
+  console.error('   Please add JWT_SECRET to your .env.local file')
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -114,7 +123,26 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Return user data (exclude password_hash)
+    // ============================================
+    // ✅ GENERATE JWT TOKEN
+    // ============================================
+    const tokenPayload = {
+      user_id: user.id,
+      username: user.username,
+      account_type: user.account_type,
+      device_id: device_id,
+      iat: Math.floor(Date.now() / 1000),           // Issued at (timestamp)
+      exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)  // Expires in 24 hours
+    }
+
+    const token = jwt.sign(tokenPayload, JWT_SECRET, { algorithm: 'HS256' })
+
+    console.log('🔑 [LOGIN API] JWT token generated')
+    console.log('   Token preview:', token.substring(0, 40) + '...')
+    console.log('   Expires in: 24 hours')
+    console.log('   User:', username, '| Account type:', user.account_type)
+
+    // Return user data with JWT token (exclude password_hash)
     const { password_hash, ...userData } = user
 
     console.log('✅ [LOGIN API] Login successful:', username)
@@ -122,6 +150,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `✅ Đăng nhập thành công! Quyền: ${user.account_type}`,
+      token: token,  // ← JWT Token
       user: userData
     })
 
