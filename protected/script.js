@@ -3646,28 +3646,36 @@ async function waitForVoiceModelReady() {
                 const punctuationIssues = detectedPunctuationIssues.filter(issue => !issue.isVietnameseWord);
                 const vietnameseWordIssues = detectedPunctuationIssues.filter(issue => issue.isVietnameseWord);
 
-                // Sắp xếp punctuation issues theo thứ tự ngược để tránh ảnh hưởng đến index
-                const sortedPunctuationIssues = [...punctuationIssues].sort((a, b) => b.start - a.start);
-                console.log('Punctuation issues to fix:', sortedPunctuationIssues.length);
+                console.log('Punctuation issues:', punctuationIssues.length);
+                console.log('Vietnamese word issues:', vietnameseWordIssues.length);
 
-                sortedPunctuationIssues.forEach((issue, index) => {
-                    console.log(`Fixing punctuation issue ${index + 1}:`, issue);
+                // ========================================
+                // 🔧 FIX BUG: MERGE TẤT CẢ ISSUES THÀNH 1 MẢNG
+                // Merge thành 1 mảng với replacement được set sẵn
+                // ========================================
+                const allIssues = [
+                    ...punctuationIssues.map(issue => ({
+                        ...issue,
+                        replacement: punctuationValue  // Dùng punctuation user chọn
+                    })),
+                    ...vietnameseWordIssues.map(issue => ({
+                        ...issue,
+                        replacement: issue.suggestion  // Dùng suggestion (Ai, Im)
+                    }))
+                ];
+
+                console.log(`Total issues to fix: ${allIssues.length}`);
+
+                // Sort TẤT CẢ issues theo thứ tự NGƯỢC (từ cuối lên đầu)
+                // Vì fix từ cuối, nên KHÔNG BAO GIỜ ảnh hưởng đến index của issues phía trước
+                const sortedAllIssues = allIssues.sort((a, b) => b.start - a.start);
+
+                // Fix TẤT CẢ issues từ CUỐI lên ĐẦU
+                sortedAllIssues.forEach((issue, index) => {
+                    console.log(`Fixing issue ${index + 1}/${sortedAllIssues.length}: "${issue.text}" → "${issue.replacement}"`);
                     const beforeText = text.substring(0, issue.start);
                     const afterText = text.substring(issue.end);
-                    // Thay thế toàn bộ cụm dấu câu bằng dấu câu mặc định
-                    text = beforeText + punctuationValue + afterText;
-                });
-
-                // Sắp xếp Vietnamese word issues theo thứ tự ngược
-                const sortedVietnameseIssues = [...vietnameseWordIssues].sort((a, b) => b.start - a.start);
-                console.log('Vietnamese word issues to fix:', sortedVietnameseIssues.length);
-
-                sortedVietnameseIssues.forEach((issue, index) => {
-                    console.log(`Fixing Vietnamese word issue ${index + 1}:`, issue);
-                    const beforeText = text.substring(0, issue.start);
-                    const afterText = text.substring(issue.end);
-                    // Thay thế bằng suggestion (Ai hoặc Im)
-                    text = beforeText + issue.suggestion + afterText;
+                    text = beforeText + issue.replacement + afterText;
                 });
 
                 textarea.value = text;
@@ -3681,14 +3689,17 @@ async function waitForVoiceModelReady() {
                 textarea.dispatchEvent(new Event('input'));
 
                 // Hiển thị thông báo thành công
-                const totalIssues = sortedPunctuationIssues.length + sortedVietnameseIssues.length;
+                const totalIssues = sortedAllIssues.length;
+                const punctuationCount = punctuationIssues.length;
+                const vietnameseCount = vietnameseWordIssues.length;
+                
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
                         title: 'Đã sửa dấu câu & từ Tiếng Việt',
-                        text: `Đã tự động sửa ${sortedPunctuationIssues.length} lỗi dấu câu và ${sortedVietnameseIssues.length} từ Tiếng Việt`,
+                        text: `Đã tự động sửa ${punctuationCount} lỗi dấu câu và ${vietnameseCount} từ Tiếng Việt`,
                         showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true
