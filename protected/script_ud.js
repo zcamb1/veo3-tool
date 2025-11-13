@@ -3009,9 +3009,35 @@ async function waitForVoiceModelReady() {
                 item.appendChild(playBtn);
                 item.appendChild(uploadBtn);
 
-                // Get duration
+                // Get duration and validate
                 getAudioDuration(file).then(dur => {
                     duration.textContent = formatDuration(dur);
+                    
+                    // Store duration in dataset for validation
+                    item.dataset.duration = dur;
+                    
+                    // Visual indicator for invalid duration
+                    if (dur < 20 || dur > 60) {
+                        item.style.backgroundColor = 'rgba(248, 113, 113, 0.1)';
+                        item.style.borderLeft = '3px solid #f87171';
+                        duration.style.color = '#f87171';
+                        duration.style.fontWeight = 'bold';
+                        uploadBtn.style.opacity = '0.5';
+                        uploadBtn.title = '⚠️ Audio không hợp lệ (20-60s)';
+                        
+                        // Add warning icon
+                        const warningIcon = document.createElement('span');
+                        warningIcon.textContent = '⚠️';
+                        warningIcon.style.color = '#f87171';
+                        warningIcon.style.marginLeft = '5px';
+                        warningIcon.title = `Audio phải từ 20-60 giây (hiện tại: ${Math.floor(dur)}s)`;
+                        duration.appendChild(warningIcon);
+                    } else {
+                        item.style.backgroundColor = 'rgba(80, 250, 123, 0.05)';
+                        item.style.borderLeft = '3px solid #50fa7b';
+                        duration.style.color = '#50fa7b';
+                        uploadBtn.title = '✅ Tải file lên (độ dài hợp lệ)';
+                    }
                 });
 
                 // Play/pause functionality
@@ -3059,10 +3085,45 @@ async function waitForVoiceModelReady() {
                 });
 
                 // Upload button functionality
-                uploadBtn.addEventListener('click', (e) => {
+                uploadBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
 
-                    // Auto-upload the selected file
+                    // Validate audio duration before upload
+                    const audioDuration = parseFloat(item.dataset.duration || 0);
+                    
+                    if (audioDuration < 20 || audioDuration > 60) {
+                        // Block upload and show error
+                        let errorMessage = '';
+                        if (audioDuration < 20) {
+                            errorMessage = `Audio quá ngắn (${Math.floor(audioDuration)}s). Cần tối thiểu 20 giây.`;
+                        } else {
+                            errorMessage = `Audio quá dài (${Math.floor(audioDuration)}s). Tối đa 60 giây.`;
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: '⚠️ Audio không hợp lệ',
+                            html: `
+                                <div style="text-align: left; padding: 10px;">
+                                    <p style="margin-bottom: 10px;"><strong>❌ ${errorMessage}</strong></p>
+                                    <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+                                    <p style="margin-bottom: 8px;">📌 <strong>Yêu cầu:</strong></p>
+                                    <ul style="margin-left: 20px; text-align: left;">
+                                        <li>Độ dài audio: <strong style="color: #50fa7b;">20-60 giây</strong></li>
+                                        <li>Hiện tại: <strong style="color: #f87171;">${Math.floor(audioDuration)} giây</strong></li>
+                                    </ul>
+                                    <p style="margin-top: 15px; color: #8be9fd;">💡 Vui lòng chọn file audio khác hoặc chỉnh sửa lại file này.</p>
+                                </div>
+                            `,
+                            confirmButtonText: 'Đã hiểu',
+                            confirmButtonColor: '#8be9fd',
+                            background: '#282a36',
+                            color: '#f8f8f2'
+                        });
+                        return; // Stop upload
+                    }
+
+                    // Auto-upload the selected file (only if valid)
                     try {
                         const fileInput = document.getElementById('gemini-file-input');
                         if (fileInput) {
@@ -3079,10 +3140,10 @@ async function waitForVoiceModelReady() {
                                 toast: true,
                                 position: 'top-end',
                                 icon: 'success',
-                                title: 'Đã tải file âm thanh',
-                                text: `File "${file.name}" đã được tải lên thành công!`,
+                                title: '✅ Đã tải file âm thanh',
+                                text: `File "${file.name}" (${Math.floor(audioDuration)}s) đã được tải lên!`,
                                 showConfirmButton: false,
-                                timer: 2000,
+                                timer: 2500,
                                 timerProgressBar: true,
                             });
                         }
@@ -3130,9 +3191,51 @@ async function waitForVoiceModelReady() {
                     if (files.length === 0) {
                         audioListContainer.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Không tìm thấy file MP3 nào</div>';
                     } else {
+                        // Create summary header placeholder
+                        const summaryDiv = document.createElement('div');
+                        summaryDiv.id = 'audio-summary';
+                        summaryDiv.style.cssText = 'padding: 12px; margin-bottom: 10px; background: rgba(139, 233, 253, 0.1); border-radius: 6px; border-left: 4px solid #8be9fd; font-size: 12px;';
+                        summaryDiv.innerHTML = '📊 Đang kiểm tra độ dài audio...';
+                        audioListContainer.appendChild(summaryDiv);
+                        
+                        // Add files to list
+                        const filePromises = [];
                         files.forEach((file, index) => {
                             const item = createAudioItem(file, index);
                             audioListContainer.appendChild(item);
+                            
+                            // Store promise to get duration
+                            filePromises.push(getAudioDuration(file));
+                        });
+                        
+                        // Wait for all durations and update summary
+                        Promise.all(filePromises).then(durations => {
+                            const validFiles = durations.filter(d => d >= 20 && d <= 60).length;
+                            const invalidFiles = durations.length - validFiles;
+                            
+                            let summaryHtml = `
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                                    <div style="flex: 1;">
+                                        <strong>📊 Tổng quan:</strong> ${files.length} file
+                                    </div>
+                                    <div style="flex: 1; text-align: center;">
+                                        <span style="color: #50fa7b; font-weight: bold;">✅ ${validFiles}</span> hợp lệ
+                                    </div>
+                                    <div style="flex: 1; text-align: right;">
+                                        <span style="color: #f87171; font-weight: bold;">⚠️ ${invalidFiles}</span> không hợp lệ
+                                    </div>
+                                </div>
+                            `;
+                            
+                            if (invalidFiles > 0) {
+                                summaryHtml += `
+                                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); color: #f87171; font-size: 11px;">
+                                        💡 <strong>${invalidFiles} file</strong> không thể upload vì độ dài không phải 20-60 giây
+                                    </div>
+                                `;
+                            }
+                            
+                            summaryDiv.innerHTML = summaryHtml;
                         });
                     }
                 } catch (error) {
@@ -3562,40 +3665,65 @@ async function waitForVoiceModelReady() {
                 
                 // Check nếu KHÔNG phải Tiếng Việt → không sửa
                 if (!selectedLanguage.includes('việt') && !selectedLanguage.includes('viet') && !selectedLanguage.includes('vietnamese')) {
-                    console.log('Language not Vietnamese, skipping Vietnamese word fixes');
+                    console.log('[fixVietnameseWords] Not Vietnamese language, skipping...');
                     return text;
                 }
                 
-                console.log('Applying Vietnamese word fixes for language:', selectedLanguage);
+                console.log('[fixVietnameseWords] Applying Vietnamese word fixes for language:', selectedLanguage);
                 
                 let fixedText = text;
                 let fixCount = 0;
                 
-                // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
-                // \b = word boundary (đảm bảo từ đứng độc lập)
-                // Ví dụ: "ai đó" → "Ai đó" ✅
-                // Ví dụ: "bại hoại" → KHÔNG đổi ❌
-                const aiPattern = /\bai\b/g;
+                // ================================================================
+                // ✅ FIX: "ai" → "Ai" (CHỈ KHI ĐỨNG ĐỘC LẬP)
+                // ================================================================
+                // Pattern cũ (SAI):  /\bai\b/g  ← Word boundary KHÔNG work với tiếng Việt có dấu
+                // Pattern mới (ĐÚNG): /(^|\s)(ai)(\s|$|[.,?!;:])/gi
+                //
+                // Giải thích:
+                // (^|\s)         - Đầu dòng HOẶC space
+                // (ai)           - Chữ "ai" (capture để giữ case)
+                // (\s|$|[.,?!;:]) - Space, cuối dòng, HOẶC dấu câu
+                //
+                // Examples:
+                // ✅ "ai đó"      → "Ai đó"     (match)
+                // ✅ "người ai"   → "người Ai"  (match)
+                // ❌ "đai"        → "đai"       (KHÔNG match - giữ nguyên!)
+                // ❌ "vành đai"   → "vành đai"  (KHÔNG match - giữ nguyên!)
+                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
+                // ================================================================
+                const aiPattern = /(^|\s)(ai)(\s|$|[.,?!;:])/gi;
                 const aiMatches = fixedText.match(aiPattern);
                 if (aiMatches) {
-                    fixedText = fixedText.replace(aiPattern, 'Ai');
+                    // Replace: giữ nguyên prefix/suffix, chỉ uppercase "ai"
+                    fixedText = fixedText.replace(aiPattern, (match, prefix, word, suffix) => {
+                        return prefix + 'Ai' + suffix;
+                    });
                     fixCount += aiMatches.length;
-                    console.log(`Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
+                    console.log(`[fixVietnameseWords] Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
                 }
                 
-                // Fix "im" → "Im" (chỉ khi đứng độc lập)
-                // Ví dụ: "im lặng" → "Im lặng" ✅
-                // Ví dụ: "kim loại" → KHÔNG đổi ❌
-                const imPattern = /\bim\b/g;
+                // ================================================================
+                // ✅ FIX: "im" → "Im" (CHỈ KHI ĐỨNG ĐỘC LẬP)
+                // ================================================================
+                // Tương tự như "ai"
+                //
+                // Examples:
+                // ✅ "im lặng"    → "Im lặng"   (match)
+                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
+                // ================================================================
+                const imPattern = /(^|\s)(im)(\s|$|[.,?!;:])/gi;
                 const imMatches = fixedText.match(imPattern);
                 if (imMatches) {
-                    fixedText = fixedText.replace(imPattern, 'Im');
+                    fixedText = fixedText.replace(imPattern, (match, prefix, word, suffix) => {
+                        return prefix + 'Im' + suffix;
+                    });
                     fixCount += imMatches.length;
-                    console.log(`Fixed ${imMatches.length} occurrences of "im" → "Im"`);
+                    console.log(`[fixVietnameseWords] Fixed ${imMatches.length} occurrences of "im" → "Im"`);
                 }
                 
                 if (fixCount > 0) {
-                    console.log(`Total Vietnamese word fixes: ${fixCount}`);
+                    console.log(`[fixVietnameseWords] Total Vietnamese word fixes: ${fixCount}`);
                 }
                 
                 return fixedText;
