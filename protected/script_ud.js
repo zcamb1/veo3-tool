@@ -264,6 +264,25 @@
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5) !important;
     transform: translateY(-2px) !important;
 }
+/* Styles for Saved Audio Library Section */
+#saved-audio-library{margin-top:20px;background:rgba(22,28,45,0.55);border:1px solid rgba(100,200,255,0.1);border-radius:14px;padding:15px;box-shadow:inset 0 0 15px rgba(100,200,255,0.05)}
+#saved-audio-library h4{margin:0 0 10px;color:#92e7ff;font-size:14px;border-bottom:1px solid rgba(100,200,255,0.2);padding-bottom:5px;text-shadow:0 0 8px rgba(90,200,255,0.3)}
+#saved-audio-list{max-height:200px;overflow-y:auto;background:#282a36;border:1px solid #6272a4;border-radius:4px;margin-bottom:10px}
+#saved-audio-list::-webkit-scrollbar{width:6px}
+#saved-audio-list::-webkit-scrollbar-track{background:#282a36}
+#saved-audio-list::-webkit-scrollbar-thumb{background:#6272a4;border-radius:3px}
+#saved-audio-list::-webkit-scrollbar-thumb:hover{background:#bd93f9}
+.saved-audio-item{display:flex;align-items:center;padding:8px;border-bottom:1px solid#44475a;transition:background-color .2s ease}
+.saved-audio-item:hover{background-color:#44475a}
+.saved-audio-name{flex-grow:1;font-size:12px;color:#f8f8f2;margin-right:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.saved-audio-duration{font-size:11px;color:#8be9fd;margin-right:10px;min-width:40px}
+.saved-audio-date{font-size:10px;color:#94a3b8;margin-right:10px;min-width:70px}
+.use-saved-audio-btn{min-width:32px;width:32px;height:32px;padding:0;font-size:14px;background:linear-gradient(135deg,#50fa7b 0%,#4ade80 100%);color:#1a1d2e;border:none;border-radius:6px;cursor:pointer;margin-right:6px;font-weight:600;transition:all 0.2s ease;box-shadow:0 2px 4px rgba(80,250,123,0.2);display:flex;align-items:center;justify-content:center}
+.use-saved-audio-btn:hover{background:linear-gradient(135deg,#4ade80 0%,#50fa7b 100%);transform:translateY(-1px);box-shadow:0 4px 8px rgba(80,250,123,0.3)}
+.delete-saved-audio-btn{min-width:32px!important;width:32px!important;height:32px!important;padding:0!important;font-size:14px!important;background:linear-gradient(135deg,#ff5555 0%,#e44 100%)!important;color:#fff!important;border:none!important;border-radius:6px!important;cursor:pointer!important;pointer-events:auto!important;opacity:1!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:all 0.2s ease!important;box-shadow:0 2px 4px rgba(255,85,85,0.2)!important}
+.delete-saved-audio-btn:hover{background:linear-gradient(135deg,#e44 0%,#ff5555 100%)!important;transform:translateY(-1px)!important;box-shadow:0 4px 8px rgba(255,85,85,0.3)!important}
+.delete-audio-swal-container{z-index:999999!important}
+.delete-audio-swal-popup{z-index:1000000!important}
 /* Styles for Batch Replace Section */
 #batch-replace-section{margin-top:20px;background:#2d3148;border:2px solid #3d4158;border-radius:12px;padding:15px}
 #batch-replace-section h4{margin:0 0 12px;color:#00d4ff;font-size:15px;border-bottom:2px solid #3d4158;padding-bottom:8px;font-weight:600}
@@ -1088,7 +1107,7 @@ button:disabled {
     transform: scale(1.1);
     box-shadow: 0 4px 15px rgba(255, 85, 85, 0.4);
 }`;
-    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="✨ Nhập hoặc dán văn bản của bạn tại đây để chuyển thành giọng nói chuyên nghiệp...
+    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="saved-audio-library" class="section"> <h4>💾 Audio đã lưu</h4> <div id="saved-audio-list"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div> </div> <button id="clear-saved-audio-btn" style="width: 100%; background: linear-gradient(135deg, #ff5555 0%, #e44 100%); color: #fff; display: none;">🗑️ Xóa tất cả audio đã lưu</button> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="✨ Nhập hoặc dán văn bản của bạn tại đây để chuyển thành giọng nói chuyên nghiệp...
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
@@ -5896,10 +5915,477 @@ async function waitForVoiceModelReady() {
         }
     }, 100);
     
+    // =================================================================
+    // == INDEXEDDB - LƯU AUDIO ĐÃ UPLOAD ==
+    // =================================================================
+    
+    const DB_NAME = 'SavedAudioDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'audios';
+    let db = null;
+    
+    // Initialize IndexedDB
+    function initIndexedDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            
+            request.onerror = () => {
+                addLogEntry('❌ Không thể mở IndexedDB', 'error');
+                reject(request.error);
+            };
+            
+            request.onsuccess = () => {
+                db = request.result;
+                addLogEntry('✅ IndexedDB đã khởi tạo', 'success');
+                resolve(db);
+            };
+            
+            request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                    objectStore.createIndex('name', 'name', { unique: false });
+                    objectStore.createIndex('uploadDate', 'uploadDate', { unique: false });
+                    addLogEntry('✅ Đã tạo object store cho audio', 'success');
+                }
+            };
+        });
+    }
+    
+    // Check if audio already exists in IndexedDB
+    async function isAudioExists(fileName) {
+        if (!db) return false;
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.getAll();
+            
+            return new Promise((resolve) => {
+                request.onsuccess = () => {
+                    const audios = request.result;
+                    const exists = audios.some(audio => audio.name === fileName);
+                    resolve(exists);
+                };
+                
+                request.onerror = () => {
+                    resolve(false);
+                };
+            });
+        } catch (error) {
+            return false;
+        }
+    }
+    
+    // Save audio to IndexedDB
+    async function saveAudioToIndexedDB(file, duration) {
+        if (!db) {
+            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
+            return;
+        }
+        
+        // Check if audio already exists
+        const exists = await isAudioExists(file.name);
+        if (exists) {
+            addLogEntry(`⚠️ Audio "${file.name}" đã tồn tại, bỏ qua`, 'warning');
+            return;
+        }
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            
+            const audioData = {
+                name: file.name,
+                blob: file,
+                duration: duration,
+                uploadDate: new Date().toISOString(),
+                size: file.size,
+                type: file.type
+            };
+            
+            const request = objectStore.add(audioData);
+            
+            return new Promise((resolve, reject) => {
+                request.onsuccess = () => {
+                    addLogEntry(`💾 Đã lưu audio: ${file.name}`, 'success');
+                    loadSavedAudios(); // Refresh list
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    addLogEntry(`❌ Lỗi lưu audio: ${request.error}`, 'error');
+                    reject(request.error);
+                };
+            });
+        } catch (error) {
+            addLogEntry(`❌ Lỗi saveAudioToIndexedDB: ${error}`, 'error');
+        }
+    }
+    
+    // Load saved audios from IndexedDB
+    async function loadSavedAudios() {
+        if (!db) {
+            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
+            return;
+        }
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.getAll();
+            
+            request.onsuccess = () => {
+                const audios = request.result;
+                renderSavedAudiosList(audios);
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi load audio: ${request.error}`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi loadSavedAudios: ${error}`, 'error');
+        }
+    }
+    
+    // Render saved audios list
+    function renderSavedAudiosList(audios) {
+        const savedAudioList = document.getElementById('saved-audio-list');
+        const clearBtn = document.getElementById('clear-saved-audio-btn');
+        
+        if (!savedAudioList) return;
+        
+        if (audios.length === 0) {
+            savedAudioList.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div>';
+            if (clearBtn) clearBtn.style.display = 'none';
+            return;
+        }
+        
+        savedAudioList.innerHTML = '';
+        if (clearBtn) clearBtn.style.display = 'block';
+        
+        audios.forEach(audio => {
+            
+            const item = document.createElement('div');
+            item.className = 'saved-audio-item';
+            
+            const name = document.createElement('span');
+            name.className = 'saved-audio-name';
+            name.textContent = audio.name;
+            name.title = audio.name;
+            
+            const duration = document.createElement('span');
+            duration.className = 'saved-audio-duration';
+            duration.textContent = formatDuration(audio.duration);
+            
+            const date = document.createElement('span');
+            date.className = 'saved-audio-date';
+            const uploadDate = new Date(audio.uploadDate);
+            date.textContent = uploadDate.toLocaleDateString('vi-VN');
+            date.title = uploadDate.toLocaleString('vi-VN');
+            
+            const useBtn = document.createElement('button');
+            useBtn.className = 'use-saved-audio-btn';
+            useBtn.textContent = '🔄';
+            useBtn.title = 'Chọn audio này';
+            useBtn.onclick = (e) => {
+                e.stopPropagation();
+                useSavedAudio(audio);
+            };
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-saved-audio-btn';
+            deleteBtn.textContent = '🗑️';
+            deleteBtn.title = 'Xóa audio này';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                deleteSavedAudio(audio.id);
+            };
+            
+            item.appendChild(name);
+            item.appendChild(duration);
+            item.appendChild(date);
+            item.appendChild(useBtn);
+            item.appendChild(deleteBtn);
+            
+            savedAudioList.appendChild(item);
+        });
+    }
+    
+    // Format duration (helper function)
+    function formatDuration(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Use saved audio (populate file input)
+    async function useSavedAudio(audio) {
+        try {
+            addLogEntry(`🔄 Đang chọn audio: ${audio.name}`, 'info');
+            
+            // Create a new File object from blob
+            const file = new File([audio.blob], audio.name, { type: audio.type });
+            
+            // Create DataTransfer to populate file input
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            
+            const fileInput = document.getElementById('gemini-file-input');
+            if (fileInput) {
+                fileInput.files = dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+                
+                addLogEntry(`✅ Đã chọn audio: ${audio.name}`, 'success');
+                
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã chọn audio',
+                    text: audio.name,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            }
+        } catch (error) {
+            addLogEntry(`❌ Lỗi useSavedAudio: ${error}`, 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Không thể chọn audio này'
+            });
+        }
+    }
+    
+    // Delete saved audio
+    async function deleteSavedAudio(id) {
+        if (!db) return;
+        
+        // Check if Swal exists
+        if (typeof Swal === 'undefined') {
+            const nativeConfirm = confirm('Bạn có chắc muốn xóa audio này?');
+            if (!nativeConfirm) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.delete(id);
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa audio', 'success');
+                loadSavedAudios();
+                alert('Đã xóa audio!');
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa audio`, 'error');
+            };
+            return;
+        }
+        
+        try {
+            const result = await Swal.fire({
+                title: 'Xác nhận xóa',
+                text: 'Bạn có chắc muốn xóa audio này?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#ff5555',
+                customClass: {
+                    container: 'delete-audio-swal-container',
+                    popup: 'delete-audio-swal-popup'
+                },
+                backdrop: true
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.delete(id);
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa audio', 'success');
+                loadSavedAudios();
+                
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã xóa',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa audio`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
+        }
+    }
+    
+    // Clear all saved audios
+    async function clearAllSavedAudios() {
+        if (!db) return;
+        
+        // Check if Swal exists
+        if (typeof Swal === 'undefined') {
+            const nativeConfirm = confirm('Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?');
+            if (!nativeConfirm) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.clear();
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa tất cả audio', 'success');
+                loadSavedAudios();
+                alert('Đã xóa tất cả audio!');
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
+            };
+            return;
+        }
+        
+        try {
+            const result = await Swal.fire({
+                title: 'Xóa tất cả?',
+                text: 'Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa tất cả',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#ff5555',
+                customClass: {
+                    container: 'delete-audio-swal-container',
+                    popup: 'delete-audio-swal-popup'
+                },
+                backdrop: true
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.clear();
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa tất cả audio', 'success');
+                loadSavedAudios();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã xóa tất cả',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
+        }
+    }
+    
+    // Initialize IndexedDB and load saved audios
+    setTimeout(async () => {
+        try {
+            await initIndexedDB();
+            await loadSavedAudios();
+            
+            // Setup clear all button
+            const clearBtn = document.getElementById('clear-saved-audio-btn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearAllSavedAudios);
+            }
+            
+            addLogEntry('✅ Hệ thống lưu audio đã sẵn sàng', 'success');
+        } catch (error) {
+            addLogEntry(`❌ Lỗi khởi tạo IndexedDB: ${error}`, 'error');
+        }
+    }, 2000);
+    
+    // Hook into file upload success to auto-save
+    // We'll intercept the gemini-file-input change event
+    setTimeout(() => {
+        const fileInput = document.getElementById('gemini-file-input');
+        if (fileInput) {
+            // Store original change handler
+            const originalOnChange = fileInput.onchange;
+            
+            fileInput.addEventListener('change', async function(e) {
+                const files = e.target.files;
+                if (!files || files.length === 0) return;
+                
+                // Auto-save each audio file
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (file.type.startsWith('audio/') || file.name.match(/\.(mp3|wav|m4a|mpeg)$/i)) {
+                        try {
+                            // Get audio duration
+                            const duration = await getAudioDuration(file);
+                            
+                            // Validate duration: only save if 20-60 seconds
+                            if (duration >= 20 && duration <= 60) {
+                                // Save to IndexedDB
+                                await saveAudioToIndexedDB(file, duration);
+                            } else {
+                                addLogEntry(`⚠️ Audio "${file.name}" (${Math.floor(duration)}s) không hợp lệ, không lưu vào thư viện`, 'warning');
+                            }
+                        } catch (error) {
+                            // Silent fail
+                        }
+                    }
+                }
+            }, false); // Use capture: false to not interfere with validation
+        }
+    }, 2500);
+    
+    // Helper: Get audio duration (reuse existing function if available)
+    async function getAudioDuration(file) {
+        return new Promise((resolve, reject) => {
+            const audio = document.createElement('audio');
+            const url = URL.createObjectURL(file);
+            
+            audio.addEventListener('loadedmetadata', () => {
+                URL.revokeObjectURL(url);
+                resolve(audio.duration);
+            });
+            
+            audio.addEventListener('error', () => {
+                URL.revokeObjectURL(url);
+                reject(new Error('Không thể load audio'));
+            });
+            
+            audio.src = url;
+        });
+    }
+    
+    // =================================================================
+    // == END INDEXEDDB ==
+    // =================================================================
+
     // Lắng nghe sự kiện beforeunload để dọn dẹp
     window.addEventListener('beforeunload', () => {
         stopAutoReset403();
         if (errorObserver) {
             errorObserver.disconnect();
+        }
+        
+        // Close IndexedDB connection
+        if (db) {
+            db.close();
         }
     });
