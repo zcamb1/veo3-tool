@@ -1358,39 +1358,54 @@ setTimeout(() => {
                     return `<li style="margin: 5px 0;"><strong>${f.name}</strong>: ${reason}</li>`;
                 }).join('');
                 
-                Swal.fire({
-                    icon: 'error',
-                    title: '⚠️ File audio không hợp lệ',
-                    html: `
-                        <div style="text-align: left; padding: 15px;">
-                            <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
-                                <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${invalidFiles.length} file không thể upload</p>
-                                <ul style="margin: 10px 0 0 0; padding-left: 20px; color: #fca5a5;">
-                                    ${fileListHtml}
-                                </ul>
+                addLogEntry('📢 [DIRECT INPUT] Hiển thị popup cảnh báo...', 'warning');
+                
+                // Check if Swal exists
+                if (typeof Swal === 'undefined') {
+                    addLogEntry('❌ [DIRECT INPUT] Swal is undefined! Showing alert instead', 'error');
+                    alert(`⚠️ FILE AUDIO KHÔNG HỢP LỆ\n\n${invalidFiles.length} file không thể upload:\n\n${invalidFiles.map(f => `• ${f.name}: ${f.duration < 20 ? 'quá ngắn' : 'quá dài'} (${Math.floor(f.duration)}s)`).join('\n')}\n\nYêu cầu: Audio phải từ 20-60 giây`);
+                } else {
+                    addLogEntry('✅ [DIRECT INPUT] Swal exists, calling Swal.fire()', 'info');
+                    Swal.fire({
+                        icon: 'error',
+                        title: '⚠️ File audio không hợp lệ',
+                        html: `
+                            <div style="text-align: left; padding: 15px;">
+                                <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
+                                    <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${invalidFiles.length} file không thể upload</p>
+                                    <ul style="margin: 10px 0 0 0; padding-left: 20px; color: #fca5a5;">
+                                        ${fileListHtml}
+                                    </ul>
+                                </div>
+                                
+                                <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+                                
+                                <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
+                                    <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li style="margin: 5px 0;">Độ dài audio: <strong style="color: #50fa7b;">20-60 giây (0:20 - 1:00)</strong></li>
+                                        <li style="margin: 5px 0;">Định dạng: MP3, WAV, M4A, OGG</li>
+                                    </ul>
+                                </div>
+                                
+                                <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
+                                    💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file về 20-60 giây.
+                                </p>
                             </div>
-                            
-                            <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
-                            
-                            <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
-                                <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
-                                <ul style="margin: 0; padding-left: 20px;">
-                                    <li style="margin: 5px 0;">Độ dài audio: <strong style="color: #50fa7b;">20-60 giây (0:20 - 1:00)</strong></li>
-                                    <li style="margin: 5px 0;">Định dạng: MP3, WAV, M4A, OGG</li>
-                                </ul>
-                            </div>
-                            
-                            <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
-                                💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file về 20-60 giây.
-                            </p>
-                        </div>
-                    `,
-                    confirmButtonText: 'Đã hiểu',
-                    confirmButtonColor: '#8be9fd',
-                    background: '#282a36',
-                    color: '#f8f8f2',
-                    width: '600px'
-                });
+                        `,
+                        confirmButtonText: 'Đã hiểu',
+                        confirmButtonColor: '#8be9fd',
+                        background: '#282a36',
+                        color: '#f8f8f2',
+                        width: '600px',
+                        customClass: {
+                            popup: 'audio-validation-popup'
+                        }
+                    }).then(() => {
+                        addLogEntry('✅ [DIRECT INPUT] User đã đóng popup', 'info');
+                    });
+                    addLogEntry('📢 [DIRECT INPUT] Đã gọi Swal.fire()', 'info');
+                }
                 
                 addLogEntry('🚫 [DIRECT INPUT] Upload BLOCKED!', 'error');
                 return false;
