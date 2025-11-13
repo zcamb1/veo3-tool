@@ -1286,7 +1286,122 @@ button:disabled {
         }
     });
 
-const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
+const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();
+
+// === AUDIO DURATION VALIDATION FOR DIRECT FILE INPUT ===
+// Intercept gemini-file-input để validate độ dài audio trước khi upload
+setTimeout(() => {
+    const fileInput = document.getElementById('gemini-file-input');
+    if (fileInput) {
+        addLogEntry('✅ Đã khởi tạo validation cho file input', 'success');
+        
+        // Helper function to get audio duration
+        async function getAudioDuration(file) {
+            return new Promise((resolve) => {
+                const audio = new Audio();
+                audio.addEventListener('loadedmetadata', () => {
+                    resolve(audio.duration);
+                });
+                audio.addEventListener('error', () => {
+                    resolve(0);
+                });
+                audio.src = URL.createObjectURL(file);
+            });
+        }
+        
+        // Intercept change event
+        fileInput.addEventListener('change', async function(e) {
+            addLogEntry('🔍 [DIRECT INPUT] File input change detected!', 'info');
+            
+            const files = e.target.files;
+            if (!files || files.length === 0) {
+                addLogEntry('⚠️ [DIRECT INPUT] No files selected', 'warning');
+                return;
+            }
+            
+            addLogEntry(`🔍 [DIRECT INPUT] ${files.length} file(s) selected`, 'info');
+            
+            // Check each audio file
+            const invalidFiles = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Only validate audio files
+                if (file.type.startsWith('audio/')) {
+                    addLogEntry(`🔍 [DIRECT INPUT] Checking: ${file.name}`, 'info');
+                    
+                    const duration = await getAudioDuration(file);
+                    addLogEntry(`🔍 [DIRECT INPUT] Duration: ${Math.floor(duration)} seconds`, 'info');
+                    
+                    if (duration < 20 || duration > 60) {
+                        invalidFiles.push({ name: file.name, duration: duration });
+                    }
+                }
+            }
+            
+            // If there are invalid files, block and show error
+            if (invalidFiles.length > 0) {
+                addLogEntry('❌ [DIRECT INPUT] VALIDATION FAILED!', 'error');
+                addLogEntry(`❌ [DIRECT INPUT] ${invalidFiles.length} file(s) không hợp lệ`, 'error');
+                
+                // Clear the input
+                e.target.value = '';
+                
+                // Show error dialog
+                let fileListHtml = invalidFiles.map(f => {
+                    let reason = '';
+                    if (f.duration < 20) {
+                        reason = `quá ngắn (${Math.floor(f.duration)}s < 20s)`;
+                    } else {
+                        reason = `quá dài (${Math.floor(f.duration)}s > 60s)`;
+                    }
+                    return `<li style="margin: 5px 0;"><strong>${f.name}</strong>: ${reason}</li>`;
+                }).join('');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: '⚠️ File audio không hợp lệ',
+                    html: `
+                        <div style="text-align: left; padding: 15px;">
+                            <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
+                                <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${invalidFiles.length} file không thể upload</p>
+                                <ul style="margin: 10px 0 0 0; padding-left: 20px; color: #fca5a5;">
+                                    ${fileListHtml}
+                                </ul>
+                            </div>
+                            
+                            <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+                            
+                            <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
+                                <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li style="margin: 5px 0;">Độ dài audio: <strong style="color: #50fa7b;">20-60 giây (0:20 - 1:00)</strong></li>
+                                    <li style="margin: 5px 0;">Định dạng: MP3, WAV, M4A, OGG</li>
+                                </ul>
+                            </div>
+                            
+                            <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
+                                💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file về 20-60 giây.
+                            </p>
+                        </div>
+                    `,
+                    confirmButtonText: 'Đã hiểu',
+                    confirmButtonColor: '#8be9fd',
+                    background: '#282a36',
+                    color: '#f8f8f2',
+                    width: '600px'
+                });
+                
+                addLogEntry('🚫 [DIRECT INPUT] Upload BLOCKED!', 'error');
+                return false;
+            }
+            
+            addLogEntry('✅ [DIRECT INPUT] All files validated successfully!', 'success');
+        }, true); // Use capture phase to intercept early
+    }
+}, 1000);
+
+const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
     // ƯU TIÊN 1: Kiểm tra tên file do người dùng nhập tùy chỉnh
     const customFilenameInput = document.getElementById('custom-filename-input');
     let fileName = 'audio_da_tao'; // Tên mặc định
@@ -3088,40 +3203,98 @@ async function waitForVoiceModelReady() {
                 uploadBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
 
+                    addLogEntry('🔍 [DEBUG] Upload button clicked!', 'info');
+                    addLogEntry(`🔍 [DEBUG] File name: ${file.name}`, 'info');
+                    addLogEntry(`🔍 [DEBUG] item.dataset.duration: ${item.dataset.duration}`, 'info');
+
+                    // Check if duration is available
+                    if (!item.dataset.duration || item.dataset.duration === 'undefined') {
+                        addLogEntry('⚠️ [DEBUG] Duration not ready yet, fetching...', 'warning');
+                        
+                        // Show loading message
+                        Swal.fire({
+                            title: 'Đang kiểm tra độ dài audio...',
+                            text: 'Vui lòng chờ...',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                        // Get duration now
+                        const dur = await getAudioDuration(file);
+                        item.dataset.duration = dur;
+                        addLogEntry(`✅ [DEBUG] Duration fetched: ${dur} seconds`, 'success');
+                        
+                        Swal.close();
+                    }
+
                     // Validate audio duration before upload
-                    const audioDuration = parseFloat(item.dataset.duration || 0);
+                    const audioDuration = parseFloat(item.dataset.duration);
                     
-                    if (audioDuration < 20 || audioDuration > 60) {
+                    addLogEntry(`🔍 [DEBUG] Parsed audioDuration: ${audioDuration}`, 'info');
+                    addLogEntry(`🔍 [DEBUG] Is valid (20-60)? ${audioDuration >= 20 && audioDuration <= 60}`, 'info');
+                    
+                    // CRITICAL: Check if duration is invalid
+                    if (!audioDuration || audioDuration < 20 || audioDuration > 60) {
                         // Block upload and show error
                         let errorMessage = '';
-                        if (audioDuration < 20) {
-                            errorMessage = `Audio quá ngắn (${Math.floor(audioDuration)}s). Cần tối thiểu 20 giây.`;
+                        let details = '';
+                        
+                        if (!audioDuration || audioDuration === 0) {
+                            errorMessage = `Không thể xác định độ dài audio.`;
+                            details = 'File có thể bị lỗi hoặc không phải file audio hợp lệ.';
+                        } else if (audioDuration < 20) {
+                            errorMessage = `Audio quá ngắn: ${Math.floor(audioDuration)} giây`;
+                            details = `Cần tối thiểu 20 giây.`;
                         } else {
-                            errorMessage = `Audio quá dài (${Math.floor(audioDuration)}s). Tối đa 60 giây.`;
+                            errorMessage = `Audio quá dài: ${Math.floor(audioDuration)} giây`;
+                            details = `Tối đa 60 giây (1 phút).`;
                         }
+                        
+                        addLogEntry('❌ [DEBUG] VALIDATION FAILED!', 'error');
+                        addLogEntry(`❌ [DEBUG] Reason: ${errorMessage}`, 'error');
                         
                         Swal.fire({
                             icon: 'error',
                             title: '⚠️ Audio không hợp lệ',
                             html: `
-                                <div style="text-align: left; padding: 10px;">
-                                    <p style="margin-bottom: 10px;"><strong>❌ ${errorMessage}</strong></p>
+                                <div style="text-align: left; padding: 15px;">
+                                    <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
+                                        <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${errorMessage}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 13px; color: #fca5a5;">${details}</p>
+                                    </div>
+                                    
                                     <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
-                                    <p style="margin-bottom: 8px;">📌 <strong>Yêu cầu:</strong></p>
-                                    <ul style="margin-left: 20px; text-align: left;">
-                                        <li>Độ dài audio: <strong style="color: #50fa7b;">20-60 giây</strong></li>
-                                        <li>Hiện tại: <strong style="color: #f87171;">${Math.floor(audioDuration)} giây</strong></li>
-                                    </ul>
-                                    <p style="margin-top: 15px; color: #8be9fd;">💡 Vui lòng chọn file audio khác hoặc chỉnh sửa lại file này.</p>
+                                    
+                                    <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
+                                        <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
+                                        <ul style="margin: 0; padding-left: 20px;">
+                                            <li style="margin: 5px 0;">Độ dài: <strong style="color: #50fa7b;">20-60 giây</strong></li>
+                                            <li style="margin: 5px 0;">Hiện tại: <strong style="color: #f87171;">${audioDuration ? Math.floor(audioDuration) : '???'} giây</strong></li>
+                                            <li style="margin: 5px 0;">File: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">${file.name}</code></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
+                                        💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file này về 20-60 giây.
+                                    </p>
                                 </div>
                             `,
                             confirmButtonText: 'Đã hiểu',
                             confirmButtonColor: '#8be9fd',
                             background: '#282a36',
-                            color: '#f8f8f2'
+                            color: '#f8f8f2',
+                            width: '600px'
                         });
+                        
+                        addLogEntry('🚫 [DEBUG] Upload BLOCKED!', 'error');
                         return; // Stop upload
                     }
+
+                    addLogEntry('✅ [DEBUG] Validation PASSED! Proceeding with upload...', 'success');
 
                     // Auto-upload the selected file (only if valid)
                     try {
@@ -3134,6 +3307,8 @@ async function waitForVoiceModelReady() {
 
                             // Trigger the change event to simulate file selection
                             fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                            addLogEntry('✅ [DEBUG] File uploaded successfully!', 'success');
 
                             // Show success message
                             Swal.fire({
@@ -3148,7 +3323,7 @@ async function waitForVoiceModelReady() {
                             });
                         }
                     } catch (error) {
-                        console.error('Error auto-uploading file:', error);
+                        addLogEntry(`❌ [DEBUG] Error during upload: ${error.message}`, 'error');
                         Swal.fire({
                             toast: true,
                             position: 'top-end',
