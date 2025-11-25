@@ -5550,6 +5550,13 @@ async function waitForVoiceModelReady() {
                 return;
             }
 
+            // 🔧 XÓA SẠCH CÁC BIẾN TOÀN CỤC CŨ ĐỂ TRÁNH NỐI THỪA AUDIO
+            ZTQj$LF$o = [];
+            SI$acY = [];
+            ttuo$y_KhCV = 0;
+            if (window.chunkBlobs) window.chunkBlobs = [];
+            addLogEntry('🧹 Đã xóa sạch dữ liệu audio cũ', 'info');
+
             // 1. Khởi tạo trạng thái (ĐÃ NÂNG CẤP)
             processingState.isPaused = false;
             processingState.isStopped = false;
@@ -5598,6 +5605,14 @@ async function waitForVoiceModelReady() {
             processingState.isStopped = true;
             processingState.isPaused = false;
             addLogEntry("🔴 Người dùng đã yêu cầu dừng hẳn quá trình.", 'error');
+
+            // 🔧 XÓA SẠCH DỮ LIỆU KHI DỪNG
+            ZTQj$LF$o = [];
+            SI$acY = [];
+            ttuo$y_KhCV = 0;
+            if (window.chunkBlobs) window.chunkBlobs = [];
+            processingState.chunks = [];
+            addLogEntry('🧹 Đã xóa sạch dữ liệu khi dừng', 'info');
 
             // Reset giao diện
             startBtn.disabled = false;
