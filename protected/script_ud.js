@@ -1955,8 +1955,9 @@ async function uSTZrHUt_IC() {
     // Logic xử lý khi đã hoàn thành tất cả các chunk
     if (ttuo$y_KhCV >= SI$acY[tQqGbytKzpHwhGmeQJucsrq(0x216)]) {
         // Kiểm tra xem tất cả chunk đã được xử lý đầy đủ chưa
-        const totalChunks = SI$acY.length;
-        const processedChunks = window.chunkStatus ? window.chunkStatus.filter(status => status === 'success' || status === 'failed').length : 0;
+        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
+        // Đếm chunks đã được xử lý dựa trên window.chunkBlobs hoặc ZTQj$LF$o
+        const processedChunks = (window.chunkBlobs || ZTQj$LF$o).filter(blob => blob !== null && blob !== undefined).length;
         const failedChunks = window.failedChunks || [];
 
         addLogEntry(`📊 Kiểm tra: ${processedChunks}/${totalChunks} chunks đã được xử lý`, 'info');
@@ -2336,11 +2337,11 @@ async function uSTZrHUt_IC() {
                         addLogEntry(`🎉 [Chunk ${ttuo$y_KhCV + 1}] Đã khôi phục thành công từ trạng thái thất bại!`, 'success');
                     }
 
-                    // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
-                    if (typeof window.chunkBlobs === 'undefined') {
-                        window.chunkBlobs = new Array(SI$acY.length).fill(null);
-                    }
-                    // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
+                        // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
+                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs)) {
+                            window.chunkBlobs = new Array(window.totalChunksForCurrentBatch || SI$acY.length).fill(null);
+                        }
+                        // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
 
                     const yEExghI = TYRNWSSd$QOYZe[ndkpgKnjg(0x1cd)](ndkpgKnjg(0x1f2))[ndkpgKnjg(0x1f1)];
                     if (yEExghI && (yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x1fa)) || yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x26f)))) try {
@@ -2374,25 +2375,28 @@ async function uSTZrHUt_IC() {
                         }
                         const qILAV = await FGrxK_RK[ndkpgKnjg(0x26f)]();
                         // Lưu chunk vào đúng vị trí dựa trên ttuo$y_KhCV (chunk index hiện tại)
-                        if (typeof window.chunkBlobs === 'undefined') {
-                            window.chunkBlobs = new Array(SI$acY.length).fill(null);
+                        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
+                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs) || window.chunkBlobs.length !== totalChunks) {
+                            window.chunkBlobs = new Array(totalChunks).fill(null);
+                            addLogEntry(`🔧 Khởi tạo lại window.chunkBlobs với ${totalChunks} vị trí`, 'info');
                         }
 
                         // QUAN TRỌNG: Đảm bảo lưu đúng vị trí chunk, không phụ thuộc vào ttuo$y_KhCV
                         const currentChunkIndex = ttuo$y_KhCV;
 
-                        // Đảm bảo window.chunkBlobs có đủ độ dài
-                        while (window.chunkBlobs.length <= currentChunkIndex) {
-                            window.chunkBlobs.push(null);
+                        // Lưu vào window.chunkBlobs nếu index hợp lệ
+                        if (currentChunkIndex >= 0 && currentChunkIndex < window.chunkBlobs.length) {
+                            window.chunkBlobs[currentChunkIndex] = qILAV;
                         }
-                        window.chunkBlobs[currentChunkIndex] = qILAV;
 
                         // ĐỒNG BỘ HÓA ZTQj$LF$o: Đảm bảo ZTQj$LF$o cũng có chunk ở đúng vị trí
-                        // Nếu ZTQj$LF$o chưa đủ độ dài, mở rộng mảng
-                        while (ZTQj$LF$o.length <= currentChunkIndex) {
-                            ZTQj$LF$o.push(null);
+                        if (!Array.isArray(ZTQj$LF$o) || ZTQj$LF$o.length !== totalChunks) {
+                            ZTQj$LF$o = new Array(totalChunks).fill(null);
+                            addLogEntry(`🔧 Khởi tạo lại ZTQj$LF$o với ${totalChunks} vị trí`, 'info');
                         }
-                        ZTQj$LF$o[currentChunkIndex] = qILAV;
+                        if (currentChunkIndex >= 0 && currentChunkIndex < ZTQj$LF$o.length) {
+                            ZTQj$LF$o[currentChunkIndex] = qILAV;
+                        }
 
                         // ĐỒNG BỘ HÓA: Đảm bảo cả hai mảng đều có chunk này ở đúng vị trí
                         addLogEntry(`🔄 Đã lưu chunk ${currentChunkIndex + 1} vào vị trí ${currentChunkIndex} của cả window.chunkBlobs và ZTQj$LF$o`, 'info');
@@ -5554,7 +5558,10 @@ async function waitForVoiceModelReady() {
             ZTQj$LF$o = [];
             SI$acY = [];
             ttuo$y_KhCV = 0;
-            if (window.chunkBlobs) window.chunkBlobs = [];
+            window.chunkBlobs = []; // Force reset
+            window.totalChunksForCurrentBatch = 0; // Thêm biến đếm chunk cho batch hiện tại
+            window.chunkStatus = []; // Reset trạng thái chunk
+            window.failedChunks = []; // Reset danh sách chunk thất bại
             addLogEntry('🧹 Đã xóa sạch dữ liệu audio cũ', 'info');
 
             // 1. Khởi tạo trạng thái (ĐÃ NÂNG CẤP)
@@ -5574,6 +5581,15 @@ async function waitForVoiceModelReady() {
                 originalIndex: index,
                 audioBlob: null
             }));
+
+            // 🔧 KHỞI TẠO LẠI ARRAYS VỚI ĐÚNG SỐ LƯỢNG CHUNKS
+            window.totalChunksForCurrentBatch = chunksArray.length;
+            window.chunkBlobs = new Array(chunksArray.length).fill(null);
+            ZTQj$LF$o = new Array(chunksArray.length).fill(null);
+            SI$acY = chunksArray; // Cập nhật SI$acY với chunks mới
+            window.chunkStatus = new Array(chunksArray.length).fill('pending'); // Khởi tạo trạng thái chunk
+            window.failedChunks = []; // Reset danh sách chunk thất bại
+            addLogEntry(`🔧 Đã khởi tạo arrays với ${chunksArray.length} vị trí cho batch mới`, 'info');
 
             // 2. Cập nhật giao diện
             startBtn.disabled = true;
@@ -5610,7 +5626,10 @@ async function waitForVoiceModelReady() {
             ZTQj$LF$o = [];
             SI$acY = [];
             ttuo$y_KhCV = 0;
-            if (window.chunkBlobs) window.chunkBlobs = [];
+            window.chunkBlobs = [];
+            window.totalChunksForCurrentBatch = 0;
+            window.chunkStatus = [];
+            window.failedChunks = [];
             processingState.chunks = [];
             addLogEntry('🧹 Đã xóa sạch dữ liệu khi dừng', 'info');
 
