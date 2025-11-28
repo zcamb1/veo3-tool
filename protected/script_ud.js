@@ -1,9 +1,8 @@
 // ==UserScript==
-// @name         Kz Tool - Clone Voice (Không cần API) - Modded
+// @name         Clone Voice (Không cần API) - Modded
 // @namespace    mmx-secure
-// @version      1.2.0
+// @version      1.1.0
 // @description  Tạo audio giọng nói clone theo ý của bạn. Không giới hạn. Thêm chức năng Ghép hội thoại & Đổi văn bản hàng loạt.
-// @author       Huy Nguyen - Kz Tool (Zalo: 0986562876)
 // @match        https://www.minimax.io/audio*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=minimax.io
 // @run-at       document-end
@@ -14,12 +13,6 @@
 // @connect      unpkg.com
 // @connect      cdn.jsdelivr.net
 // ==/UserScript==
-
-
-/* ========================================================================== */
-/* BẢN QUYỀN PHẦN MỀM THUỘC VỀ: HUY NGUYEN - KZ TOOL                        */
-/* ZALO: 0986562876                                                          */
-/* ========================================================================== */
 
 
 (function () {
@@ -271,25 +264,6 @@
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5) !important;
     transform: translateY(-2px) !important;
 }
-/* Styles for Saved Audio Library Section */
-#saved-audio-library{margin-top:20px;background:rgba(22,28,45,0.55);border:1px solid rgba(100,200,255,0.1);border-radius:14px;padding:15px;box-shadow:inset 0 0 15px rgba(100,200,255,0.05)}
-#saved-audio-library h4{margin:0 0 10px;color:#92e7ff;font-size:14px;border-bottom:1px solid rgba(100,200,255,0.2);padding-bottom:5px;text-shadow:0 0 8px rgba(90,200,255,0.3)}
-#saved-audio-list{max-height:200px;overflow-y:auto;background:#282a36;border:1px solid #6272a4;border-radius:4px;margin-bottom:10px}
-#saved-audio-list::-webkit-scrollbar{width:6px}
-#saved-audio-list::-webkit-scrollbar-track{background:#282a36}
-#saved-audio-list::-webkit-scrollbar-thumb{background:#6272a4;border-radius:3px}
-#saved-audio-list::-webkit-scrollbar-thumb:hover{background:#bd93f9}
-.saved-audio-item{display:flex;align-items:center;padding:8px;border-bottom:1px solid#44475a;transition:background-color .2s ease}
-.saved-audio-item:hover{background-color:#44475a}
-.saved-audio-name{flex-grow:1;font-size:12px;color:#f8f8f2;margin-right:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.saved-audio-duration{font-size:11px;color:#8be9fd;margin-right:10px;min-width:40px}
-.saved-audio-date{font-size:10px;color:#94a3b8;margin-right:10px;min-width:70px}
-.use-saved-audio-btn{min-width:32px;width:32px;height:32px;padding:0;font-size:14px;background:linear-gradient(135deg,#50fa7b 0%,#4ade80 100%);color:#1a1d2e;border:none;border-radius:6px;cursor:pointer;margin-right:6px;font-weight:600;transition:all 0.2s ease;box-shadow:0 2px 4px rgba(80,250,123,0.2);display:flex;align-items:center;justify-content:center}
-.use-saved-audio-btn:hover{background:linear-gradient(135deg,#4ade80 0%,#50fa7b 100%);transform:translateY(-1px);box-shadow:0 4px 8px rgba(80,250,123,0.3)}
-.delete-saved-audio-btn{min-width:32px!important;width:32px!important;height:32px!important;padding:0!important;font-size:14px!important;background:linear-gradient(135deg,#ff5555 0%,#e44 100%)!important;color:#fff!important;border:none!important;border-radius:6px!important;cursor:pointer!important;pointer-events:auto!important;opacity:1!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:all 0.2s ease!important;box-shadow:0 2px 4px rgba(255,85,85,0.2)!important}
-.delete-saved-audio-btn:hover{background:linear-gradient(135deg,#e44 0%,#ff5555 100%)!important;transform:translateY(-1px)!important;box-shadow:0 4px 8px rgba(255,85,85,0.3)!important}
-.delete-audio-swal-container{z-index:999999!important}
-.delete-audio-swal-popup{z-index:1000000!important}
 /* Styles for Batch Replace Section */
 #batch-replace-section{margin-top:20px;background:#2d3148;border:2px solid #3d4158;border-radius:12px;padding:15px}
 #batch-replace-section h4{margin:0 0 12px;color:#00d4ff;font-size:15px;border-bottom:2px solid #3d4158;padding-bottom:8px;font-weight:600}
@@ -1114,7 +1088,7 @@ button:disabled {
     transform: scale(1.1);
     box-shadow: 0 4px 15px rgba(255, 85, 85, 0.4);
 }`;
-    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Chọn file âm thanh (nhấn nút TẢI LÊN ở bên dưới)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="saved-audio-library" class="section"> <h4>💾 Audio đã lưu</h4> <div id="saved-audio-list"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div> </div> <button id="clear-saved-audio-btn" style="width: 100%; background: linear-gradient(135deg, #ff5555 0%, #e44 100%); color: #fff; display: none;">🗑️ Xóa tất cả audio đã lưu</button> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="✨ Nhập hoặc dán văn bản của bạn tại đây để chuyển thành giọng nói chuyên nghiệp...
+    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="Dán nội dung bạn đã chuẩn bị vào đây.
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
@@ -1312,153 +1286,7 @@ button:disabled {
         }
     });
 
-const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();
-
-// === AUDIO DURATION VALIDATION FOR DIRECT FILE INPUT ===
-// Intercept gemini-file-input để validate độ dài audio trước khi upload
-setTimeout(() => {
-    const fileInput = document.getElementById('gemini-file-input');
-    if (fileInput) {
-        addLogEntry('✅ Đã khởi tạo validation cho file input', 'success');
-        
-        // Helper function to get audio duration
-        async function getAudioDuration(file) {
-            return new Promise((resolve) => {
-                const audio = new Audio();
-                audio.addEventListener('loadedmetadata', () => {
-                    resolve(audio.duration);
-                });
-                audio.addEventListener('error', () => {
-                    resolve(0);
-                });
-                audio.src = URL.createObjectURL(file);
-            });
-        }
-        
-        // Intercept change event
-        fileInput.addEventListener('change', async function(e) {
-            addLogEntry('🔍 [DIRECT INPUT] File input change detected!', 'info');
-            
-            const files = e.target.files;
-            if (!files || files.length === 0) {
-                addLogEntry('⚠️ [DIRECT INPUT] No files selected', 'warning');
-                return;
-            }
-            
-            addLogEntry(`🔍 [DIRECT INPUT] ${files.length} file(s) selected`, 'info');
-            
-            // Check each audio file
-            const invalidFiles = [];
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                
-                // Only validate audio files
-                if (file.type.startsWith('audio/')) {
-                    addLogEntry(`🔍 [DIRECT INPUT] Checking: ${file.name}`, 'info');
-                    
-                    const duration = await getAudioDuration(file);
-                    addLogEntry(`🔍 [DIRECT INPUT] Duration: ${Math.floor(duration)} seconds`, 'info');
-                    
-                    if (duration < 20 || duration > 60) {
-                        invalidFiles.push({ name: file.name, duration: duration });
-                    }
-                }
-            }
-            
-            // If there are invalid files, block and show error
-            if (invalidFiles.length > 0) {
-                // CRITICAL: Stop all event propagation immediately
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                
-                addLogEntry('❌ [DIRECT INPUT] VALIDATION FAILED!', 'error');
-                addLogEntry(`❌ [DIRECT INPUT] ${invalidFiles.length} file(s) không hợp lệ`, 'error');
-                
-                // Clear the input
-                e.target.value = '';
-                
-                // Show error dialog
-                let fileListHtml = invalidFiles.map(f => {
-                    let reason = '';
-                    if (f.duration < 20) {
-                        reason = `quá ngắn (${Math.floor(f.duration)}s < 20s)`;
-                    } else {
-                        reason = `quá dài (${Math.floor(f.duration)}s > 60s)`;
-                    }
-                    return `<li style="margin: 5px 0;"><strong>${f.name}</strong>: ${reason}</li>`;
-                }).join('');
-                
-                addLogEntry('📢 [DIRECT INPUT] Hiển thị popup cảnh báo...', 'warning');
-                
-                // Add CSS to ensure popup is visible
-                const style = document.createElement('style');
-                style.textContent = `
-                    .audio-validation-popup {
-                        z-index: 999999 !important;
-                    }
-                    .swal2-container {
-                        z-index: 999998 !important;
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                // Delay a bit to ensure everything is processed
-                setTimeout(() => {
-                    if (typeof Swal === 'undefined') {
-                        addLogEntry('❌ [DIRECT INPUT] Swal is undefined! Showing alert instead', 'error');
-                        alert(`⚠️ FILE AUDIO KHÔNG HỢP LỆ\n\n${invalidFiles.length} file không thể upload:\n\n${invalidFiles.map(f => `• ${f.name}: ${f.duration < 20 ? 'quá ngắn' : 'quá dài'} (${Math.floor(f.duration)}s)`).join('\n')}\n\nYêu cầu: Audio phải từ 20-60 giây`);
-                    } else {
-                        addLogEntry('✅ [DIRECT INPUT] Swal exists, calling Swal.fire()', 'info');
-                        Swal.fire({
-                            icon: 'error',
-                            title: '⚠️ File audio không hợp lệ',
-                            html: `
-                                <div style="text-align: center; padding: 10px;">
-                                    <p style="margin: 10px 0; color: #f87171; font-size: 14px;">
-                                        ${invalidFiles.map(f => {
-                                            let reason = f.duration < 20 ? 'quá ngắn' : 'quá dài';
-                                            return `<strong>${f.name}</strong><br>${reason} (${Math.floor(f.duration)}s)`;
-                                        }).join('<br><br>')}
-                                    </p>
-                                    <hr style="border-color: rgba(255,255,255,0.2); margin: 15px 0;">
-                                    <p style="margin: 10px 0; color: #8be9fd; font-size: 13px;">
-                                        📌 <strong>Yêu cầu: 20-60 giây</strong>
-                                    </p>
-                                    <p style="margin: 5px 0; color: #94a3b8; font-size: 12px;">
-                                        Chọn file khác hoặc cắt lại file
-                                    </p>
-                                </div>
-                            `,
-                            confirmButtonText: 'Đã hiểu',
-                            confirmButtonColor: '#8be9fd',
-                            background: '#282a36',
-                            color: '#f8f8f2',
-                            width: '450px',
-                            customClass: {
-                                popup: 'audio-validation-popup',
-                                container: 'audio-validation-container'
-                            },
-                            heightAuto: false,
-                            backdrop: true,
-                            allowOutsideClick: true
-                        }).then(() => {
-                            addLogEntry('✅ [DIRECT INPUT] User đã đóng popup', 'info');
-                        });
-                        addLogEntry('📢 [DIRECT INPUT] Đã gọi Swal.fire()', 'info');
-                    }
-                }, 100); // Small delay to ensure event is fully blocked
-                
-                addLogEntry('🚫 [DIRECT INPUT] Upload BLOCKED!', 'error');
-                return false;
-            }
-            
-            addLogEntry('✅ [DIRECT INPUT] All files validated successfully!', 'success');
-        }, true); // Use capture phase to intercept early
-    }
-}, 1000);
-
-const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));if(LrkOcBYz_$AGjPqXLWnyiATpCI){LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x243)]=!![];}function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
+const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
     // ƯU TIÊN 1: Kiểm tra tên file do người dùng nhập tùy chỉnh
     const customFilenameInput = document.getElementById('custom-filename-input');
     let fileName = 'audio_da_tao'; // Tên mặc định
@@ -1955,9 +1783,8 @@ async function uSTZrHUt_IC() {
     // Logic xử lý khi đã hoàn thành tất cả các chunk
     if (ttuo$y_KhCV >= SI$acY[tQqGbytKzpHwhGmeQJucsrq(0x216)]) {
         // Kiểm tra xem tất cả chunk đã được xử lý đầy đủ chưa
-        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
-        // Đếm chunks đã được xử lý dựa trên window.chunkBlobs hoặc ZTQj$LF$o
-        const processedChunks = (window.chunkBlobs || ZTQj$LF$o).filter(blob => blob !== null && blob !== undefined).length;
+        const totalChunks = SI$acY.length;
+        const processedChunks = window.chunkStatus ? window.chunkStatus.filter(status => status === 'success' || status === 'failed').length : 0;
         const failedChunks = window.failedChunks || [];
 
         addLogEntry(`📊 Kiểm tra: ${processedChunks}/${totalChunks} chunks đã được xử lý`, 'info');
@@ -2337,11 +2164,11 @@ async function uSTZrHUt_IC() {
                         addLogEntry(`🎉 [Chunk ${ttuo$y_KhCV + 1}] Đã khôi phục thành công từ trạng thái thất bại!`, 'success');
                     }
 
-                        // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
-                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs)) {
-                            window.chunkBlobs = new Array(window.totalChunksForCurrentBatch || SI$acY.length).fill(null);
-                        }
-                        // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
+                    // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
+                    if (typeof window.chunkBlobs === 'undefined') {
+                        window.chunkBlobs = new Array(SI$acY.length).fill(null);
+                    }
+                    // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
 
                     const yEExghI = TYRNWSSd$QOYZe[ndkpgKnjg(0x1cd)](ndkpgKnjg(0x1f2))[ndkpgKnjg(0x1f1)];
                     if (yEExghI && (yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x1fa)) || yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x26f)))) try {
@@ -2375,28 +2202,25 @@ async function uSTZrHUt_IC() {
                         }
                         const qILAV = await FGrxK_RK[ndkpgKnjg(0x26f)]();
                         // Lưu chunk vào đúng vị trí dựa trên ttuo$y_KhCV (chunk index hiện tại)
-                        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
-                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs) || window.chunkBlobs.length !== totalChunks) {
-                            window.chunkBlobs = new Array(totalChunks).fill(null);
-                            addLogEntry(`🔧 Khởi tạo lại window.chunkBlobs với ${totalChunks} vị trí`, 'info');
+                        if (typeof window.chunkBlobs === 'undefined') {
+                            window.chunkBlobs = new Array(SI$acY.length).fill(null);
                         }
 
                         // QUAN TRỌNG: Đảm bảo lưu đúng vị trí chunk, không phụ thuộc vào ttuo$y_KhCV
                         const currentChunkIndex = ttuo$y_KhCV;
 
-                        // Lưu vào window.chunkBlobs nếu index hợp lệ
-                        if (currentChunkIndex >= 0 && currentChunkIndex < window.chunkBlobs.length) {
-                            window.chunkBlobs[currentChunkIndex] = qILAV;
+                        // Đảm bảo window.chunkBlobs có đủ độ dài
+                        while (window.chunkBlobs.length <= currentChunkIndex) {
+                            window.chunkBlobs.push(null);
                         }
+                        window.chunkBlobs[currentChunkIndex] = qILAV;
 
                         // ĐỒNG BỘ HÓA ZTQj$LF$o: Đảm bảo ZTQj$LF$o cũng có chunk ở đúng vị trí
-                        if (!Array.isArray(ZTQj$LF$o) || ZTQj$LF$o.length !== totalChunks) {
-                            ZTQj$LF$o = new Array(totalChunks).fill(null);
-                            addLogEntry(`🔧 Khởi tạo lại ZTQj$LF$o với ${totalChunks} vị trí`, 'info');
+                        // Nếu ZTQj$LF$o chưa đủ độ dài, mở rộng mảng
+                        while (ZTQj$LF$o.length <= currentChunkIndex) {
+                            ZTQj$LF$o.push(null);
                         }
-                        if (currentChunkIndex >= 0 && currentChunkIndex < ZTQj$LF$o.length) {
-                            ZTQj$LF$o[currentChunkIndex] = qILAV;
-                        }
+                        ZTQj$LF$o[currentChunkIndex] = qILAV;
 
                         // ĐỒNG BỘ HÓA: Đảm bảo cả hai mảng đều có chunk này ở đúng vị trí
                         addLogEntry(`🔄 Đã lưu chunk ${currentChunkIndex + 1} vào vị trí ${currentChunkIndex} của cả window.chunkBlobs và ZTQj$LF$o`, 'info');
@@ -2491,7 +2315,7 @@ async function waitForVoiceModelReady() {
 
     // Trả về kết quả cuối cùng
     return true; // Trả về true vì đã qua được bước chờ giọng mẫu
-}function u_In_Taeyb(ha_vkXztSqPwoX_qmQKlcp){const scdrpb$_nwRMQXvVJ=AP$u_huhInYfTj,TJ_txTK=document[scdrpb$_nwRMQXvVJ(0x1cd)](scdrpb$_nwRMQXvVJ(0x26d));if(!TJ_txTK)return![];try{const pIzqjC$SSlBxLJPDufXHf_hTwNG=new DataTransfer();for(const q$$rNffLZXQHBKXbsZBb of ha_vkXztSqPwoX_qmQKlcp)pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x1e5)][scdrpb$_nwRMQXvVJ(0x203)](q$$rNffLZXQHBKXbsZBb);return TJ_txTK[scdrpb$_nwRMQXvVJ(0x208)]=pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x208)],TJ_txTK[scdrpb$_nwRMQXvVJ(0x1c1)](new Event(scdrpb$_nwRMQXvVJ(0x1d7),{'bubbles':!![]})),!![];}catch(tnv$KWVWNV){return![];}}WRVxYBSrPsjcqQs_bXI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x229),()=>{const bISsk$DCGLNjOv=AP$u_huhInYfTj,LvLmlCAo_vy_AFJk=WRVxYBSrPsjcqQs_bXI[bISsk$DCGLNjOv(0x24c)];CVjXA$H[bISsk$DCGLNjOv(0x1c7)]=bISsk$DCGLNjOv(0x20f)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1ff)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\s+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1fc)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1ed)](/[.!?。！？]+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x23b)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\n+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1f4);}),yU_jfkzmffcnGgLWrq[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),async()=>{const t$_EKwXXWYJwVOu=AP$u_huhInYfTj;if(PcLAEW[t$_EKwXXWYJwVOu(0x208)][t$_EKwXXWYJwVOu(0x216)]===0x16e0+-0x1573+-parseInt(0x49)*0x5){Swal[t$_EKwXXWYJwVOu(0x26b)]({'icon':t$_EKwXXWYJwVOu(0x212),'title':t$_EKwXXWYJwVOu(0x266),'text':t$_EKwXXWYJwVOu(0x200)});LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=!![];return;}const pP$elepNWoiOEswuBl$wWpWgE=VcTcfGnbfWZdhQRvBp$emAVjf[t$_EKwXXWYJwVOu(0x24c)];yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=!![],TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x1d0),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x22f);if(u_In_Taeyb(PcLAEW[t$_EKwXXWYJwVOu(0x208)])){await new Promise(YoMwltQiCl_gqyp=>setTimeout(YoMwltQiCl_gqyp,Math.floor(-0xbf0)*Math.floor(parseInt(0x1))+parseFloat(-parseInt(0x952))+parseFloat(parseInt(0x192a)))),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x267);const lYBfNBUXykQSrYdLWRfJs=await wfxQyKsZ_OULEUwIDIN$OYr(pP$elepNWoiOEswuBl$wWpWgE);lYBfNBUXykQSrYdLWRfJs?(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x22b)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x228),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=![]):(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x247)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=!![]);}else TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x259),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6);yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=![];}),LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const muOPzQltrb_ezJpe_MNI=AP$u_huhInYfTj;if(EfNjYNYj_O_CGB)return;const EFBSgoVbWWlkmceHpywAdxhpn=WRVxYBSrPsjcqQs_bXI[muOPzQltrb_ezJpe_MNI(0x24c)][muOPzQltrb_ezJpe_MNI(0x1d4)]();if(!EFBSgoVbWWlkmceHpywAdxhpn){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':muOPzQltrb_ezJpe_MNI(0x202)});return;}if(!PcLAEW[muOPzQltrb_ezJpe_MNI(0x208)]||PcLAEW[muOPzQltrb_ezJpe_MNI(0x208)][muOPzQltrb_ezJpe_MNI(0x216)]===0x0){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':'Vui lòng upload file audio trước khi bắt đầu tạo âm thanh!'});return;}dqj_t_Mr=new Date(),zQizakWdLEdLjtenmCbNC[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),document[muOPzQltrb_ezJpe_MNI(0x1de)](muOPzQltrb_ezJpe_MNI(0x225))[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),pT$bOHGEGbXDSpcuLWAq_yMVf[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),cHjV$QkAT$JWlL[muOPzQltrb_ezJpe_MNI(0x273)]='';if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[muOPzQltrb_ezJpe_MNI(0x1cc)]();ZTQj$LF$o=[],SI$acY=NrfPVBbJv_Dph$tazCpJ(EFBSgoVbWWlkmceHpywAdxhpn),ttuo$y_KhCV=0x6*Math.floor(-parseInt(0x26))+-0x1c45+Math.ceil(parseInt(0x1d29)),EfNjYNYj_O_CGB=!![],MEpJezGZUsmpZdAgFRBRZW=![],LrkOcBYz_$AGjPqXLWnyiATpCI[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),OdKzziXLxtOGjvaBMHm[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x273)]=muOPzQltrb_ezJpe_MNI(0x239),uSTZrHUt_IC();}),lraDK$WDOgsXHRO[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const AuzopbHlRPCFBPQqnHMs=AP$u_huhInYfTj;MEpJezGZUsmpZdAgFRBRZW=!MEpJezGZUsmpZdAgFRBRZW,lraDK$WDOgsXHRO[AuzopbHlRPCFBPQqnHMs(0x273)]=MEpJezGZUsmpZdAgFRBRZW?AuzopbHlRPCFBPQqnHMs(0x271):AuzopbHlRPCFBPQqnHMs(0x239);if(!MEpJezGZUsmpZdAgFRBRZW)uSTZrHUt_IC();}),OdKzziXLxtOGjvaBMHm[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const jWtMo=AP$u_huhInYfTj;EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![];if(xlgJHLP$MATDT$kTXWV)xlgJHLP$MATDT$kTXWV[jWtMo(0x24e)]();if(Srnj$swt)clearTimeout(Srnj$swt);ZTQj$LF$o=[],SI$acY=[],WRVxYBSrPsjcqQs_bXI[jWtMo(0x24c)]='',rUxbIRagbBVychZ$GfsogD[jWtMo(0x24c)]='',pT$bOHGEGbXDSpcuLWAq_yMVf[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),zQizakWdLEdLjtenmCbNC[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209);if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[jWtMo(0x1cc)]();LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x258),lraDK$WDOgsXHRO[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),OdKzziXLxtOGjvaBMHm[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x243)]=![],LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x273)]=jWtMo(0x275);}),XvyPnqSRdJtYjSxingI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const XhOmEQytvnK$v=AP$u_huhInYfTj;if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[XhOmEQytvnK$v(0x21a)]();});
+}function u_In_Taeyb(ha_vkXztSqPwoX_qmQKlcp){const scdrpb$_nwRMQXvVJ=AP$u_huhInYfTj,TJ_txTK=document[scdrpb$_nwRMQXvVJ(0x1cd)](scdrpb$_nwRMQXvVJ(0x26d));if(!TJ_txTK)return![];try{const pIzqjC$SSlBxLJPDufXHf_hTwNG=new DataTransfer();for(const q$$rNffLZXQHBKXbsZBb of ha_vkXztSqPwoX_qmQKlcp)pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x1e5)][scdrpb$_nwRMQXvVJ(0x203)](q$$rNffLZXQHBKXbsZBb);return TJ_txTK[scdrpb$_nwRMQXvVJ(0x208)]=pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x208)],TJ_txTK[scdrpb$_nwRMQXvVJ(0x1c1)](new Event(scdrpb$_nwRMQXvVJ(0x1d7),{'bubbles':!![]})),!![];}catch(tnv$KWVWNV){return![];}}WRVxYBSrPsjcqQs_bXI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x229),()=>{const bISsk$DCGLNjOv=AP$u_huhInYfTj,LvLmlCAo_vy_AFJk=WRVxYBSrPsjcqQs_bXI[bISsk$DCGLNjOv(0x24c)];CVjXA$H[bISsk$DCGLNjOv(0x1c7)]=bISsk$DCGLNjOv(0x20f)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1ff)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\s+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1fc)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1ed)](/[.!?。！？]+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x23b)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\n+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1f4);}),yU_jfkzmffcnGgLWrq[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),async()=>{const t$_EKwXXWYJwVOu=AP$u_huhInYfTj;if(PcLAEW[t$_EKwXXWYJwVOu(0x208)][t$_EKwXXWYJwVOu(0x216)]===0x16e0+-0x1573+-parseInt(0x49)*0x5){Swal[t$_EKwXXWYJwVOu(0x26b)]({'icon':t$_EKwXXWYJwVOu(0x212),'title':t$_EKwXXWYJwVOu(0x266),'text':t$_EKwXXWYJwVOu(0x200)});return;}const pP$elepNWoiOEswuBl$wWpWgE=VcTcfGnbfWZdhQRvBp$emAVjf[t$_EKwXXWYJwVOu(0x24c)];yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=!![],TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x1d0),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x22f);if(u_In_Taeyb(PcLAEW[t$_EKwXXWYJwVOu(0x208)])){await new Promise(YoMwltQiCl_gqyp=>setTimeout(YoMwltQiCl_gqyp,Math.floor(-0xbf0)*Math.floor(parseInt(0x1))+parseFloat(-parseInt(0x952))+parseFloat(parseInt(0x192a)))),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x267);const lYBfNBUXykQSrYdLWRfJs=await wfxQyKsZ_OULEUwIDIN$OYr(pP$elepNWoiOEswuBl$wWpWgE);lYBfNBUXykQSrYdLWRfJs?(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x22b)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x228)):(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x247)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6)),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=![];}else TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x259),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6);yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=![];}),LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const muOPzQltrb_ezJpe_MNI=AP$u_huhInYfTj;if(EfNjYNYj_O_CGB)return;const EFBSgoVbWWlkmceHpywAdxhpn=WRVxYBSrPsjcqQs_bXI[muOPzQltrb_ezJpe_MNI(0x24c)][muOPzQltrb_ezJpe_MNI(0x1d4)]();if(!EFBSgoVbWWlkmceHpywAdxhpn){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':muOPzQltrb_ezJpe_MNI(0x202)});return;}dqj_t_Mr=new Date(),zQizakWdLEdLjtenmCbNC[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),document[muOPzQltrb_ezJpe_MNI(0x1de)](muOPzQltrb_ezJpe_MNI(0x225))[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),pT$bOHGEGbXDSpcuLWAq_yMVf[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),cHjV$QkAT$JWlL[muOPzQltrb_ezJpe_MNI(0x273)]='';if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[muOPzQltrb_ezJpe_MNI(0x1cc)]();ZTQj$LF$o=[],SI$acY=NrfPVBbJv_Dph$tazCpJ(EFBSgoVbWWlkmceHpywAdxhpn),ttuo$y_KhCV=0x6*Math.floor(-parseInt(0x26))+-0x1c45+Math.ceil(parseInt(0x1d29)),EfNjYNYj_O_CGB=!![],MEpJezGZUsmpZdAgFRBRZW=![],LrkOcBYz_$AGjPqXLWnyiATpCI[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),OdKzziXLxtOGjvaBMHm[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x273)]=muOPzQltrb_ezJpe_MNI(0x239),uSTZrHUt_IC();}),lraDK$WDOgsXHRO[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const AuzopbHlRPCFBPQqnHMs=AP$u_huhInYfTj;MEpJezGZUsmpZdAgFRBRZW=!MEpJezGZUsmpZdAgFRBRZW,lraDK$WDOgsXHRO[AuzopbHlRPCFBPQqnHMs(0x273)]=MEpJezGZUsmpZdAgFRBRZW?AuzopbHlRPCFBPQqnHMs(0x271):AuzopbHlRPCFBPQqnHMs(0x239);if(!MEpJezGZUsmpZdAgFRBRZW)uSTZrHUt_IC();}),OdKzziXLxtOGjvaBMHm[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const jWtMo=AP$u_huhInYfTj;EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![];if(xlgJHLP$MATDT$kTXWV)xlgJHLP$MATDT$kTXWV[jWtMo(0x24e)]();if(Srnj$swt)clearTimeout(Srnj$swt);ZTQj$LF$o=[],SI$acY=[],WRVxYBSrPsjcqQs_bXI[jWtMo(0x24c)]='',rUxbIRagbBVychZ$GfsogD[jWtMo(0x24c)]='',pT$bOHGEGbXDSpcuLWAq_yMVf[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),zQizakWdLEdLjtenmCbNC[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209);if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[jWtMo(0x1cc)]();LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x258),lraDK$WDOgsXHRO[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),OdKzziXLxtOGjvaBMHm[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x243)]=![],LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x273)]=jWtMo(0x275);}),XvyPnqSRdJtYjSxingI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const XhOmEQytvnK$v=AP$u_huhInYfTj;if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[XhOmEQytvnK$v(0x21a)]();});
 
         // --- START: NEW FUNCTIONALITY ---
 
@@ -2854,11 +2678,11 @@ async function waitForVoiceModelReady() {
                     startQueueBtn.style.display = 'none';
                     applyPunctuationBtn.style.display = 'block';
                 } else {
-                    // Kiểm tra xem có đang processing không (thay vì kiểm tra style.display)
-                    if (!EfNjYNYj_O_CGB) {
+                    // Chỉ hiện nút nếu chưa bị ẩn (chưa bấm tạo âm thanh)
+                    // Nhưng không can thiệp nếu nút đã được hiện lại sau khi áp dụng thiết lập
+                    if (startQueueBtn.style.display !== 'none') {
                         startQueueBtn.style.display = 'block';
-                        // Giữ nguyên disabled state (có thể disabled vì chưa upload audio)
-                        // startQueueBtn.disabled = mainTextarea.value.trim() === '';
+                        startQueueBtn.disabled = mainTextarea.value.trim() === '';
                     }
                     applyPunctuationBtn.style.display = 'none';
                 }
@@ -2951,15 +2775,8 @@ async function waitForVoiceModelReady() {
                 textToProcess = textToProcess.replace(/ {2,}/g, ' ');
 
                 // Thay thế dấu câu đã thiết lập
-                // ⭐ FIX: Chỉ replace dấu chấm/phẩy KHÔNG phải số thập phân (29.5, 1,000)
-                if (settings.periodEnabled && settings.period > 0) {
-                    // Negative lookbehind/lookahead: Chỉ replace dấu chấm KHÔNG nằm giữa 2 số
-                    textToProcess = textToProcess.replace(/(?<!\d)\.(?!\d)/g, ` ${mapDurationToPauseString(settings.period)} `);
-                }
-                if (settings.commaEnabled && settings.comma > 0) {
-                    // Negative lookbehind/lookahead: Chỉ replace dấu phẩy KHÔNG nằm giữa 2 số (để tránh 1,000 → 1 (#0.3#) 000)
-                    textToProcess = textToProcess.replace(/(?<!\d),(?!\d)/g, ` ${mapDurationToPauseString(settings.comma)} `);
-                }
+                if (settings.periodEnabled && settings.period > 0) textToProcess = textToProcess.replace(/\./g, ` ${mapDurationToPauseString(settings.period)} `);
+                if (settings.commaEnabled && settings.comma > 0) textToProcess = textToProcess.replace(/,/g, ` ${mapDurationToPauseString(settings.comma)} `);
                 if (settings.semicolonEnabled && settings.semicolon > 0) textToProcess = textToProcess.replace(/;/g, ` ${mapDurationToPauseString(settings.semicolon)} `);
                 if (settings.newlineEnabled && settings.newline > 0) textToProcess = textToProcess.replace(/\n/g, ` ${mapDurationToPauseString(settings.newline)} `);
                 // ⭐ FIX: Chỉ replace nhiều spaces, KHÔNG replace xuống dòng
@@ -2975,10 +2792,7 @@ async function waitForVoiceModelReady() {
 
                 // Hiện lại nút tạo âm thanh sau khi áp dụng thiết lập
                 startQueueBtn.style.display = 'block';
-                // Disabled nếu: chưa có text HOẶC chưa upload audio
-                const hasText = mainTextarea.value.trim() !== '';
-                const hasAudio = PcLAEW && PcLAEW.files && PcLAEW.files.length > 0;
-                startQueueBtn.disabled = !hasText || !hasAudio;
+                startQueueBtn.disabled = mainTextarea.value.trim() === '';
                 applyPunctuationBtn.style.display = 'none';
 
                 Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Đã áp dụng thiết lập vào văn bản!', showConfirmButton: false, timer: 2000 });
@@ -3188,35 +3002,9 @@ async function waitForVoiceModelReady() {
                 item.appendChild(playBtn);
                 item.appendChild(uploadBtn);
 
-                // Get duration and validate
+                // Get duration
                 getAudioDuration(file).then(dur => {
                     duration.textContent = formatDuration(dur);
-                    
-                    // Store duration in dataset for validation
-                    item.dataset.duration = dur;
-                    
-                    // Visual indicator for invalid duration
-                    if (dur < 20 || dur > 60) {
-                        item.style.backgroundColor = 'rgba(248, 113, 113, 0.1)';
-                        item.style.borderLeft = '3px solid #f87171';
-                        duration.style.color = '#f87171';
-                        duration.style.fontWeight = 'bold';
-                        uploadBtn.style.opacity = '0.5';
-                        uploadBtn.title = '⚠️ Audio không hợp lệ (20-60s)';
-                        
-                        // Add warning icon
-                        const warningIcon = document.createElement('span');
-                        warningIcon.textContent = '⚠️';
-                        warningIcon.style.color = '#f87171';
-                        warningIcon.style.marginLeft = '5px';
-                        warningIcon.title = `Audio phải từ 20-60 giây (hiện tại: ${Math.floor(dur)}s)`;
-                        duration.appendChild(warningIcon);
-                    } else {
-                        item.style.backgroundColor = 'rgba(80, 250, 123, 0.05)';
-                        item.style.borderLeft = '3px solid #50fa7b';
-                        duration.style.color = '#50fa7b';
-                        uploadBtn.title = '✅ Tải file lên (độ dài hợp lệ)';
-                    }
                 });
 
                 // Play/pause functionality
@@ -3264,103 +3052,10 @@ async function waitForVoiceModelReady() {
                 });
 
                 // Upload button functionality
-                uploadBtn.addEventListener('click', async (e) => {
+                uploadBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
 
-                    addLogEntry('🔍 [DEBUG] Upload button clicked!', 'info');
-                    addLogEntry(`🔍 [DEBUG] File name: ${file.name}`, 'info');
-                    addLogEntry(`🔍 [DEBUG] item.dataset.duration: ${item.dataset.duration}`, 'info');
-
-                    // Check if duration is available
-                    if (!item.dataset.duration || item.dataset.duration === 'undefined') {
-                        addLogEntry('⚠️ [DEBUG] Duration not ready yet, fetching...', 'warning');
-                        
-                        // Show loading message
-                        Swal.fire({
-                            title: 'Đang kiểm tra độ dài audio...',
-                            text: 'Vui lòng chờ...',
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
-                        
-                        // Get duration now
-                        const dur = await getAudioDuration(file);
-                        item.dataset.duration = dur;
-                        addLogEntry(`✅ [DEBUG] Duration fetched: ${dur} seconds`, 'success');
-                        
-                        Swal.close();
-                    }
-
-                    // Validate audio duration before upload
-                    const audioDuration = parseFloat(item.dataset.duration);
-                    
-                    addLogEntry(`🔍 [DEBUG] Parsed audioDuration: ${audioDuration}`, 'info');
-                    addLogEntry(`🔍 [DEBUG] Is valid (20-60)? ${audioDuration >= 20 && audioDuration <= 60}`, 'info');
-                    
-                    // CRITICAL: Check if duration is invalid
-                    if (!audioDuration || audioDuration < 20 || audioDuration > 60) {
-                        // Block upload and show error
-                        let errorMessage = '';
-                        let details = '';
-                        
-                        if (!audioDuration || audioDuration === 0) {
-                            errorMessage = `Không thể xác định độ dài audio.`;
-                            details = 'File có thể bị lỗi hoặc không phải file audio hợp lệ.';
-                        } else if (audioDuration < 20) {
-                            errorMessage = `Audio quá ngắn: ${Math.floor(audioDuration)} giây`;
-                            details = `Cần tối thiểu 20 giây.`;
-                        } else {
-                            errorMessage = `Audio quá dài: ${Math.floor(audioDuration)} giây`;
-                            details = `Tối đa 60 giây (1 phút).`;
-                        }
-                        
-                        addLogEntry('❌ [DEBUG] VALIDATION FAILED!', 'error');
-                        addLogEntry(`❌ [DEBUG] Reason: ${errorMessage}`, 'error');
-                        
-                        Swal.fire({
-                            icon: 'error',
-                            title: '⚠️ Audio không hợp lệ',
-                            html: `
-                                <div style="text-align: left; padding: 15px;">
-                                    <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
-                                        <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${errorMessage}</p>
-                                        <p style="margin: 5px 0 0 0; font-size: 13px; color: #fca5a5;">${details}</p>
-                                    </div>
-                                    
-                                    <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
-                                    
-                                    <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
-                                        <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
-                                        <ul style="margin: 0; padding-left: 20px;">
-                                            <li style="margin: 5px 0;">Độ dài: <strong style="color: #50fa7b;">20-60 giây</strong></li>
-                                            <li style="margin: 5px 0;">Hiện tại: <strong style="color: #f87171;">${audioDuration ? Math.floor(audioDuration) : '???'} giây</strong></li>
-                                            <li style="margin: 5px 0;">File: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">${file.name}</code></li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
-                                        💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file này về 20-60 giây.
-                                    </p>
-                                </div>
-                            `,
-                            confirmButtonText: 'Đã hiểu',
-                            confirmButtonColor: '#8be9fd',
-                            background: '#282a36',
-                            color: '#f8f8f2',
-                            width: '600px'
-                        });
-                        
-                        addLogEntry('🚫 [DEBUG] Upload BLOCKED!', 'error');
-                        return; // Stop upload
-                    }
-
-                    addLogEntry('✅ [DEBUG] Validation PASSED! Proceeding with upload...', 'success');
-
-                    // Auto-upload the selected file (only if valid)
+                    // Auto-upload the selected file
                     try {
                         const fileInput = document.getElementById('gemini-file-input');
                         if (fileInput) {
@@ -3372,22 +3067,20 @@ async function waitForVoiceModelReady() {
                             // Trigger the change event to simulate file selection
                             fileInput.dispatchEvent(new Event('change', { bubbles: true }));
 
-                            addLogEntry('✅ [DEBUG] File uploaded successfully!', 'success');
-
                             // Show success message
                             Swal.fire({
                                 toast: true,
                                 position: 'top-end',
                                 icon: 'success',
-                                title: '✅ Đã tải file âm thanh',
-                                text: `File "${file.name}" (${Math.floor(audioDuration)}s) đã được tải lên!`,
+                                title: 'Đã tải file âm thanh',
+                                text: `File "${file.name}" đã được tải lên thành công!`,
                                 showConfirmButton: false,
-                                timer: 2500,
+                                timer: 2000,
                                 timerProgressBar: true,
                             });
                         }
                     } catch (error) {
-                        addLogEntry(`❌ [DEBUG] Error during upload: ${error.message}`, 'error');
+                        console.error('Error auto-uploading file:', error);
                         Swal.fire({
                             toast: true,
                             position: 'top-end',
@@ -3430,51 +3123,9 @@ async function waitForVoiceModelReady() {
                     if (files.length === 0) {
                         audioListContainer.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Không tìm thấy file MP3 nào</div>';
                     } else {
-                        // Create summary header placeholder
-                        const summaryDiv = document.createElement('div');
-                        summaryDiv.id = 'audio-summary';
-                        summaryDiv.style.cssText = 'padding: 12px; margin-bottom: 10px; background: rgba(139, 233, 253, 0.1); border-radius: 6px; border-left: 4px solid #8be9fd; font-size: 12px;';
-                        summaryDiv.innerHTML = '📊 Đang kiểm tra độ dài audio...';
-                        audioListContainer.appendChild(summaryDiv);
-                        
-                        // Add files to list
-                        const filePromises = [];
                         files.forEach((file, index) => {
                             const item = createAudioItem(file, index);
                             audioListContainer.appendChild(item);
-                            
-                            // Store promise to get duration
-                            filePromises.push(getAudioDuration(file));
-                        });
-                        
-                        // Wait for all durations and update summary
-                        Promise.all(filePromises).then(durations => {
-                            const validFiles = durations.filter(d => d >= 20 && d <= 60).length;
-                            const invalidFiles = durations.length - validFiles;
-                            
-                            let summaryHtml = `
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
-                                    <div style="flex: 1;">
-                                        <strong>📊 Tổng quan:</strong> ${files.length} file
-                                    </div>
-                                    <div style="flex: 1; text-align: center;">
-                                        <span style="color: #50fa7b; font-weight: bold;">✅ ${validFiles}</span> hợp lệ
-                                    </div>
-                                    <div style="flex: 1; text-align: right;">
-                                        <span style="color: #f87171; font-weight: bold;">⚠️ ${invalidFiles}</span> không hợp lệ
-                                    </div>
-                                </div>
-                            `;
-                            
-                            if (invalidFiles > 0) {
-                                summaryHtml += `
-                                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); color: #f87171; font-size: 11px;">
-                                        💡 <strong>${invalidFiles} file</strong> không thể upload vì độ dài không phải 20-60 giây
-                                    </div>
-                                `;
-                            }
-                            
-                            summaryDiv.innerHTML = summaryHtml;
                         });
                     }
                 } catch (error) {
@@ -3904,65 +3555,40 @@ async function waitForVoiceModelReady() {
                 
                 // Check nếu KHÔNG phải Tiếng Việt → không sửa
                 if (!selectedLanguage.includes('việt') && !selectedLanguage.includes('viet') && !selectedLanguage.includes('vietnamese')) {
-                    console.log('[fixVietnameseWords] Not Vietnamese language, skipping...');
+                    console.log('Language not Vietnamese, skipping Vietnamese word fixes');
                     return text;
                 }
                 
-                console.log('[fixVietnameseWords] Applying Vietnamese word fixes for language:', selectedLanguage);
+                console.log('Applying Vietnamese word fixes for language:', selectedLanguage);
                 
                 let fixedText = text;
                 let fixCount = 0;
                 
-                // ================================================================
-                // ✅ FIX: "ai" → "Ai" (CHỈ KHI ĐỨNG ĐỘC LẬP)
-                // ================================================================
-                // Pattern cũ (SAI):  /\bai\b/g  ← Word boundary KHÔNG work với tiếng Việt có dấu
-                // Pattern mới (ĐÚNG): /(^|\s)(ai)(\s|$|[.,?!;:])/gi
-                //
-                // Giải thích:
-                // (^|\s)         - Đầu dòng HOẶC space
-                // (ai)           - Chữ "ai" (capture để giữ case)
-                // (\s|$|[.,?!;:]) - Space, cuối dòng, HOẶC dấu câu
-                //
-                // Examples:
-                // ✅ "ai đó"      → "Ai đó"     (match)
-                // ✅ "người ai"   → "người Ai"  (match)
-                // ❌ "đai"        → "đai"       (KHÔNG match - giữ nguyên!)
-                // ❌ "vành đai"   → "vành đai"  (KHÔNG match - giữ nguyên!)
-                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
-                // ================================================================
-                const aiPattern = /(^|\s)(ai)(\s|$|[.,?!;:])/gi;
+                // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
+                // \b = word boundary (đảm bảo từ đứng độc lập)
+                // Ví dụ: "ai đó" → "Ai đó" ✅
+                // Ví dụ: "bại hoại" → KHÔNG đổi ❌
+                const aiPattern = /\bai\b/g;
                 const aiMatches = fixedText.match(aiPattern);
                 if (aiMatches) {
-                    // Replace: giữ nguyên prefix/suffix, chỉ uppercase "ai"
-                    fixedText = fixedText.replace(aiPattern, (match, prefix, word, suffix) => {
-                        return prefix + 'Ai' + suffix;
-                    });
+                    fixedText = fixedText.replace(aiPattern, 'Ai');
                     fixCount += aiMatches.length;
-                    console.log(`[fixVietnameseWords] Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
+                    console.log(`Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
                 }
                 
-                // ================================================================
-                // ✅ FIX: "im" → "Im" (CHỈ KHI ĐỨNG ĐỘC LẬP)
-                // ================================================================
-                // Tương tự như "ai"
-                //
-                // Examples:
-                // ✅ "im lặng"    → "Im lặng"   (match)
-                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
-                // ================================================================
-                const imPattern = /(^|\s)(im)(\s|$|[.,?!;:])/gi;
+                // Fix "im" → "Im" (chỉ khi đứng độc lập)
+                // Ví dụ: "im lặng" → "Im lặng" ✅
+                // Ví dụ: "kim loại" → KHÔNG đổi ❌
+                const imPattern = /\bim\b/g;
                 const imMatches = fixedText.match(imPattern);
                 if (imMatches) {
-                    fixedText = fixedText.replace(imPattern, (match, prefix, word, suffix) => {
-                        return prefix + 'Im' + suffix;
-                    });
+                    fixedText = fixedText.replace(imPattern, 'Im');
                     fixCount += imMatches.length;
-                    console.log(`[fixVietnameseWords] Fixed ${imMatches.length} occurrences of "im" → "Im"`);
+                    console.log(`Fixed ${imMatches.length} occurrences of "im" → "Im"`);
                 }
                 
                 if (fixCount > 0) {
-                    console.log(`[fixVietnameseWords] Total Vietnamese word fixes: ${fixCount}`);
+                    console.log(`Total Vietnamese word fixes: ${fixCount}`);
                 }
                 
                 return fixedText;
@@ -4013,36 +3639,28 @@ async function waitForVoiceModelReady() {
                 const punctuationIssues = detectedPunctuationIssues.filter(issue => !issue.isVietnameseWord);
                 const vietnameseWordIssues = detectedPunctuationIssues.filter(issue => issue.isVietnameseWord);
 
-                console.log('Punctuation issues:', punctuationIssues.length);
-                console.log('Vietnamese word issues:', vietnameseWordIssues.length);
+                // Sắp xếp punctuation issues theo thứ tự ngược để tránh ảnh hưởng đến index
+                const sortedPunctuationIssues = [...punctuationIssues].sort((a, b) => b.start - a.start);
+                console.log('Punctuation issues to fix:', sortedPunctuationIssues.length);
 
-                // ========================================
-                // 🔧 FIX BUG: MERGE TẤT CẢ ISSUES THÀNH 1 MẢNG
-                // Merge thành 1 mảng với replacement được set sẵn
-                // ========================================
-                const allIssues = [
-                    ...punctuationIssues.map(issue => ({
-                        ...issue,
-                        replacement: punctuationValue  // Dùng punctuation user chọn
-                    })),
-                    ...vietnameseWordIssues.map(issue => ({
-                        ...issue,
-                        replacement: issue.suggestion  // Dùng suggestion (Ai, Im)
-                    }))
-                ];
-
-                console.log(`Total issues to fix: ${allIssues.length}`);
-
-                // Sort TẤT CẢ issues theo thứ tự NGƯỢC (từ cuối lên đầu)
-                // Vì fix từ cuối, nên KHÔNG BAO GIỜ ảnh hưởng đến index của issues phía trước
-                const sortedAllIssues = allIssues.sort((a, b) => b.start - a.start);
-
-                // Fix TẤT CẢ issues từ CUỐI lên ĐẦU
-                sortedAllIssues.forEach((issue, index) => {
-                    console.log(`Fixing issue ${index + 1}/${sortedAllIssues.length}: "${issue.text}" → "${issue.replacement}"`);
+                sortedPunctuationIssues.forEach((issue, index) => {
+                    console.log(`Fixing punctuation issue ${index + 1}:`, issue);
                     const beforeText = text.substring(0, issue.start);
                     const afterText = text.substring(issue.end);
-                    text = beforeText + issue.replacement + afterText;
+                    // Thay thế toàn bộ cụm dấu câu bằng dấu câu mặc định
+                    text = beforeText + punctuationValue + afterText;
+                });
+
+                // Sắp xếp Vietnamese word issues theo thứ tự ngược
+                const sortedVietnameseIssues = [...vietnameseWordIssues].sort((a, b) => b.start - a.start);
+                console.log('Vietnamese word issues to fix:', sortedVietnameseIssues.length);
+
+                sortedVietnameseIssues.forEach((issue, index) => {
+                    console.log(`Fixing Vietnamese word issue ${index + 1}:`, issue);
+                    const beforeText = text.substring(0, issue.start);
+                    const afterText = text.substring(issue.end);
+                    // Thay thế bằng suggestion (Ai hoặc Im)
+                    text = beforeText + issue.suggestion + afterText;
                 });
 
                 textarea.value = text;
@@ -4056,17 +3674,14 @@ async function waitForVoiceModelReady() {
                 textarea.dispatchEvent(new Event('input'));
 
                 // Hiển thị thông báo thành công
-                const totalIssues = sortedAllIssues.length;
-                const punctuationCount = punctuationIssues.length;
-                const vietnameseCount = vietnameseWordIssues.length;
-                
+                const totalIssues = sortedPunctuationIssues.length + sortedVietnameseIssues.length;
                 if (typeof Swal !== 'undefined') {
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
                         title: 'Đã sửa dấu câu & từ Tiếng Việt',
-                        text: `Đã tự động sửa ${punctuationCount} lỗi dấu câu và ${vietnameseCount} từ Tiếng Việt`,
+                        text: `Đã tự động sửa ${sortedPunctuationIssues.length} lỗi dấu câu và ${sortedVietnameseIssues.length} từ Tiếng Việt`,
                         showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true
@@ -5554,16 +5169,6 @@ async function waitForVoiceModelReady() {
                 return;
             }
 
-            // 🔧 XÓA SẠCH CÁC BIẾN TOÀN CỤC CŨ ĐỂ TRÁNH NỐI THỪA AUDIO
-            ZTQj$LF$o = [];
-            SI$acY = [];
-            ttuo$y_KhCV = 0;
-            window.chunkBlobs = []; // Force reset
-            window.totalChunksForCurrentBatch = 0; // Thêm biến đếm chunk cho batch hiện tại
-            window.chunkStatus = []; // Reset trạng thái chunk
-            window.failedChunks = []; // Reset danh sách chunk thất bại
-            addLogEntry('🧹 Đã xóa sạch dữ liệu audio cũ', 'info');
-
             // 1. Khởi tạo trạng thái (ĐÃ NÂNG CẤP)
             processingState.isPaused = false;
             processingState.isStopped = false;
@@ -5581,15 +5186,6 @@ async function waitForVoiceModelReady() {
                 originalIndex: index,
                 audioBlob: null
             }));
-
-            // 🔧 KHỞI TẠO LẠI ARRAYS VỚI ĐÚNG SỐ LƯỢNG CHUNKS
-            window.totalChunksForCurrentBatch = chunksArray.length;
-            window.chunkBlobs = new Array(chunksArray.length).fill(null);
-            ZTQj$LF$o = new Array(chunksArray.length).fill(null);
-            SI$acY = chunksArray; // Cập nhật SI$acY với chunks mới
-            window.chunkStatus = new Array(chunksArray.length).fill('pending'); // Khởi tạo trạng thái chunk
-            window.failedChunks = []; // Reset danh sách chunk thất bại
-            addLogEntry(`🔧 Đã khởi tạo arrays với ${chunksArray.length} vị trí cho batch mới`, 'info');
 
             // 2. Cập nhật giao diện
             startBtn.disabled = true;
@@ -5621,17 +5217,6 @@ async function waitForVoiceModelReady() {
             processingState.isStopped = true;
             processingState.isPaused = false;
             addLogEntry("🔴 Người dùng đã yêu cầu dừng hẳn quá trình.", 'error');
-
-            // 🔧 XÓA SẠCH DỮ LIỆU KHI DỪNG
-            ZTQj$LF$o = [];
-            SI$acY = [];
-            ttuo$y_KhCV = 0;
-            window.chunkBlobs = [];
-            window.totalChunksForCurrentBatch = 0;
-            window.chunkStatus = [];
-            window.failedChunks = [];
-            processingState.chunks = [];
-            addLogEntry('🧹 Đã xóa sạch dữ liệu khi dừng', 'info');
 
             // Reset giao diện
             startBtn.disabled = false;
@@ -5929,12 +5514,12 @@ async function waitForVoiceModelReady() {
         errorObserver = observeErrorMessages();
     }, 2000);
     
-    // Override user info text to show "Kz Tool" and keep it
+    // Override user info text to show "Đã đăng nhập" and keep it
     function setUserInfoText() {
         const userInfo = document.getElementById('gemini-user-info');
-        if (userInfo && userInfo.textContent !== '✅ Kz Tool') {
-            userInfo.textContent = '✅ Kz Tool';
-            userInfo.innerHTML = '✅ Kz Tool';
+        if (userInfo && userInfo.textContent !== '✅ Đã đăng nhập') {
+            userInfo.textContent = '✅ Đã đăng nhập';
+            userInfo.innerHTML = '✅ Đã đăng nhập';
         }
     }
     
@@ -5959,489 +5544,10 @@ async function waitForVoiceModelReady() {
         }
     }, 100);
     
-    // =================================================================
-    // == INDEXEDDB - LƯU AUDIO ĐÃ UPLOAD ==
-    // =================================================================
-    
-    const DB_NAME = 'SavedAudioDB';
-    const DB_VERSION = 1;
-    const STORE_NAME = 'audios';
-    let db = null;
-    
-    // Initialize IndexedDB
-    function initIndexedDB() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, DB_VERSION);
-            
-            request.onerror = () => {
-                addLogEntry('❌ Không thể mở IndexedDB', 'error');
-                reject(request.error);
-            };
-            
-            request.onsuccess = () => {
-                db = request.result;
-                addLogEntry('✅ IndexedDB đã khởi tạo', 'success');
-                resolve(db);
-            };
-            
-            request.onupgradeneeded = (event) => {
-                db = event.target.result;
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-                    objectStore.createIndex('name', 'name', { unique: false });
-                    objectStore.createIndex('uploadDate', 'uploadDate', { unique: false });
-                    addLogEntry('✅ Đã tạo object store cho audio', 'success');
-                }
-            };
-        });
-    }
-    
-    // Check if audio already exists in IndexedDB
-    async function isAudioExists(fileName) {
-        if (!db) return false;
-        
-        try {
-            const transaction = db.transaction([STORE_NAME], 'readonly');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.getAll();
-            
-            return new Promise((resolve) => {
-                request.onsuccess = () => {
-                    const audios = request.result;
-                    const exists = audios.some(audio => audio.name === fileName);
-                    resolve(exists);
-                };
-                
-                request.onerror = () => {
-                    resolve(false);
-                };
-            });
-        } catch (error) {
-            return false;
-        }
-    }
-    
-    // Save audio to IndexedDB
-    async function saveAudioToIndexedDB(file, duration) {
-        if (!db) {
-            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
-            return;
-        }
-        
-        // Check if audio already exists
-        const exists = await isAudioExists(file.name);
-        if (exists) {
-            addLogEntry(`⚠️ Audio "${file.name}" đã tồn tại, bỏ qua`, 'warning');
-            return;
-        }
-        
-        try {
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            
-            const audioData = {
-                name: file.name,
-                blob: file,
-                duration: duration,
-                uploadDate: new Date().toISOString(),
-                size: file.size,
-                type: file.type
-            };
-            
-            const request = objectStore.add(audioData);
-            
-            return new Promise((resolve, reject) => {
-                request.onsuccess = () => {
-                    addLogEntry(`💾 Đã lưu audio: ${file.name}`, 'success');
-                    loadSavedAudios(); // Refresh list
-                    resolve(request.result);
-                };
-                
-                request.onerror = () => {
-                    addLogEntry(`❌ Lỗi lưu audio: ${request.error}`, 'error');
-                    reject(request.error);
-                };
-            });
-        } catch (error) {
-            addLogEntry(`❌ Lỗi saveAudioToIndexedDB: ${error}`, 'error');
-        }
-    }
-    
-    // Load saved audios from IndexedDB
-    async function loadSavedAudios() {
-        if (!db) {
-            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
-            return;
-        }
-        
-        try {
-            const transaction = db.transaction([STORE_NAME], 'readonly');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.getAll();
-            
-            request.onsuccess = () => {
-                const audios = request.result;
-                renderSavedAudiosList(audios);
-            };
-            
-            request.onerror = () => {
-                addLogEntry(`❌ Lỗi load audio: ${request.error}`, 'error');
-            };
-        } catch (error) {
-            addLogEntry(`❌ Lỗi loadSavedAudios: ${error}`, 'error');
-        }
-    }
-    
-    // Render saved audios list
-    function renderSavedAudiosList(audios) {
-        const savedAudioList = document.getElementById('saved-audio-list');
-        const clearBtn = document.getElementById('clear-saved-audio-btn');
-        
-        if (!savedAudioList) return;
-        
-        if (audios.length === 0) {
-            savedAudioList.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div>';
-            if (clearBtn) clearBtn.style.display = 'none';
-            return;
-        }
-        
-        savedAudioList.innerHTML = '';
-        if (clearBtn) clearBtn.style.display = 'block';
-        
-        audios.forEach(audio => {
-            
-            const item = document.createElement('div');
-            item.className = 'saved-audio-item';
-            
-            const name = document.createElement('span');
-            name.className = 'saved-audio-name';
-            name.textContent = audio.name;
-            name.title = audio.name;
-            
-            const duration = document.createElement('span');
-            duration.className = 'saved-audio-duration';
-            duration.textContent = formatDuration(audio.duration);
-            
-            const date = document.createElement('span');
-            date.className = 'saved-audio-date';
-            const uploadDate = new Date(audio.uploadDate);
-            date.textContent = uploadDate.toLocaleDateString('vi-VN');
-            date.title = uploadDate.toLocaleString('vi-VN');
-            
-            const useBtn = document.createElement('button');
-            useBtn.className = 'use-saved-audio-btn';
-            useBtn.textContent = '🔄';
-            useBtn.title = 'Chọn audio này';
-            useBtn.onclick = (e) => {
-                e.stopPropagation();
-                useSavedAudio(audio);
-            };
-            
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-saved-audio-btn';
-            deleteBtn.textContent = '🗑️';
-            deleteBtn.title = 'Xóa audio này';
-            deleteBtn.onclick = (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                deleteSavedAudio(audio.id);
-            };
-            
-            item.appendChild(name);
-            item.appendChild(duration);
-            item.appendChild(date);
-            item.appendChild(useBtn);
-            item.appendChild(deleteBtn);
-            
-            savedAudioList.appendChild(item);
-        });
-    }
-    
-    // Format duration (helper function)
-    function formatDuration(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-    
-    // Use saved audio (populate file input)
-    async function useSavedAudio(audio) {
-        try {
-            addLogEntry(`🔄 Đang chọn audio: ${audio.name}`, 'info');
-            
-            // Create a new File object from blob
-            const file = new File([audio.blob], audio.name, { type: audio.type });
-            
-            // Create DataTransfer to populate file input
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            
-            const fileInput = document.getElementById('gemini-file-input');
-            if (fileInput) {
-                fileInput.files = dataTransfer.files;
-                
-                // Trigger change event
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
-                
-                addLogEntry(`✅ Đã chọn audio: ${audio.name}`, 'success');
-                
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Đã chọn audio',
-                    text: audio.name,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                });
-            }
-        } catch (error) {
-            addLogEntry(`❌ Lỗi useSavedAudio: ${error}`, 'error');
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: 'Không thể chọn audio này'
-            });
-        }
-    }
-    
-    // Delete saved audio
-    async function deleteSavedAudio(id) {
-        if (!db) return;
-        
-        // Check if Swal exists
-        if (typeof Swal === 'undefined') {
-            const nativeConfirm = confirm('Bạn có chắc muốn xóa audio này?');
-            if (!nativeConfirm) return;
-            
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.delete(id);
-            
-            request.onsuccess = () => {
-                addLogEntry('✅ Đã xóa audio', 'success');
-                loadSavedAudios();
-                alert('Đã xóa audio!');
-            };
-            
-            request.onerror = () => {
-                addLogEntry(`❌ Lỗi xóa audio`, 'error');
-            };
-            return;
-        }
-        
-        try {
-            const result = await Swal.fire({
-                title: 'Xác nhận xóa',
-                text: 'Bạn có chắc muốn xóa audio này?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Xóa',
-                cancelButtonText: 'Hủy',
-                confirmButtonColor: '#ff5555',
-                customClass: {
-                    container: 'delete-audio-swal-container',
-                    popup: 'delete-audio-swal-popup'
-                },
-                backdrop: true
-            });
-            
-            if (!result.isConfirmed) return;
-            
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.delete(id);
-            
-            request.onsuccess = () => {
-                addLogEntry('✅ Đã xóa audio', 'success');
-                loadSavedAudios();
-                
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Đã xóa',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            };
-            
-            request.onerror = () => {
-                addLogEntry(`❌ Lỗi xóa audio`, 'error');
-            };
-        } catch (error) {
-            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
-        }
-    }
-    
-    // Clear all saved audios
-    async function clearAllSavedAudios() {
-        if (!db) return;
-        
-        // Check if Swal exists
-        if (typeof Swal === 'undefined') {
-            const nativeConfirm = confirm('Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?');
-            if (!nativeConfirm) return;
-            
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.clear();
-            
-            request.onsuccess = () => {
-                addLogEntry('✅ Đã xóa tất cả audio', 'success');
-                loadSavedAudios();
-                alert('Đã xóa tất cả audio!');
-            };
-            
-            request.onerror = () => {
-                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
-            };
-            return;
-        }
-        
-        try {
-            const result = await Swal.fire({
-                title: 'Xóa tất cả?',
-                text: 'Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Xóa tất cả',
-                cancelButtonText: 'Hủy',
-                confirmButtonColor: '#ff5555',
-                customClass: {
-                    container: 'delete-audio-swal-container',
-                    popup: 'delete-audio-swal-popup'
-                },
-                backdrop: true
-            });
-            
-            if (!result.isConfirmed) return;
-            
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const objectStore = transaction.objectStore(STORE_NAME);
-            const request = objectStore.clear();
-            
-            request.onsuccess = () => {
-                addLogEntry('✅ Đã xóa tất cả audio', 'success');
-                loadSavedAudios();
-                
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Đã xóa tất cả',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            };
-            
-            request.onerror = () => {
-                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
-            };
-        } catch (error) {
-            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
-        }
-    }
-    
-    // Initialize IndexedDB and load saved audios
-    setTimeout(async () => {
-        try {
-            await initIndexedDB();
-            await loadSavedAudios();
-            
-            // Setup clear all button
-            const clearBtn = document.getElementById('clear-saved-audio-btn');
-            if (clearBtn) {
-                clearBtn.addEventListener('click', clearAllSavedAudios);
-            }
-            
-            addLogEntry('✅ Hệ thống lưu audio đã sẵn sàng', 'success');
-        } catch (error) {
-            addLogEntry(`❌ Lỗi khởi tạo IndexedDB: ${error}`, 'error');
-        }
-    }, 2000);
-    
-    // Hook into file upload success to auto-save
-    // We'll intercept the gemini-file-input change event
-    setTimeout(() => {
-        const fileInput = document.getElementById('gemini-file-input');
-        if (fileInput) {
-            // Store original change handler
-            const originalOnChange = fileInput.onchange;
-            
-            fileInput.addEventListener('change', async function(e) {
-                const files = e.target.files;
-                if (!files || files.length === 0) {
-                    // Nếu xóa file, disable nút "Bắt đầu"
-                    const startBtn = document.getElementById('gemini-start-queue-btn');
-                    if (startBtn) startBtn.disabled = true;
-                    return;
-                }
-                
-                // Auto-save each audio file
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    if (file.type.startsWith('audio/') || file.name.match(/\.(mp3|wav|m4a|mpeg)$/i)) {
-                        try {
-                            // Get audio duration
-                            const duration = await getAudioDuration(file);
-                            
-                            // Validate duration: only save if 20-60 seconds
-                            if (duration >= 20 && duration <= 60) {
-                                // Save to IndexedDB
-                                await saveAudioToIndexedDB(file, duration);
-                            } else {
-                                addLogEntry(`⚠️ Audio "${file.name}" (${Math.floor(duration)}s) không hợp lệ, không lưu vào thư viện`, 'warning');
-                            }
-                        } catch (error) {
-                            // Silent fail
-                        }
-                    }
-                }
-                
-                // ✅ ENABLE nút "Bắt đầu" sau khi upload audio thành công
-                const startBtn = document.getElementById('gemini-start-queue-btn');
-                const mainTextarea = document.getElementById('gemini-main-textarea');
-                if (startBtn && files.length > 0) {
-                    startBtn.disabled = !mainTextarea || mainTextarea.value.trim() === '';
-                }
-            }, false); // Use capture: false to not interfere with validation
-        }
-    }, 2500);
-    
-    // Helper: Get audio duration (reuse existing function if available)
-    async function getAudioDuration(file) {
-        return new Promise((resolve, reject) => {
-            const audio = document.createElement('audio');
-            const url = URL.createObjectURL(file);
-            
-            audio.addEventListener('loadedmetadata', () => {
-                URL.revokeObjectURL(url);
-                resolve(audio.duration);
-            });
-            
-            audio.addEventListener('error', () => {
-                URL.revokeObjectURL(url);
-                reject(new Error('Không thể load audio'));
-            });
-            
-            audio.src = url;
-        });
-    }
-    
-    // =================================================================
-    // == END INDEXEDDB ==
-    // =================================================================
-
     // Lắng nghe sự kiện beforeunload để dọn dẹp
     window.addEventListener('beforeunload', () => {
         stopAutoReset403();
         if (errorObserver) {
             errorObserver.disconnect();
-        }
-        
-        // Close IndexedDB connection
-        if (db) {
-            db.close();
         }
     });
