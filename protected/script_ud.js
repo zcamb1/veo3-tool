@@ -1,8 +1,9 @@
 // ==UserScript==
-// @name         Clone Voice (Không cần API) - Modded
+// @name         Kz Tool - Clone Voice (Không cần API) - Modded
 // @namespace    mmx-secure
-// @version      1.1.0
+// @version      1.2.0
 // @description  Tạo audio giọng nói clone theo ý của bạn. Không giới hạn. Thêm chức năng Ghép hội thoại & Đổi văn bản hàng loạt.
+// @author       Huy Nguyen - Kz Tool (Zalo: 0986562876)
 // @match        https://www.minimax.io/audio*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=minimax.io
 // @run-at       document-end
@@ -13,6 +14,12 @@
 // @connect      unpkg.com
 // @connect      cdn.jsdelivr.net
 // ==/UserScript==
+
+
+/* ========================================================================== */
+/* BẢN QUYỀN PHẦN MỀM THUỘC VỀ: HUY NGUYEN - KZ TOOL                        */
+/* ZALO: 0986562876                                                          */
+/* ========================================================================== */
 
 
 (function () {
@@ -174,6 +181,43 @@
     transform: translateY(-2px) !important;
 }
 
+/* Styles for History Modal Button */
+#open-history-modal-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+#open-history-modal-btn:hover {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Styles for Tạo file hàng loạt Button */
+#open-batch-modal-btn {
+    background: linear-gradient(135deg, #f1fa8c 0%, #e8ea75 100%) !important;
+    color: #282a36 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(241, 250, 140, 0.3) !important;
+}
+
+#open-batch-modal-btn:hover {
+    background: linear-gradient(135deg, #e8ea75 0%, #d4d65e 100%) !important;
+    box-shadow: 0 6px 20px rgba(241, 250, 140, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
 /* Styles for Log Modal Button */
 #open-log-modal-btn {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
@@ -264,6 +308,25 @@
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5) !important;
     transform: translateY(-2px) !important;
 }
+/* Styles for Saved Audio Library Section */
+#saved-audio-library{margin-top:20px;background:rgba(22,28,45,0.55);border:1px solid rgba(100,200,255,0.1);border-radius:14px;padding:15px;box-shadow:inset 0 0 15px rgba(100,200,255,0.05)}
+#saved-audio-library h4{margin:0 0 10px;color:#92e7ff;font-size:14px;border-bottom:1px solid rgba(100,200,255,0.2);padding-bottom:5px;text-shadow:0 0 8px rgba(90,200,255,0.3)}
+#saved-audio-list{max-height:200px;overflow-y:auto;background:#282a36;border:1px solid #6272a4;border-radius:4px;margin-bottom:10px}
+#saved-audio-list::-webkit-scrollbar{width:6px}
+#saved-audio-list::-webkit-scrollbar-track{background:#282a36}
+#saved-audio-list::-webkit-scrollbar-thumb{background:#6272a4;border-radius:3px}
+#saved-audio-list::-webkit-scrollbar-thumb:hover{background:#bd93f9}
+.saved-audio-item{display:flex;align-items:center;padding:8px;border-bottom:1px solid#44475a;transition:background-color .2s ease}
+.saved-audio-item:hover{background-color:#44475a}
+.saved-audio-name{flex-grow:1;font-size:12px;color:#f8f8f2;margin-right:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.saved-audio-duration{font-size:11px;color:#8be9fd;margin-right:10px;min-width:40px}
+.saved-audio-date{font-size:10px;color:#94a3b8;margin-right:10px;min-width:70px}
+.use-saved-audio-btn{min-width:32px;width:32px;height:32px;padding:0;font-size:14px;background:linear-gradient(135deg,#50fa7b 0%,#4ade80 100%);color:#1a1d2e;border:none;border-radius:6px;cursor:pointer;margin-right:6px;font-weight:600;transition:all 0.2s ease;box-shadow:0 2px 4px rgba(80,250,123,0.2);display:flex;align-items:center;justify-content:center}
+.use-saved-audio-btn:hover{background:linear-gradient(135deg,#4ade80 0%,#50fa7b 100%);transform:translateY(-1px);box-shadow:0 4px 8px rgba(80,250,123,0.3)}
+.delete-saved-audio-btn{min-width:32px!important;width:32px!important;height:32px!important;padding:0!important;font-size:14px!important;background:linear-gradient(135deg,#ff5555 0%,#e44 100%)!important;color:#fff!important;border:none!important;border-radius:6px!important;cursor:pointer!important;pointer-events:auto!important;opacity:1!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:all 0.2s ease!important;box-shadow:0 2px 4px rgba(255,85,85,0.2)!important}
+.delete-saved-audio-btn:hover{background:linear-gradient(135deg,#e44 0%,#ff5555 100%)!important;transform:translateY(-1px)!important;box-shadow:0 4px 8px rgba(255,85,85,0.3)!important}
+.delete-audio-swal-container{z-index:999999!important}
+.delete-audio-swal-popup{z-index:1000000!important}
 /* Styles for Batch Replace Section */
 #batch-replace-section{margin-top:20px;background:#2d3148;border:2px solid #3d4158;border-radius:12px;padding:15px}
 #batch-replace-section h4{margin:0 0 12px;color:#00d4ff;font-size:15px;border-bottom:2px solid #3d4158;padding-bottom:8px;font-weight:600}
@@ -1088,12 +1151,12 @@ button:disabled {
     transform: scale(1.1);
     box-shadow: 0 4px 15px rgba(255, 85, 85, 0.4);
 }`;
-    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Tải lên tệp âm thanh (Tối đa 3 file)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="Dán nội dung bạn đã chuẩn bị vào đây.
+    const APP_HTML = `<div id="gemini-col-1" class="gemini-column"> <div class="column-header"><div class="logo-user"><a href="" tager="_blank"><div class="logo"><img src="https://minimax.buhaseo.com/wp-content/uploads/2025/08/logo-minimax.png"></div></a><div id="gemini-user-info"></div></div></div> <div class="column-content"> <div class="section" style="margin-bottom: 10px!important;"> <h4>1. Chọn file âm thanh (nhấn nút TẢI LÊN ở bên dưới)</h4> <input type="file" id="gemini-file-input" accept=".wav,.mp3,.mpeg,.mp4,.m4a,.avi,.mov,.wmv,.flv,.mkv,.webm" multiple> </div> <div class="section"> <h4>2. Chọn ngôn ngữ</h4> <select id="gemini-language-select"><option value="Vietnamese">Vietnamese</option><option value="English">English</option><option value="Arabic">Arabic</option><option value="Cantonese">Cantonese</option><option value="Chinese (Mandarin)">Chinese (Mandarin)</option><option value="Dutch">Dutch</option><option value="French">French</option><option value="German">German</option><option value="Indonesian">Indonesian</option><option value="Italian">Italian</option><option value="Japanese">Japanese</option><option value="Korean">Korean</option><option value="Portuguese">Portuguese</option><option value="Russian">Russian</option><option value="Spanish">Spanish</option><option value="Turkish">Turkish</option><option value="Ukrainian">Ukrainian</option><option value="Thai">Thai</option><option value="Polish">Polish</option><option value="Romanian">Romanian</option><option value="Greek">Greek</option><option value="Czech">Czech</option><option value="Finnish">Finnish</option><option value="Hindi">Hindi</option><option value="Bulgarian">Bulgarian</option><option value="Danish">Danish</option><option value="Hebrew">Hebrew</option><option value="Malay">Malay</option><option value="Persian">Persian</option><option value="Slovak">Slovak</option><option value="Swedish">Swedish</option><option value="Croatian">Croatian</option><option value="Filipino">Filipino</option><option value="Hungarian">Hungarian</option><option value="Norwegian">Norwegian</option><option value="Slovenian">Slovenian</option><option value="Catalan">Catalan</option><option value="Nynorsk">Nynorsk</option><option value="Tamil">Tamil</option><option value="Afrikaans">Afrikaans</option></select> <button id="gemini-upload-btn" style="margin-top: 12px; width: 100%;"><i class="fas fa-music" style="margin-right: 8px;"></i>Tải lên âm thanh</button> <div id="gemini-upload-status"></div> </div> <div id="saved-audio-library" class="section"> <h4>💾 Audio đã lưu</h4> <div id="saved-audio-list"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div> </div> <button id="clear-saved-audio-btn" style="width: 100%; background: linear-gradient(135deg, #ff5555 0%, #e44 100%); color: #fff; display: none;">🗑️ Xóa tất cả audio đã lưu</button> </div> <div id="batch-replace-section" class="section"> <h4>📝 Đổi văn bản hàng loạt</h4> <div id="batch-replace-pairs"></div> <div id="batch-replace-actions"> <button id="add-replace-pair-btn">➕</button> <button id="execute-replace-btn">Thực hiện thay thế</button> </div> </div> <div class="section"> <h4>📁 Quản lý thư mục âm thanh</h4> <div id="audio-folder-manager" style="background: #44475a; border: 1px solid #6272a4; border-radius: 8px; padding: 12px;"> <button id="folder-select-btn" style="width: 100%; margin-bottom: 10px;">📂 Chọn thư mục chứa MP3</button> <div id="selected-folder-path" style="display:none;"></div> <div id="audio-list-container" style="display:none;"> <div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có file MP3 nào</div> </div> <button id="refresh-audio-list-btn" style="display:none; width: 100%; margin-top: 10px;">🔄 Làm mới danh sách</button> </div> </div> </div> </div> </div> <div id="gemini-col-2" class="gemini-column"> <div class="column-header"><div class="box-info-version"><h3>🎙️ Voice Studio Pro</h3><span style="color: #8be9fd; font-size: 12px; font-weight: 600;">Version 2.0.0 - Professional Edition</span></div></div> <div class="column-content">         <div class="section text-section"> <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;"><h4 style="margin: 0;">Nhập văn bản cần tạo giọng nói</h4><button id="load-text-file-btn" style="width: auto;">📄 Tải từ file</button></div><input type="file" id="text-file-input" accept=".txt,.doc,.docx,.rtf,.odt,.pdf,.md,.html,.htm,.xml,.csv,.json" style="display: none;"><div class="text-input-options"><div id="text-input-area" class="input-area active"><textarea id="gemini-main-textarea" placeholder="✨ Nhập hoặc dán văn bản của bạn tại đây để chuyển thành giọng nói chuyên nghiệp...
 ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
 
-<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Tạo đoạn liền mạch</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Cài đặt</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Tạo đoạn liền mạch</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Cài đặt</button><button id="open-history-modal-btn" style="flex: 1;">🎵 Audio đã tạo</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div><div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="open-batch-modal-btn" style="flex: 1; background: linear-gradient(135deg, #f1fa8c 0%, #e8ea75 100%); color: #282a36; font-weight: 600;">📚 Tạo file hàng loạt</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
 
     <!-- Modal phát hiện dấu câu -->
     <div id="punctuation-detection-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;">
@@ -1120,6 +1183,69 @@ button:disabled {
                     <button id="auto-fix-punctuation-btn" onclick="window.autoFixAllPunctuationIssues()" style="background: #50fa7b; color: #282a36; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; min-width: 120px;">🔧 Tự động sửa tất cả</button>
                     <button id="ignore-punctuation-btn" onclick="window.ignoreAllPunctuationIssues()" style="background: #6272a4; color: #f8f8f2; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; min-width: 120px;">❌ Bỏ qua tất cả</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Audio đã tạo -->
+    <div id="history-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target.id==='history-modal') this.style.display='none'">
+        <div style="background: #282a36; border: 2px solid #6272a4; border-radius: 8px; padding: 20px; max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #bd93f9; font-size: 20px; font-weight: bold;">🎵 Audio đã tạo</h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button id="clear-all-history-btn" style="background: #ff5555; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">🗑️ Xóa tất cả</button>
+                    <button onclick="document.getElementById('history-modal').style.display='none'" style="background: #6272a4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 18px; width: auto;">✕</button>
+                </div>
+            </div>
+            <div id="history-list" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- History items will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tạo file hàng loạt -->
+    <div id="batch-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target.id==='batch-modal') this.style.display='none'">
+        <div style="background: #282a36; border: 2px solid #6272a4; border-radius: 8px; padding: 20px; max-width: 900px; width: 90%; max-height: 85vh; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #f1fa8c; font-size: 20px; font-weight: bold;">📚 Tạo file hàng loạt - Tạo audio cho nhiều file</h3>
+                <button onclick="document.getElementById('batch-modal').style.display='none'" style="background: #6272a4; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 18px;">✕</button>
+            </div>
+            
+            <input type="file" id="batch-files-input" accept=".txt" multiple style="display: none;">
+            
+            <div style="margin-bottom: 15px;">
+                <button id="select-batch-files-btn" style="width: 100%; background: linear-gradient(135deg, #8be9fd 0%, #79dce9 100%); color: #282a36; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">
+                    📂 Chọn file text (TXT)
+                </button>
+            </div>
+            
+            <div id="batch-files-list" style="flex: 1; overflow-y: auto; background: #1e1e2e; border: 1px solid #6272a4; border-radius: 6px; padding: 15px; margin-bottom: 15px; max-height: 400px;">
+                <div style="text-align: center; color: #94a3b8; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
+                    <div>Chưa có file nào được chọn</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Click nút "Chọn file text" để bắt đầu</div>
+                </div>
+            </div>
+            
+            <div id="batch-progress" style="display: none; margin-bottom: 15px; background: #1e1e2e; border: 1px solid #6272a4; border-radius: 6px; padding: 15px;">
+                <div style="margin-bottom: 10px; color: #f1fa8c; font-weight: 600;">
+                    Đang xử lý: <span id="batch-current-file">-</span>
+                </div>
+                <div style="margin-bottom: 5px; color: #8be9fd;">
+                    Tiến độ: <span id="batch-progress-text">0/0</span>
+                </div>
+                <div style="width: 100%; background: #44475a; border-radius: 4px; height: 8px; overflow: hidden;">
+                    <div id="batch-progress-bar" style="width: 0%; background: linear-gradient(135deg, #50fa7b 0%, #4ade80 100%); height: 100%; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button id="start-batch-btn" style="flex: 1; background: linear-gradient(135deg, #50fa7b 0%, #4ade80 100%); color: #282a36; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;" disabled>
+                    🚀 Bắt đầu tạo audio
+                </button>
+                <button id="stop-batch-btn" style="flex: 1; background: linear-gradient(135deg, #ff5555 0%, #e44 100%); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; display: none;">
+                    ⏹️ Dừng batch
+                </button>
             </div>
         </div>
     </div>
@@ -1277,6 +1403,212 @@ button:disabled {
         }
     }
 
+    // =================================================================
+    // == HISTORY DB CLASS - QUẢN LÝ LỊCH SỬ FILE ĐÃ GHÉP ==
+    // =================================================================
+    class HistoryDB {
+        constructor() {
+            this.dbName = 'AudioHistoryDB';
+            this.dbVersion = 2;
+            this.storeName = 'mergedFiles';
+            this.db = null;
+        }
+
+        async init() {
+            // Khởi tạo kết nối IndexedDB cho việc lưu trữ lịch sử audio
+            if (this.db) {
+                return Promise.resolve(this.db);
+            }
+            
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(this.dbName, this.dbVersion);
+
+                request.onerror = () => {
+                    console.error('Lỗi mở HistoryDB:', request.error);
+                    reject(request.error);
+                };
+
+                request.onsuccess = () => {
+                    this.db = request.result;
+                    resolve(this.db);
+                };
+
+                request.onupgradeneeded = (event) => {
+                    // Tạo object store nếu chưa có (lần đầu tiên hoặc khi nâng cấp version)
+                    const db = event.target.result;
+                    const oldVersion = event.oldVersion;
+                    const newVersion = event.newVersion;
+                    
+                    console.log(`📦 Upgrading IndexedDB từ version ${oldVersion} lên ${newVersion}`);
+                    
+                    // Tạo store nếu chưa có
+                    if (!db.objectStoreNames.contains(this.storeName)) {
+                        console.log('✨ Tạo object store mới:', this.storeName);
+                        const objectStore = db.createObjectStore(this.storeName, { keyPath: 'id', autoIncrement: true });
+                        objectStore.createIndex('timestamp', 'timestamp', { unique: false });
+                        objectStore.createIndex('fileName', 'fileName', { unique: false });
+                    }
+                    // Nếu đã có store nhưng thiếu index (upgrade từ v1 lên v2)
+                    else {
+                        console.log('📦 Object store đã tồn tại, kiểm tra indexes...');
+                        const transaction = event.target.transaction;
+                        const objectStore = transaction.objectStore(this.storeName);
+                        
+                        // Tạo index nếu chưa có
+                        if (!objectStore.indexNames.contains('timestamp')) {
+                            console.log('✨ Thêm index: timestamp');
+                            objectStore.createIndex('timestamp', 'timestamp', { unique: false });
+                        }
+                        if (!objectStore.indexNames.contains('fileName')) {
+                            console.log('✨ Thêm index: fileName');
+                            objectStore.createIndex('fileName', 'fileName', { unique: false });
+                        }
+                    }
+                };
+            });
+        }
+
+        async saveMergedFile(fileName, blob, metadata = {}) {
+            // Lưu file audio đã merge vào IndexedDB kèm metadata (tên, size, timestamp, số chunks...)
+            if (!this.db) {
+                await this.init();
+            }
+            
+            return new Promise((resolve, reject) => {
+                try {
+                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const store = transaction.objectStore(this.storeName);
+                    
+                    const data = {
+                        fileName: fileName,
+                        blob: blob,
+                        timestamp: Date.now(),
+                        size: blob.size,
+                        ...metadata
+                    };
+                    
+                    const addRequest = store.add(data);
+                    addRequest.onsuccess = () => resolve(addRequest.result);
+                    addRequest.onerror = () => reject(addRequest.error);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        async getAllHistory() {
+            // Lấy tất cả audio đã lưu, sắp xếp theo timestamp giảm dần (mới nhất trước)
+            if (!this.db) {
+                await this.init();
+            }
+            
+            return new Promise((resolve, reject) => {
+                try {
+                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const store = transaction.objectStore(this.storeName);
+                    
+                    // Fallback: nếu index không tồn tại, dùng getAll()
+                    let request;
+                    let usesCursor = true;
+                    try {
+                        const index = store.index('timestamp');
+                        request = index.openCursor(null, 'prev'); // 'prev' = giảm dần
+                    } catch (e) {
+                        console.warn('Index timestamp không tồn tại, dùng getAll()', e);
+                        request = store.getAll();
+                        usesCursor = false;
+                    }
+
+                    const history = [];
+                    request.onsuccess = (event) => {
+                        if (usesCursor) {
+                            // Sử dụng cursor
+                            const cursor = event.target.result;
+                            if (cursor) {
+                                history.push({
+                                    id: cursor.primaryKey,
+                                    ...cursor.value
+                                });
+                                cursor.continue();
+                            } else {
+                                resolve(history);
+                            }
+                        } else {
+                            // Sử dụng getAll
+                            const items = event.target.result.map((item, idx) => ({
+                                id: item.id || idx + 1,
+                                ...item
+                            }));
+                            // Sort theo timestamp giảm dần
+                            items.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                            resolve(items);
+                        }
+                    };
+
+                    request.onerror = () => reject(request.error);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        async deleteHistoryItem(id) {
+            if (!this.db) {
+                await this.init();
+            }
+            
+            return new Promise((resolve, reject) => {
+                const transaction = this.db.transaction([this.storeName], 'readwrite');
+                const store = transaction.objectStore(this.storeName);
+                const request = store.delete(id);
+
+                request.onsuccess = () => {
+                    console.log(`🗑️ Đã xóa file khỏi lịch sử`);
+                    resolve();
+                };
+
+                request.onerror = () => {
+                    console.error('❌ Lỗi xóa file:', request.error);
+                    reject(request.error);
+                };
+            });
+        }
+
+        async clearAllHistory() {
+            if (!this.db) {
+                await this.init();
+            }
+            
+            return new Promise((resolve, reject) => {
+                const transaction = this.db.transaction([this.storeName], 'readwrite');
+                const store = transaction.objectStore(this.storeName);
+                const request = store.clear();
+
+                request.onsuccess = () => {
+                    console.log('🗑️ Đã xóa toàn bộ lịch sử');
+                    resolve();
+                };
+
+                request.onerror = () => {
+                    console.error('❌ Lỗi xóa lịch sử:', request.error);
+                    reject(request.error);
+                };
+            });
+        }
+    }
+
+    // Khởi tạo HistoryDB cho việc lưu trữ audio đã tạo
+    const historyDB = new HistoryDB();
+    window.historyDB = historyDB;
+    
+    // Init database sau 1s để tránh blocking UI
+    setTimeout(async () => {
+        try {
+            await historyDB.init();
+        } catch (error) {
+            console.error('Lỗi init HistoryDB:', error);
+        }
+    }, 1000);
 
     // Add event listener for clear log button
     document.addEventListener('DOMContentLoaded', function() {
@@ -1286,7 +1618,153 @@ button:disabled {
         }
     });
 
-const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
+const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();
+
+// === AUDIO DURATION VALIDATION FOR DIRECT FILE INPUT ===
+// Intercept gemini-file-input để validate độ dài audio trước khi upload
+setTimeout(() => {
+    const fileInput = document.getElementById('gemini-file-input');
+    if (fileInput) {
+        addLogEntry('✅ Đã khởi tạo validation cho file input', 'success');
+        
+        // Helper function to get audio duration
+        async function getAudioDuration(file) {
+            return new Promise((resolve) => {
+                const audio = new Audio();
+                audio.addEventListener('loadedmetadata', () => {
+                    resolve(audio.duration);
+                });
+                audio.addEventListener('error', () => {
+                    resolve(0);
+                });
+                audio.src = URL.createObjectURL(file);
+            });
+        }
+        
+        // Intercept change event
+        fileInput.addEventListener('change', async function(e) {
+            addLogEntry('🔍 [DIRECT INPUT] File input change detected!', 'info');
+            
+            const files = e.target.files;
+            if (!files || files.length === 0) {
+                addLogEntry('⚠️ [DIRECT INPUT] No files selected', 'warning');
+                return;
+            }
+            
+            addLogEntry(`🔍 [DIRECT INPUT] ${files.length} file(s) selected`, 'info');
+            
+            // Check each audio file
+            const invalidFiles = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Only validate audio files
+                if (file.type.startsWith('audio/')) {
+                    addLogEntry(`🔍 [DIRECT INPUT] Checking: ${file.name}`, 'info');
+                    
+                    const duration = await getAudioDuration(file);
+                    addLogEntry(`🔍 [DIRECT INPUT] Duration: ${Math.floor(duration)} seconds`, 'info');
+                    
+                    if (duration < 20 || duration > 60) {
+                        invalidFiles.push({ name: file.name, duration: duration });
+                    }
+                }
+            }
+            
+            // If there are invalid files, block and show error
+            if (invalidFiles.length > 0) {
+                // CRITICAL: Stop all event propagation immediately
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                addLogEntry('❌ [DIRECT INPUT] VALIDATION FAILED!', 'error');
+                addLogEntry(`❌ [DIRECT INPUT] ${invalidFiles.length} file(s) không hợp lệ`, 'error');
+                
+                // Clear the input
+                e.target.value = '';
+                
+                // Show error dialog
+                let fileListHtml = invalidFiles.map(f => {
+                    let reason = '';
+                    if (f.duration < 20) {
+                        reason = `quá ngắn (${Math.floor(f.duration)}s < 20s)`;
+                    } else {
+                        reason = `quá dài (${Math.floor(f.duration)}s > 60s)`;
+                    }
+                    return `<li style="margin: 5px 0;"><strong>${f.name}</strong>: ${reason}</li>`;
+                }).join('');
+                
+                addLogEntry('📢 [DIRECT INPUT] Hiển thị popup cảnh báo...', 'warning');
+                
+                // Add CSS to ensure popup is visible
+                const style = document.createElement('style');
+                style.textContent = `
+                    .audio-validation-popup {
+                        z-index: 999999 !important;
+                    }
+                    .swal2-container {
+                        z-index: 999998 !important;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Delay a bit to ensure everything is processed
+                setTimeout(() => {
+                    if (typeof Swal === 'undefined') {
+                        addLogEntry('❌ [DIRECT INPUT] Swal is undefined! Showing alert instead', 'error');
+                        alert(`⚠️ FILE AUDIO KHÔNG HỢP LỆ\n\n${invalidFiles.length} file không thể upload:\n\n${invalidFiles.map(f => `• ${f.name}: ${f.duration < 20 ? 'quá ngắn' : 'quá dài'} (${Math.floor(f.duration)}s)`).join('\n')}\n\nYêu cầu: Audio phải từ 20-60 giây`);
+                    } else {
+                        addLogEntry('✅ [DIRECT INPUT] Swal exists, calling Swal.fire()', 'info');
+                        Swal.fire({
+                            icon: 'error',
+                            title: '⚠️ File audio không hợp lệ',
+                            html: `
+                                <div style="text-align: center; padding: 10px;">
+                                    <p style="margin: 10px 0; color: #f87171; font-size: 14px;">
+                                        ${invalidFiles.map(f => {
+                                            let reason = f.duration < 20 ? 'quá ngắn' : 'quá dài';
+                                            return `<strong>${f.name}</strong><br>${reason} (${Math.floor(f.duration)}s)`;
+                                        }).join('<br><br>')}
+                                    </p>
+                                    <hr style="border-color: rgba(255,255,255,0.2); margin: 15px 0;">
+                                    <p style="margin: 10px 0; color: #8be9fd; font-size: 13px;">
+                                        📌 <strong>Yêu cầu: 20-60 giây</strong>
+                                    </p>
+                                    <p style="margin: 5px 0; color: #94a3b8; font-size: 12px;">
+                                        Chọn file khác hoặc cắt lại file
+                                    </p>
+                                </div>
+                            `,
+                            confirmButtonText: 'Đã hiểu',
+                            confirmButtonColor: '#8be9fd',
+                            background: '#282a36',
+                            color: '#f8f8f2',
+                            width: '450px',
+                            customClass: {
+                                popup: 'audio-validation-popup',
+                                container: 'audio-validation-container'
+                            },
+                            heightAuto: false,
+                            backdrop: true,
+                            allowOutsideClick: true
+                        }).then(() => {
+                            addLogEntry('✅ [DIRECT INPUT] User đã đóng popup', 'info');
+                        });
+                        addLogEntry('📢 [DIRECT INPUT] Đã gọi Swal.fire()', 'info');
+                    }
+                }, 100); // Small delay to ensure event is fully blocked
+                
+                addLogEntry('🚫 [DIRECT INPUT] Upload BLOCKED!', 'error');
+                return false;
+            }
+            
+            addLogEntry('✅ [DIRECT INPUT] All files validated successfully!', 'success');
+        }, true); // Use capture phase to intercept early
+    }
+}, 1000);
+
+const LrkOcBYz_$AGjPqXLWnyiATpCI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x261)),lraDK$WDOgsXHRO=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1da)),OdKzziXLxtOGjvaBMHm=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23a)),WRVxYBSrPsjcqQs_bXI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x24f)),rUxbIRagbBVychZ$GfsogD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x235)),zQizakWdLEdLjtenmCbNC=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x23f)),PEYtOIOW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x230)),PcLAEW=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1e7)),yU_jfkzmffcnGgLWrq=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1ba)),VcTcfGnbfWZdhQRvBp$emAVjf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x223)),CVjXA$H=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x260)),pT$bOHGEGbXDSpcuLWAq_yMVf=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x214)),pemHAD=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1dc)),SCOcXEQXTPOOS=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x211)),XvyPnqSRdJtYjSxingI=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x20a)),cHjV$QkAT$JWlL=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x1bb)),TUlYLVXXZeP_OexmGXTd=document[AP$u_huhInYfTj(0x1de)](AP$u_huhInYfTj(0x234));if(LrkOcBYz_$AGjPqXLWnyiATpCI){LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x243)]=!![];}function BZr$GS$CqnCyt(){const qDfoTpFPZIJhavEhvzA=AP$u_huhInYfTj,tHDv$H_WMTUmdIgly=document[qDfoTpFPZIJhavEhvzA(0x1cd)](qDfoTpFPZIJhavEhvzA(0x253));tHDv$H_WMTUmdIgly&&(tHDv$H_WMTUmdIgly[qDfoTpFPZIJhavEhvzA(0x1fb)][qDfoTpFPZIJhavEhvzA(0x1e1)]=qDfoTpFPZIJhavEhvzA(0x209));}function KxTOuAJu(TD$MiWBRgQx){const oJBWD_FSUVQDirej_NDYd=AP$u_huhInYfTj;if(!TD$MiWBRgQx)return![];try{if(TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)])TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1e3)]();const SEv_hb=unsafeWindow||window,CvgA_TVH$Ae=TD$MiWBRgQx[oJBWD_FSUVQDirej_NDYd(0x1bf)]||document;return[oJBWD_FSUVQDirej_NDYd(0x1c5),oJBWD_FSUVQDirej_NDYd(0x218),oJBWD_FSUVQDirej_NDYd(0x242),oJBWD_FSUVQDirej_NDYd(0x1ee),oJBWD_FSUVQDirej_NDYd(0x1bd)][oJBWD_FSUVQDirej_NDYd(0x1dd)](nTTsQoPvqnqJrM=>{const hTykMlxVcfVO_SymRDte=oJBWD_FSUVQDirej_NDYd;let JhxaolNQUORsB_QxPsC;if(SEv_hb[hTykMlxVcfVO_SymRDte(0x233)]&&nTTsQoPvqnqJrM[hTykMlxVcfVO_SymRDte(0x20e)](hTykMlxVcfVO_SymRDte(0x1e2)))JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x233))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'pointerId':0x1,'isPrimary':!![]});else SEv_hb[hTykMlxVcfVO_SymRDte(0x206)]?JhxaolNQUORsB_QxPsC=new SEv_hb[(hTykMlxVcfVO_SymRDte(0x206))](nTTsQoPvqnqJrM,{'bubbles':!![],'cancelable':!![],'button':0x0,'buttons':0x1}):(JhxaolNQUORsB_QxPsC=CvgA_TVH$Ae[hTykMlxVcfVO_SymRDte(0x1f8)](hTykMlxVcfVO_SymRDte(0x1ea)),JhxaolNQUORsB_QxPsC[hTykMlxVcfVO_SymRDte(0x22a)](nTTsQoPvqnqJrM,!![],!![],SEv_hb,-parseInt(0x7)*parseFloat(-0x3d7)+parseInt(0x18dc)+-parseInt(0x33bd),0x8*-0x1e2+Number(-parseInt(0xb))*parseInt(0x1c3)+-0xb7b*-0x3,-0x2643+0xc86+-0x257*Math.floor(-0xb),parseInt(parseInt(0x159d))*-0x1+Math.max(parseInt(0x2240),parseInt(0x2240))*Math.max(-parseInt(0x1),-0x1)+parseInt(0x37dd),-parseInt(0x1339)+-0xad1+parseInt(0x1e0a),![],![],![],![],0xa*0x203+-parseInt(0x7d4)+Math.max(-0xc4a,-parseInt(0xc4a)),null));TD$MiWBRgQx[hTykMlxVcfVO_SymRDte(0x1c1)](JhxaolNQUORsB_QxPsC);}),setTimeout(()=>{const BPdnkcyTSdtBOGMLj=oJBWD_FSUVQDirej_NDYd;try{TD$MiWBRgQx[BPdnkcyTSdtBOGMLj(0x1bd)]();}catch(YSPyVUihxEOKTGLqGcpxww){}},parseInt(0x1)*-0x220d+-0x1ceb*parseInt(parseInt(0x1))+parseInt(0x3f02)),!![];}catch(wYZWjTdHsjGqS$TxW){return![];}}function ymkKApNTfjOanYIBsxsoMNBX(TQ$sjPfgYpRqekqYTKkMM$xsbq){const fZxoQbjOSjhtnzVVyV=AP$u_huhInYfTj,wZCCqPFq$YpVFMqx=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq/(0x61c+-0x1*-0x467+-parseInt(0x1)*0xa47)),IgThKNqdaOrPWvnnnfSK=Math[fZxoQbjOSjhtnzVVyV(0x23d)](TQ$sjPfgYpRqekqYTKkMM$xsbq%(parseInt(0x1)*Math.ceil(-parseInt(0x1675))+-0x1*parseFloat(parseInt(0x3f8))+Math.floor(parseInt(0x23))*Math.ceil(0xc3)));return wZCCqPFq$YpVFMqx+fZxoQbjOSjhtnzVVyV(0x1ef)+IgThKNqdaOrPWvnnnfSK+fZxoQbjOSjhtnzVVyV(0x25d);}function i_B_kZYD() {
     // ƯU TIÊN 1: Kiểm tra tên file do người dùng nhập tùy chỉnh
     const customFilenameInput = document.getElementById('custom-filename-input');
     let fileName = 'audio_da_tao'; // Tên mặc định
@@ -1541,6 +2019,9 @@ function smartSplitter(text, maxLength = 700) {
     return finalChunks.filter(c => c.length > 0);
 }
 
+// Expose smartSplitter ra global scope để tạo file hàng loạt có thể sử dụng
+window.smartSplitter = smartSplitter;
+
 function dExAbhXwTJeTJBIjWr(EARfsfSN_QdgxH){const tENdSoNDV_gGwQKLZv$sYaZKhl=AP$u_huhInYfTj,T$dCpaznIPQ_UPNPAquzJhwHya=document[tENdSoNDV_gGwQKLZv$sYaZKhl(0x207)](tENdSoNDV_gGwQKLZv$sYaZKhl(0x263));for(const uUautBCIQlQydFiAF of T$dCpaznIPQ_UPNPAquzJhwHya){if(uUautBCIQlQydFiAF[tENdSoNDV_gGwQKLZv$sYaZKhl(0x273)][tENdSoNDV_gGwQKLZv$sYaZKhl(0x1d4)]()[tENdSoNDV_gGwQKLZv$sYaZKhl(0x1d1)]()===EARfsfSN_QdgxH[tENdSoNDV_gGwQKLZv$sYaZKhl(0x1d1)]())return KxTOuAJu(uUautBCIQlQydFiAF);}return![];}function s_BrlXXxPOJaBMKQX(){const Qhhztv_Emh_V=AP$u_huhInYfTj,qEJFmmYaq_ZY$ADPfvGUAMIlmIC=document[Qhhztv_Emh_V(0x1de)](Qhhztv_Emh_V(0x1c2)),IhdbQcdDHJpPksT$$OGFBBMT=document[Qhhztv_Emh_V(0x1cd)](Qhhztv_Emh_V(0x1e0)),rxGCINQSAqsWepsnWTGJOpnkL=document[Qhhztv_Emh_V(0x1cd)](Qhhztv_Emh_V(0x251));if(qEJFmmYaq_ZY$ADPfvGUAMIlmIC){qEJFmmYaq_ZY$ADPfvGUAMIlmIC[Qhhztv_Emh_V(0x1c7)]='';if(IhdbQcdDHJpPksT$$OGFBBMT){const wdZDFYMevO_$Lwy=document[Qhhztv_Emh_V(0x25a)](Qhhztv_Emh_V(0x23c));wdZDFYMevO_$Lwy[Qhhztv_Emh_V(0x1f1)]=IhdbQcdDHJpPksT$$OGFBBMT[Qhhztv_Emh_V(0x1f1)],wdZDFYMevO_$Lwy[Qhhztv_Emh_V(0x23e)]=Qhhztv_Emh_V(0x245),qEJFmmYaq_ZY$ADPfvGUAMIlmIC[Qhhztv_Emh_V(0x1eb)](wdZDFYMevO_$Lwy);}if(rxGCINQSAqsWepsnWTGJOpnkL){const MTKrudpbV$ZIhmZO=document[Qhhztv_Emh_V(0x25a)](Qhhztv_Emh_V(0x1be));MTKrudpbV$ZIhmZO['id']=Qhhztv_Emh_V(0x257),MTKrudpbV$ZIhmZO[Qhhztv_Emh_V(0x273)]=Qhhztv_Emh_V(0x1e9)+rxGCINQSAqsWepsnWTGJOpnkL[Qhhztv_Emh_V(0x273)][Qhhztv_Emh_V(0x1d4)](),qEJFmmYaq_ZY$ADPfvGUAMIlmIC[Qhhztv_Emh_V(0x1eb)](MTKrudpbV$ZIhmZO);}}}async function tt__SfNwBHDebpWJOqrSTR(){const VCAHyXsrERcpXVhFPxmgdBjjh=AP$u_huhInYfTj,zEwMPLN$IZxzIwfdDbCfnIYcA=new Date();cHjV$QkAT$JWlL[VCAHyXsrERcpXVhFPxmgdBjjh(0x273)]=VCAHyXsrERcpXVhFPxmgdBjjh(0x1ce)+ymkKApNTfjOanYIBsxsoMNBX((zEwMPLN$IZxzIwfdDbCfnIYcA-dqj_t_Mr)/(Number(-0x27)*Math.floor(-0x26)+0x1f37+0x25*Math.floor(-parseInt(0xe5))));if(ZTQj$LF$o[VCAHyXsrERcpXVhFPxmgdBjjh(0x216)]===parseFloat(-0x1ca4)+Number(-parseInt(0x2445))+parseInt(0x40e9))return;try{
 // Sử dụng window.chunkBlobs nếu có và có dữ liệu, nếu không thì dùng ZTQj$LF$o
 let finalBlobs = ZTQj$LF$o; // Mặc định dùng ZTQj$LF$o như code gốc
@@ -1551,6 +2032,23 @@ if (window.chunkBlobs && window.chunkBlobs.length > 0) {
     }
 }
 const InRdxToeqTDyPgDGZb=new Blob(finalBlobs,{'type':VCAHyXsrERcpXVhFPxmgdBjjh(0x1f5)}),BBNDYjhHoGkj_qbbbJu=URL[VCAHyXsrERcpXVhFPxmgdBjjh(0x1f0)](InRdxToeqTDyPgDGZb);PEYtOIOW[VCAHyXsrERcpXVhFPxmgdBjjh(0x25c)]=BBNDYjhHoGkj_qbbbJu,PEYtOIOW[VCAHyXsrERcpXVhFPxmgdBjjh(0x1c8)]=i_B_kZYD(),zQizakWdLEdLjtenmCbNC[VCAHyXsrERcpXVhFPxmgdBjjh(0x1fb)][VCAHyXsrERcpXVhFPxmgdBjjh(0x1e1)]=VCAHyXsrERcpXVhFPxmgdBjjh(0x258),document[VCAHyXsrERcpXVhFPxmgdBjjh(0x1de)](VCAHyXsrERcpXVhFPxmgdBjjh(0x225))[VCAHyXsrERcpXVhFPxmgdBjjh(0x1fb)][VCAHyXsrERcpXVhFPxmgdBjjh(0x1e1)]=VCAHyXsrERcpXVhFPxmgdBjjh(0x258);if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[VCAHyXsrERcpXVhFPxmgdBjjh(0x26c)]();typeof WaveSurfer===VCAHyXsrERcpXVhFPxmgdBjjh(0x24d)&&await new Promise(dyvridmApUsyBfpYIHkxv=>setTimeout(dyvridmApUsyBfpYIHkxv,parseInt(0xf61)+Math.ceil(-parseInt(0x1e0))+-parseInt(0xb8d))),n_WwsStaC$jzsWjOIjRqedTG=WaveSurfer[VCAHyXsrERcpXVhFPxmgdBjjh(0x240)]({'container':VCAHyXsrERcpXVhFPxmgdBjjh(0x274),'waveColor':VCAHyXsrERcpXVhFPxmgdBjjh(0x26a),'progressColor':VCAHyXsrERcpXVhFPxmgdBjjh(0x228),'cursorColor':VCAHyXsrERcpXVhFPxmgdBjjh(0x20c),'barWidth':0x3,'barRadius':0x3,'cursorWidth':0x1,'height':0x64,'barGap':0x3}),n_WwsStaC$jzsWjOIjRqedTG[VCAHyXsrERcpXVhFPxmgdBjjh(0x1d5)](BBNDYjhHoGkj_qbbbJu),n_WwsStaC$jzsWjOIjRqedTG['on'](VCAHyXsrERcpXVhFPxmgdBjjh(0x1d6),()=>{const Ipo_CDaCvNEfh=VCAHyXsrERcpXVhFPxmgdBjjh;XvyPnqSRdJtYjSxingI[Ipo_CDaCvNEfh(0x1c7)]='⏸️';}),n_WwsStaC$jzsWjOIjRqedTG['on'](VCAHyXsrERcpXVhFPxmgdBjjh(0x22d),()=>{const NdVplyNSVhdzFR=VCAHyXsrERcpXVhFPxmgdBjjh;XvyPnqSRdJtYjSxingI[NdVplyNSVhdzFR(0x1c7)]='▶️';});
+
+        // Lưu file đã merge vào lịch sử IndexedDB để người dùng có thể xem lại sau
+        try {
+            const fileName = i_B_kZYD();
+            const db = window.historyDB || historyDB;
+            
+            if (db && typeof db.saveMergedFile === 'function') {
+                await db.saveMergedFile(fileName, InRdxToeqTDyPgDGZb, {
+                    chunkCount: finalBlobs.length,
+                    totalChunks: SI$acY.length
+                });
+                addLogEntry(`📚 Đã lưu "${fileName}" vào lịch sử`, 'success');
+            }
+        } catch (historyError) {
+            // Lỗi lưu lịch sử không ảnh hưởng đến quá trình tạo audio chính
+            console.error('Lỗi lưu lịch sử:', historyError);
+        }
 
         // --- BẮT ĐẦU NÂNG CẤP: THÊM NÚT TẢI CHUNKS (ZIP) ---
         try {
@@ -1783,17 +2281,58 @@ async function uSTZrHUt_IC() {
     // Logic xử lý khi đã hoàn thành tất cả các chunk
     if (ttuo$y_KhCV >= SI$acY[tQqGbytKzpHwhGmeQJucsrq(0x216)]) {
         // Kiểm tra xem tất cả chunk đã được xử lý đầy đủ chưa
-        const totalChunks = SI$acY.length;
-        const processedChunks = window.chunkStatus ? window.chunkStatus.filter(status => status === 'success' || status === 'failed').length : 0;
+        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
+        // Đếm chunks đã được xử lý dựa trên window.chunkBlobs hoặc ZTQj$LF$o
+        const processedChunks = (window.chunkBlobs || ZTQj$LF$o).filter(blob => blob !== null && blob !== undefined).length;
         const failedChunks = window.failedChunks || [];
 
         addLogEntry(`📊 Kiểm tra: ${processedChunks}/${totalChunks} chunks đã được xử lý`, 'info');
 
-        // Nếu chưa xử lý đủ chunk, tiếp tục chờ
+        // Khởi tạo bộ đếm waiting nếu chưa có
+        if (typeof window.waitingCheckCount === 'undefined') {
+            window.waitingCheckCount = 0;
+        }
+
+        // Nếu chưa xử lý đủ chunk, tiếp tục chờ (nhưng có giới hạn)
         if (processedChunks < totalChunks) {
-            addLogEntry(`⏳ Còn ${totalChunks - processedChunks} chunk chưa được xử lý. Tiếp tục chờ...`, 'warning');
-            setTimeout(uSTZrHUt_IC, 2000);
-            return;
+            window.waitingCheckCount++;
+            const maxWaitingChecks = 10; // Chờ tối đa 10 lần x 2s = 20s
+            
+            if (window.waitingCheckCount >= maxWaitingChecks) {
+                // Đã chờ quá lâu, có thể có chunk failed chưa retry
+                addLogEntry(`⚠️ Đã chờ ${maxWaitingChecks * 2}s nhưng vẫn còn ${totalChunks - processedChunks} chunk chưa xử lý`, 'warning');
+                
+                // Tìm các chunk chưa có blob và đánh dấu là failed
+                const chunkBlobsArray = window.chunkBlobs || ZTQj$LF$o;
+                for (let i = 0; i < totalChunks; i++) {
+                    if (!chunkBlobsArray[i] && !failedChunks.includes(i)) {
+                        failedChunks.push(i);
+                        window.chunkStatus[i] = 'failed';
+                        addLogEntry(`⚠️ Chunk ${i + 1} chưa có blob, tự động đánh dấu là failed`, 'warning');
+                    }
+                }
+                
+                // Reset waiting count và force retry
+                window.waitingCheckCount = 0;
+                window.failedChunks = failedChunks;
+                
+                // Nếu có failed chunks, chuyển sang retry mode
+                if (failedChunks.length > 0) {
+                    addLogEntry(`🔄 Phát hiện ${failedChunks.length} chunk cần retry. Chuyển sang retry mode...`, 'warning');
+                    // Không return, để rơi vào logic retry bên dưới
+                } else {
+                    addLogEntry(`⏳ Còn ${totalChunks - processedChunks} chunk chưa được xử lý. Tiếp tục chờ...`, 'warning');
+                    setTimeout(uSTZrHUt_IC, 2000);
+                    return;
+                }
+            } else {
+                addLogEntry(`⏳ Còn ${totalChunks - processedChunks} chunk chưa được xử lý. Tiếp tục chờ... (${window.waitingCheckCount}/${maxWaitingChecks})`, 'warning');
+                setTimeout(uSTZrHUt_IC, 2000);
+                return;
+            }
+        } else {
+            // Đã xử lý đủ chunk, reset waiting count
+            window.waitingCheckCount = 0;
         }
 
         // Nếu có chunk thất bại và chưa kiểm tra cuối
@@ -2164,11 +2703,11 @@ async function uSTZrHUt_IC() {
                         addLogEntry(`🎉 [Chunk ${ttuo$y_KhCV + 1}] Đã khôi phục thành công từ trạng thái thất bại!`, 'success');
                     }
 
-                    // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
-                    if (typeof window.chunkBlobs === 'undefined') {
-                        window.chunkBlobs = new Array(SI$acY.length).fill(null);
-                    }
-                    // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
+                        // ĐỒNG BỘ HÓA KHI RETRY: Đảm bảo window.chunkBlobs được cập nhật khi retry thành công
+                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs)) {
+                            window.chunkBlobs = new Array(window.totalChunksForCurrentBatch || SI$acY.length).fill(null);
+                        }
+                        // Chunk này sẽ được lưu vào window.chunkBlobs ở phần code phía dưới
 
                     const yEExghI = TYRNWSSd$QOYZe[ndkpgKnjg(0x1cd)](ndkpgKnjg(0x1f2))[ndkpgKnjg(0x1f1)];
                     if (yEExghI && (yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x1fa)) || yEExghI[ndkpgKnjg(0x20e)](ndkpgKnjg(0x26f)))) try {
@@ -2202,25 +2741,28 @@ async function uSTZrHUt_IC() {
                         }
                         const qILAV = await FGrxK_RK[ndkpgKnjg(0x26f)]();
                         // Lưu chunk vào đúng vị trí dựa trên ttuo$y_KhCV (chunk index hiện tại)
-                        if (typeof window.chunkBlobs === 'undefined') {
-                            window.chunkBlobs = new Array(SI$acY.length).fill(null);
+                        const totalChunks = window.totalChunksForCurrentBatch || SI$acY.length;
+                        if (typeof window.chunkBlobs === 'undefined' || !Array.isArray(window.chunkBlobs) || window.chunkBlobs.length !== totalChunks) {
+                            window.chunkBlobs = new Array(totalChunks).fill(null);
+                            addLogEntry(`🔧 Khởi tạo lại window.chunkBlobs với ${totalChunks} vị trí`, 'info');
                         }
 
                         // QUAN TRỌNG: Đảm bảo lưu đúng vị trí chunk, không phụ thuộc vào ttuo$y_KhCV
                         const currentChunkIndex = ttuo$y_KhCV;
 
-                        // Đảm bảo window.chunkBlobs có đủ độ dài
-                        while (window.chunkBlobs.length <= currentChunkIndex) {
-                            window.chunkBlobs.push(null);
+                        // Lưu vào window.chunkBlobs nếu index hợp lệ
+                        if (currentChunkIndex >= 0 && currentChunkIndex < window.chunkBlobs.length) {
+                            window.chunkBlobs[currentChunkIndex] = qILAV;
                         }
-                        window.chunkBlobs[currentChunkIndex] = qILAV;
 
                         // ĐỒNG BỘ HÓA ZTQj$LF$o: Đảm bảo ZTQj$LF$o cũng có chunk ở đúng vị trí
-                        // Nếu ZTQj$LF$o chưa đủ độ dài, mở rộng mảng
-                        while (ZTQj$LF$o.length <= currentChunkIndex) {
-                            ZTQj$LF$o.push(null);
+                        if (!Array.isArray(ZTQj$LF$o) || ZTQj$LF$o.length !== totalChunks) {
+                            ZTQj$LF$o = new Array(totalChunks).fill(null);
+                            addLogEntry(`🔧 Khởi tạo lại ZTQj$LF$o với ${totalChunks} vị trí`, 'info');
                         }
-                        ZTQj$LF$o[currentChunkIndex] = qILAV;
+                        if (currentChunkIndex >= 0 && currentChunkIndex < ZTQj$LF$o.length) {
+                            ZTQj$LF$o[currentChunkIndex] = qILAV;
+                        }
 
                         // ĐỒNG BỘ HÓA: Đảm bảo cả hai mảng đều có chunk này ở đúng vị trí
                         addLogEntry(`🔄 Đã lưu chunk ${currentChunkIndex + 1} vào vị trí ${currentChunkIndex} của cả window.chunkBlobs và ZTQj$LF$o`, 'info');
@@ -2315,7 +2857,7 @@ async function waitForVoiceModelReady() {
 
     // Trả về kết quả cuối cùng
     return true; // Trả về true vì đã qua được bước chờ giọng mẫu
-}function u_In_Taeyb(ha_vkXztSqPwoX_qmQKlcp){const scdrpb$_nwRMQXvVJ=AP$u_huhInYfTj,TJ_txTK=document[scdrpb$_nwRMQXvVJ(0x1cd)](scdrpb$_nwRMQXvVJ(0x26d));if(!TJ_txTK)return![];try{const pIzqjC$SSlBxLJPDufXHf_hTwNG=new DataTransfer();for(const q$$rNffLZXQHBKXbsZBb of ha_vkXztSqPwoX_qmQKlcp)pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x1e5)][scdrpb$_nwRMQXvVJ(0x203)](q$$rNffLZXQHBKXbsZBb);return TJ_txTK[scdrpb$_nwRMQXvVJ(0x208)]=pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x208)],TJ_txTK[scdrpb$_nwRMQXvVJ(0x1c1)](new Event(scdrpb$_nwRMQXvVJ(0x1d7),{'bubbles':!![]})),!![];}catch(tnv$KWVWNV){return![];}}WRVxYBSrPsjcqQs_bXI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x229),()=>{const bISsk$DCGLNjOv=AP$u_huhInYfTj,LvLmlCAo_vy_AFJk=WRVxYBSrPsjcqQs_bXI[bISsk$DCGLNjOv(0x24c)];CVjXA$H[bISsk$DCGLNjOv(0x1c7)]=bISsk$DCGLNjOv(0x20f)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1ff)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\s+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1fc)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1ed)](/[.!?。！？]+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x23b)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\n+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1f4);}),yU_jfkzmffcnGgLWrq[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),async()=>{const t$_EKwXXWYJwVOu=AP$u_huhInYfTj;if(PcLAEW[t$_EKwXXWYJwVOu(0x208)][t$_EKwXXWYJwVOu(0x216)]===0x16e0+-0x1573+-parseInt(0x49)*0x5){Swal[t$_EKwXXWYJwVOu(0x26b)]({'icon':t$_EKwXXWYJwVOu(0x212),'title':t$_EKwXXWYJwVOu(0x266),'text':t$_EKwXXWYJwVOu(0x200)});return;}const pP$elepNWoiOEswuBl$wWpWgE=VcTcfGnbfWZdhQRvBp$emAVjf[t$_EKwXXWYJwVOu(0x24c)];yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=!![],TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x1d0),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x22f);if(u_In_Taeyb(PcLAEW[t$_EKwXXWYJwVOu(0x208)])){await new Promise(YoMwltQiCl_gqyp=>setTimeout(YoMwltQiCl_gqyp,Math.floor(-0xbf0)*Math.floor(parseInt(0x1))+parseFloat(-parseInt(0x952))+parseFloat(parseInt(0x192a)))),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x267);const lYBfNBUXykQSrYdLWRfJs=await wfxQyKsZ_OULEUwIDIN$OYr(pP$elepNWoiOEswuBl$wWpWgE);lYBfNBUXykQSrYdLWRfJs?(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x22b)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x228)):(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x247)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6)),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=![];}else TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x259),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6);yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=![];}),LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const muOPzQltrb_ezJpe_MNI=AP$u_huhInYfTj;if(EfNjYNYj_O_CGB)return;const EFBSgoVbWWlkmceHpywAdxhpn=WRVxYBSrPsjcqQs_bXI[muOPzQltrb_ezJpe_MNI(0x24c)][muOPzQltrb_ezJpe_MNI(0x1d4)]();if(!EFBSgoVbWWlkmceHpywAdxhpn){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':muOPzQltrb_ezJpe_MNI(0x202)});return;}dqj_t_Mr=new Date(),zQizakWdLEdLjtenmCbNC[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),document[muOPzQltrb_ezJpe_MNI(0x1de)](muOPzQltrb_ezJpe_MNI(0x225))[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),pT$bOHGEGbXDSpcuLWAq_yMVf[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),cHjV$QkAT$JWlL[muOPzQltrb_ezJpe_MNI(0x273)]='';if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[muOPzQltrb_ezJpe_MNI(0x1cc)]();ZTQj$LF$o=[],SI$acY=NrfPVBbJv_Dph$tazCpJ(EFBSgoVbWWlkmceHpywAdxhpn),ttuo$y_KhCV=0x6*Math.floor(-parseInt(0x26))+-0x1c45+Math.ceil(parseInt(0x1d29)),EfNjYNYj_O_CGB=!![],MEpJezGZUsmpZdAgFRBRZW=![],LrkOcBYz_$AGjPqXLWnyiATpCI[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),OdKzziXLxtOGjvaBMHm[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x273)]=muOPzQltrb_ezJpe_MNI(0x239),uSTZrHUt_IC();}),lraDK$WDOgsXHRO[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const AuzopbHlRPCFBPQqnHMs=AP$u_huhInYfTj;MEpJezGZUsmpZdAgFRBRZW=!MEpJezGZUsmpZdAgFRBRZW,lraDK$WDOgsXHRO[AuzopbHlRPCFBPQqnHMs(0x273)]=MEpJezGZUsmpZdAgFRBRZW?AuzopbHlRPCFBPQqnHMs(0x271):AuzopbHlRPCFBPQqnHMs(0x239);if(!MEpJezGZUsmpZdAgFRBRZW)uSTZrHUt_IC();}),OdKzziXLxtOGjvaBMHm[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const jWtMo=AP$u_huhInYfTj;EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![];if(xlgJHLP$MATDT$kTXWV)xlgJHLP$MATDT$kTXWV[jWtMo(0x24e)]();if(Srnj$swt)clearTimeout(Srnj$swt);ZTQj$LF$o=[],SI$acY=[],WRVxYBSrPsjcqQs_bXI[jWtMo(0x24c)]='',rUxbIRagbBVychZ$GfsogD[jWtMo(0x24c)]='',pT$bOHGEGbXDSpcuLWAq_yMVf[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),zQizakWdLEdLjtenmCbNC[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209);if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[jWtMo(0x1cc)]();LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x258),lraDK$WDOgsXHRO[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),OdKzziXLxtOGjvaBMHm[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x243)]=![],LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x273)]=jWtMo(0x275);}),XvyPnqSRdJtYjSxingI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const XhOmEQytvnK$v=AP$u_huhInYfTj;if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[XhOmEQytvnK$v(0x21a)]();});
+}function u_In_Taeyb(ha_vkXztSqPwoX_qmQKlcp){const scdrpb$_nwRMQXvVJ=AP$u_huhInYfTj,TJ_txTK=document[scdrpb$_nwRMQXvVJ(0x1cd)](scdrpb$_nwRMQXvVJ(0x26d));if(!TJ_txTK)return![];try{const pIzqjC$SSlBxLJPDufXHf_hTwNG=new DataTransfer();for(const q$$rNffLZXQHBKXbsZBb of ha_vkXztSqPwoX_qmQKlcp)pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x1e5)][scdrpb$_nwRMQXvVJ(0x203)](q$$rNffLZXQHBKXbsZBb);return TJ_txTK[scdrpb$_nwRMQXvVJ(0x208)]=pIzqjC$SSlBxLJPDufXHf_hTwNG[scdrpb$_nwRMQXvVJ(0x208)],TJ_txTK[scdrpb$_nwRMQXvVJ(0x1c1)](new Event(scdrpb$_nwRMQXvVJ(0x1d7),{'bubbles':!![]})),!![];}catch(tnv$KWVWNV){return![];}}WRVxYBSrPsjcqQs_bXI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x229),()=>{const bISsk$DCGLNjOv=AP$u_huhInYfTj,LvLmlCAo_vy_AFJk=WRVxYBSrPsjcqQs_bXI[bISsk$DCGLNjOv(0x24c)];CVjXA$H[bISsk$DCGLNjOv(0x1c7)]=bISsk$DCGLNjOv(0x20f)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1ff)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\s+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1fc)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1ed)](/[.!?。！？]+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x23b)+LvLmlCAo_vy_AFJk[bISsk$DCGLNjOv(0x1d4)]()[bISsk$DCGLNjOv(0x1ed)](/\n+/)[bISsk$DCGLNjOv(0x21d)](Boolean)[bISsk$DCGLNjOv(0x216)]+bISsk$DCGLNjOv(0x1f4);}),yU_jfkzmffcnGgLWrq[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),async()=>{const t$_EKwXXWYJwVOu=AP$u_huhInYfTj;if(PcLAEW[t$_EKwXXWYJwVOu(0x208)][t$_EKwXXWYJwVOu(0x216)]===0x16e0+-0x1573+-parseInt(0x49)*0x5){Swal[t$_EKwXXWYJwVOu(0x26b)]({'icon':t$_EKwXXWYJwVOu(0x212),'title':t$_EKwXXWYJwVOu(0x266),'text':t$_EKwXXWYJwVOu(0x200)});LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=!![];return;}const pP$elepNWoiOEswuBl$wWpWgE=VcTcfGnbfWZdhQRvBp$emAVjf[t$_EKwXXWYJwVOu(0x24c)];yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=!![],TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x1d0),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x22f);if(u_In_Taeyb(PcLAEW[t$_EKwXXWYJwVOu(0x208)])){await new Promise(YoMwltQiCl_gqyp=>setTimeout(YoMwltQiCl_gqyp,Math.floor(-0xbf0)*Math.floor(parseInt(0x1))+parseFloat(-parseInt(0x952))+parseFloat(parseInt(0x192a)))),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x267);const lYBfNBUXykQSrYdLWRfJs=await wfxQyKsZ_OULEUwIDIN$OYr(pP$elepNWoiOEswuBl$wWpWgE);lYBfNBUXykQSrYdLWRfJs?(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x22b)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x228),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=![]):(TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x247)+pP$elepNWoiOEswuBl$wWpWgE+'.',TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6),LrkOcBYz_$AGjPqXLWnyiATpCI[t$_EKwXXWYJwVOu(0x243)]=!![]);}else TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x273)]=t$_EKwXXWYJwVOu(0x259),TUlYLVXXZeP_OexmGXTd[t$_EKwXXWYJwVOu(0x1fb)][t$_EKwXXWYJwVOu(0x26e)]=t$_EKwXXWYJwVOu(0x1e6);yU_jfkzmffcnGgLWrq[t$_EKwXXWYJwVOu(0x243)]=![];}),LrkOcBYz_$AGjPqXLWnyiATpCI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const muOPzQltrb_ezJpe_MNI=AP$u_huhInYfTj;if(EfNjYNYj_O_CGB)return;const EFBSgoVbWWlkmceHpywAdxhpn=WRVxYBSrPsjcqQs_bXI[muOPzQltrb_ezJpe_MNI(0x24c)][muOPzQltrb_ezJpe_MNI(0x1d4)]();if(!EFBSgoVbWWlkmceHpywAdxhpn){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':muOPzQltrb_ezJpe_MNI(0x202)});return;}if(!PcLAEW[muOPzQltrb_ezJpe_MNI(0x208)]||PcLAEW[muOPzQltrb_ezJpe_MNI(0x208)][muOPzQltrb_ezJpe_MNI(0x216)]===0x0){Swal[muOPzQltrb_ezJpe_MNI(0x26b)]({'icon':muOPzQltrb_ezJpe_MNI(0x212),'title':muOPzQltrb_ezJpe_MNI(0x266),'text':'Vui lòng upload file audio trước khi bắt đầu tạo âm thanh!'});return;}dqj_t_Mr=new Date(),zQizakWdLEdLjtenmCbNC[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),document[muOPzQltrb_ezJpe_MNI(0x1de)](muOPzQltrb_ezJpe_MNI(0x225))[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),pT$bOHGEGbXDSpcuLWAq_yMVf[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),cHjV$QkAT$JWlL[muOPzQltrb_ezJpe_MNI(0x273)]='';if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[muOPzQltrb_ezJpe_MNI(0x1cc)]();ZTQj$LF$o=[],SI$acY=NrfPVBbJv_Dph$tazCpJ(EFBSgoVbWWlkmceHpywAdxhpn),ttuo$y_KhCV=0x6*Math.floor(-parseInt(0x26))+-0x1c45+Math.ceil(parseInt(0x1d29)),EfNjYNYj_O_CGB=!![],MEpJezGZUsmpZdAgFRBRZW=![],LrkOcBYz_$AGjPqXLWnyiATpCI[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x209),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),OdKzziXLxtOGjvaBMHm[muOPzQltrb_ezJpe_MNI(0x1fb)][muOPzQltrb_ezJpe_MNI(0x1e1)]=muOPzQltrb_ezJpe_MNI(0x258),lraDK$WDOgsXHRO[muOPzQltrb_ezJpe_MNI(0x273)]=muOPzQltrb_ezJpe_MNI(0x239),uSTZrHUt_IC();}),lraDK$WDOgsXHRO[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const AuzopbHlRPCFBPQqnHMs=AP$u_huhInYfTj;MEpJezGZUsmpZdAgFRBRZW=!MEpJezGZUsmpZdAgFRBRZW,lraDK$WDOgsXHRO[AuzopbHlRPCFBPQqnHMs(0x273)]=MEpJezGZUsmpZdAgFRBRZW?AuzopbHlRPCFBPQqnHMs(0x271):AuzopbHlRPCFBPQqnHMs(0x239);if(!MEpJezGZUsmpZdAgFRBRZW)uSTZrHUt_IC();}),OdKzziXLxtOGjvaBMHm[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const jWtMo=AP$u_huhInYfTj;EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![];if(xlgJHLP$MATDT$kTXWV)xlgJHLP$MATDT$kTXWV[jWtMo(0x24e)]();if(Srnj$swt)clearTimeout(Srnj$swt);ZTQj$LF$o=[],SI$acY=[],WRVxYBSrPsjcqQs_bXI[jWtMo(0x24c)]='',rUxbIRagbBVychZ$GfsogD[jWtMo(0x24c)]='',pT$bOHGEGbXDSpcuLWAq_yMVf[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),zQizakWdLEdLjtenmCbNC[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209);if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[jWtMo(0x1cc)]();LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x258),lraDK$WDOgsXHRO[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),OdKzziXLxtOGjvaBMHm[jWtMo(0x1fb)][jWtMo(0x1e1)]=jWtMo(0x209),LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x243)]=![],LrkOcBYz_$AGjPqXLWnyiATpCI[jWtMo(0x273)]=jWtMo(0x275);}),XvyPnqSRdJtYjSxingI[AP$u_huhInYfTj(0x25f)](AP$u_huhInYfTj(0x1bd),()=>{const XhOmEQytvnK$v=AP$u_huhInYfTj;if(n_WwsStaC$jzsWjOIjRqedTG)n_WwsStaC$jzsWjOIjRqedTG[XhOmEQytvnK$v(0x21a)]();});
 
         // --- START: NEW FUNCTIONALITY ---
 
@@ -2678,11 +3220,11 @@ async function waitForVoiceModelReady() {
                     startQueueBtn.style.display = 'none';
                     applyPunctuationBtn.style.display = 'block';
                 } else {
-                    // Chỉ hiện nút nếu chưa bị ẩn (chưa bấm tạo âm thanh)
-                    // Nhưng không can thiệp nếu nút đã được hiện lại sau khi áp dụng thiết lập
-                    if (startQueueBtn.style.display !== 'none') {
+                    // Kiểm tra xem có đang processing không (thay vì kiểm tra style.display)
+                    if (!EfNjYNYj_O_CGB) {
                         startQueueBtn.style.display = 'block';
-                        startQueueBtn.disabled = mainTextarea.value.trim() === '';
+                        // Giữ nguyên disabled state (có thể disabled vì chưa upload audio)
+                        // startQueueBtn.disabled = mainTextarea.value.trim() === '';
                     }
                     applyPunctuationBtn.style.display = 'none';
                 }
@@ -2775,8 +3317,15 @@ async function waitForVoiceModelReady() {
                 textToProcess = textToProcess.replace(/ {2,}/g, ' ');
 
                 // Thay thế dấu câu đã thiết lập
-                if (settings.periodEnabled && settings.period > 0) textToProcess = textToProcess.replace(/\./g, ` ${mapDurationToPauseString(settings.period)} `);
-                if (settings.commaEnabled && settings.comma > 0) textToProcess = textToProcess.replace(/,/g, ` ${mapDurationToPauseString(settings.comma)} `);
+                // ⭐ FIX: Chỉ replace dấu chấm/phẩy KHÔNG phải số thập phân (29.5, 1,000)
+                if (settings.periodEnabled && settings.period > 0) {
+                    // Negative lookbehind/lookahead: Chỉ replace dấu chấm KHÔNG nằm giữa 2 số
+                    textToProcess = textToProcess.replace(/(?<!\d)\.(?!\d)/g, ` ${mapDurationToPauseString(settings.period)} `);
+                }
+                if (settings.commaEnabled && settings.comma > 0) {
+                    // Negative lookbehind/lookahead: Chỉ replace dấu phẩy KHÔNG nằm giữa 2 số (để tránh 1,000 → 1 (#0.3#) 000)
+                    textToProcess = textToProcess.replace(/(?<!\d),(?!\d)/g, ` ${mapDurationToPauseString(settings.comma)} `);
+                }
                 if (settings.semicolonEnabled && settings.semicolon > 0) textToProcess = textToProcess.replace(/;/g, ` ${mapDurationToPauseString(settings.semicolon)} `);
                 if (settings.newlineEnabled && settings.newline > 0) textToProcess = textToProcess.replace(/\n/g, ` ${mapDurationToPauseString(settings.newline)} `);
                 // ⭐ FIX: Chỉ replace nhiều spaces, KHÔNG replace xuống dòng
@@ -2792,7 +3341,10 @@ async function waitForVoiceModelReady() {
 
                 // Hiện lại nút tạo âm thanh sau khi áp dụng thiết lập
                 startQueueBtn.style.display = 'block';
-                startQueueBtn.disabled = mainTextarea.value.trim() === '';
+                // Disabled nếu: chưa có text HOẶC chưa upload audio
+                const hasText = mainTextarea.value.trim() !== '';
+                const hasAudio = PcLAEW && PcLAEW.files && PcLAEW.files.length > 0;
+                startQueueBtn.disabled = !hasText || !hasAudio;
                 applyPunctuationBtn.style.display = 'none';
 
                 Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Đã áp dụng thiết lập vào văn bản!', showConfirmButton: false, timer: 2000 });
@@ -3002,9 +3554,35 @@ async function waitForVoiceModelReady() {
                 item.appendChild(playBtn);
                 item.appendChild(uploadBtn);
 
-                // Get duration
+                // Get duration and validate
                 getAudioDuration(file).then(dur => {
                     duration.textContent = formatDuration(dur);
+                    
+                    // Store duration in dataset for validation
+                    item.dataset.duration = dur;
+                    
+                    // Visual indicator for invalid duration
+                    if (dur < 20 || dur > 60) {
+                        item.style.backgroundColor = 'rgba(248, 113, 113, 0.1)';
+                        item.style.borderLeft = '3px solid #f87171';
+                        duration.style.color = '#f87171';
+                        duration.style.fontWeight = 'bold';
+                        uploadBtn.style.opacity = '0.5';
+                        uploadBtn.title = '⚠️ Audio không hợp lệ (20-60s)';
+                        
+                        // Add warning icon
+                        const warningIcon = document.createElement('span');
+                        warningIcon.textContent = '⚠️';
+                        warningIcon.style.color = '#f87171';
+                        warningIcon.style.marginLeft = '5px';
+                        warningIcon.title = `Audio phải từ 20-60 giây (hiện tại: ${Math.floor(dur)}s)`;
+                        duration.appendChild(warningIcon);
+                    } else {
+                        item.style.backgroundColor = 'rgba(80, 250, 123, 0.05)';
+                        item.style.borderLeft = '3px solid #50fa7b';
+                        duration.style.color = '#50fa7b';
+                        uploadBtn.title = '✅ Tải file lên (độ dài hợp lệ)';
+                    }
                 });
 
                 // Play/pause functionality
@@ -3052,10 +3630,103 @@ async function waitForVoiceModelReady() {
                 });
 
                 // Upload button functionality
-                uploadBtn.addEventListener('click', (e) => {
+                uploadBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
 
-                    // Auto-upload the selected file
+                    addLogEntry('🔍 [DEBUG] Upload button clicked!', 'info');
+                    addLogEntry(`🔍 [DEBUG] File name: ${file.name}`, 'info');
+                    addLogEntry(`🔍 [DEBUG] item.dataset.duration: ${item.dataset.duration}`, 'info');
+
+                    // Check if duration is available
+                    if (!item.dataset.duration || item.dataset.duration === 'undefined') {
+                        addLogEntry('⚠️ [DEBUG] Duration not ready yet, fetching...', 'warning');
+                        
+                        // Show loading message
+                        Swal.fire({
+                            title: 'Đang kiểm tra độ dài audio...',
+                            text: 'Vui lòng chờ...',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                        // Get duration now
+                        const dur = await getAudioDuration(file);
+                        item.dataset.duration = dur;
+                        addLogEntry(`✅ [DEBUG] Duration fetched: ${dur} seconds`, 'success');
+                        
+                        Swal.close();
+                    }
+
+                    // Validate audio duration before upload
+                    const audioDuration = parseFloat(item.dataset.duration);
+                    
+                    addLogEntry(`🔍 [DEBUG] Parsed audioDuration: ${audioDuration}`, 'info');
+                    addLogEntry(`🔍 [DEBUG] Is valid (20-60)? ${audioDuration >= 20 && audioDuration <= 60}`, 'info');
+                    
+                    // CRITICAL: Check if duration is invalid
+                    if (!audioDuration || audioDuration < 20 || audioDuration > 60) {
+                        // Block upload and show error
+                        let errorMessage = '';
+                        let details = '';
+                        
+                        if (!audioDuration || audioDuration === 0) {
+                            errorMessage = `Không thể xác định độ dài audio.`;
+                            details = 'File có thể bị lỗi hoặc không phải file audio hợp lệ.';
+                        } else if (audioDuration < 20) {
+                            errorMessage = `Audio quá ngắn: ${Math.floor(audioDuration)} giây`;
+                            details = `Cần tối thiểu 20 giây.`;
+                        } else {
+                            errorMessage = `Audio quá dài: ${Math.floor(audioDuration)} giây`;
+                            details = `Tối đa 60 giây (1 phút).`;
+                        }
+                        
+                        addLogEntry('❌ [DEBUG] VALIDATION FAILED!', 'error');
+                        addLogEntry(`❌ [DEBUG] Reason: ${errorMessage}`, 'error');
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: '⚠️ Audio không hợp lệ',
+                            html: `
+                                <div style="text-align: left; padding: 15px;">
+                                    <div style="background: rgba(248, 113, 113, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #f87171;">
+                                        <p style="margin: 0; font-weight: bold; color: #f87171;">❌ ${errorMessage}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 13px; color: #fca5a5;">${details}</p>
+                                    </div>
+                                    
+                                    <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+                                    
+                                    <div style="background: rgba(139, 233, 253, 0.1); padding: 12px; border-radius: 6px; border-left: 4px solid #8be9fd;">
+                                        <p style="margin: 0 0 8px 0; font-weight: bold;">📌 Yêu cầu:</p>
+                                        <ul style="margin: 0; padding-left: 20px;">
+                                            <li style="margin: 5px 0;">Độ dài: <strong style="color: #50fa7b;">20-60 giây</strong></li>
+                                            <li style="margin: 5px 0;">Hiện tại: <strong style="color: #f87171;">${audioDuration ? Math.floor(audioDuration) : '???'} giây</strong></li>
+                                            <li style="margin: 5px 0;">File: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">${file.name}</code></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <p style="margin-top: 15px; color: #8be9fd; font-size: 13px;">
+                                        💡 <strong>Giải pháp:</strong> Chọn file audio khác hoặc cắt/chỉnh sửa file này về 20-60 giây.
+                                    </p>
+                                </div>
+                            `,
+                            confirmButtonText: 'Đã hiểu',
+                            confirmButtonColor: '#8be9fd',
+                            background: '#282a36',
+                            color: '#f8f8f2',
+                            width: '600px'
+                        });
+                        
+                        addLogEntry('🚫 [DEBUG] Upload BLOCKED!', 'error');
+                        return; // Stop upload
+                    }
+
+                    addLogEntry('✅ [DEBUG] Validation PASSED! Proceeding with upload...', 'success');
+
+                    // Auto-upload the selected file (only if valid)
                     try {
                         const fileInput = document.getElementById('gemini-file-input');
                         if (fileInput) {
@@ -3067,20 +3738,22 @@ async function waitForVoiceModelReady() {
                             // Trigger the change event to simulate file selection
                             fileInput.dispatchEvent(new Event('change', { bubbles: true }));
 
+                            addLogEntry('✅ [DEBUG] File uploaded successfully!', 'success');
+
                             // Show success message
                             Swal.fire({
                                 toast: true,
                                 position: 'top-end',
                                 icon: 'success',
-                                title: 'Đã tải file âm thanh',
-                                text: `File "${file.name}" đã được tải lên thành công!`,
+                                title: '✅ Đã tải file âm thanh',
+                                text: `File "${file.name}" (${Math.floor(audioDuration)}s) đã được tải lên!`,
                                 showConfirmButton: false,
-                                timer: 2000,
+                                timer: 2500,
                                 timerProgressBar: true,
                             });
                         }
                     } catch (error) {
-                        console.error('Error auto-uploading file:', error);
+                        addLogEntry(`❌ [DEBUG] Error during upload: ${error.message}`, 'error');
                         Swal.fire({
                             toast: true,
                             position: 'top-end',
@@ -3123,9 +3796,51 @@ async function waitForVoiceModelReady() {
                     if (files.length === 0) {
                         audioListContainer.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Không tìm thấy file MP3 nào</div>';
                     } else {
+                        // Create summary header placeholder
+                        const summaryDiv = document.createElement('div');
+                        summaryDiv.id = 'audio-summary';
+                        summaryDiv.style.cssText = 'padding: 12px; margin-bottom: 10px; background: rgba(139, 233, 253, 0.1); border-radius: 6px; border-left: 4px solid #8be9fd; font-size: 12px;';
+                        summaryDiv.innerHTML = '📊 Đang kiểm tra độ dài audio...';
+                        audioListContainer.appendChild(summaryDiv);
+                        
+                        // Add files to list
+                        const filePromises = [];
                         files.forEach((file, index) => {
                             const item = createAudioItem(file, index);
                             audioListContainer.appendChild(item);
+                            
+                            // Store promise to get duration
+                            filePromises.push(getAudioDuration(file));
+                        });
+                        
+                        // Wait for all durations and update summary
+                        Promise.all(filePromises).then(durations => {
+                            const validFiles = durations.filter(d => d >= 20 && d <= 60).length;
+                            const invalidFiles = durations.length - validFiles;
+                            
+                            let summaryHtml = `
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                                    <div style="flex: 1;">
+                                        <strong>📊 Tổng quan:</strong> ${files.length} file
+                                    </div>
+                                    <div style="flex: 1; text-align: center;">
+                                        <span style="color: #50fa7b; font-weight: bold;">✅ ${validFiles}</span> hợp lệ
+                                    </div>
+                                    <div style="flex: 1; text-align: right;">
+                                        <span style="color: #f87171; font-weight: bold;">⚠️ ${invalidFiles}</span> không hợp lệ
+                                    </div>
+                                </div>
+                            `;
+                            
+                            if (invalidFiles > 0) {
+                                summaryHtml += `
+                                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); color: #f87171; font-size: 11px;">
+                                        💡 <strong>${invalidFiles} file</strong> không thể upload vì độ dài không phải 20-60 giây
+                                    </div>
+                                `;
+                            }
+                            
+                            summaryDiv.innerHTML = summaryHtml;
                         });
                     }
                 } catch (error) {
@@ -3512,6 +4227,26 @@ async function waitForVoiceModelReady() {
                     return;
                 }
 
+                // === AUTO-FIX KHI ĐANG TRONG BATCH MODE ===
+                // Kiểm tra xem có đang tạo file hàng loạt không
+                const isBatchMode = window.batchState && window.batchState.isProcessing;
+                
+                console.log('🔍 [Punctuation] Checking batch mode:', {
+                    hasBatchState: !!window.batchState,
+                    isProcessing: window.batchState?.isProcessing,
+                    isBatchMode: isBatchMode
+                });
+                
+                if (isBatchMode) {
+                    // Tự động fix và không hiển thị modal
+                    addLogEntry('🔧 [Batch] Tự động sửa dấu câu trùng lặp...', 'info');
+                    setTimeout(() => {
+                        window.autoFixAllPunctuationIssues();
+                    }, 100);
+                    return;
+                }
+                // === END AUTO-FIX ===
+
                 issuesList.innerHTML = '';
                 issues.forEach((issue, index) => {
                     const issueDiv = document.createElement('div');
@@ -3540,7 +4275,7 @@ async function waitForVoiceModelReady() {
                     issuesList.appendChild(issueDiv);
                 });
 
-                // Hiển thị modal
+                // Hiển thị modal (chỉ khi không phải batch mode)
                 modal.style.display = 'flex';
             }
 
@@ -3555,40 +4290,65 @@ async function waitForVoiceModelReady() {
                 
                 // Check nếu KHÔNG phải Tiếng Việt → không sửa
                 if (!selectedLanguage.includes('việt') && !selectedLanguage.includes('viet') && !selectedLanguage.includes('vietnamese')) {
-                    console.log('Language not Vietnamese, skipping Vietnamese word fixes');
+                    console.log('[fixVietnameseWords] Not Vietnamese language, skipping...');
                     return text;
                 }
                 
-                console.log('Applying Vietnamese word fixes for language:', selectedLanguage);
+                console.log('[fixVietnameseWords] Applying Vietnamese word fixes for language:', selectedLanguage);
                 
                 let fixedText = text;
                 let fixCount = 0;
                 
-                // Fix "ai" → "Ai" (chỉ khi đứng độc lập)
-                // \b = word boundary (đảm bảo từ đứng độc lập)
-                // Ví dụ: "ai đó" → "Ai đó" ✅
-                // Ví dụ: "bại hoại" → KHÔNG đổi ❌
-                const aiPattern = /\bai\b/g;
+                // ================================================================
+                // ✅ FIX: "ai" → "Ai" (CHỈ KHI ĐỨNG ĐỘC LẬP)
+                // ================================================================
+                // Pattern cũ (SAI):  /\bai\b/g  ← Word boundary KHÔNG work với tiếng Việt có dấu
+                // Pattern mới (ĐÚNG): /(^|\s)(ai)(\s|$|[.,?!;:])/gi
+                //
+                // Giải thích:
+                // (^|\s)         - Đầu dòng HOẶC space
+                // (ai)           - Chữ "ai" (capture để giữ case)
+                // (\s|$|[.,?!;:]) - Space, cuối dòng, HOẶC dấu câu
+                //
+                // Examples:
+                // ✅ "ai đó"      → "Ai đó"     (match)
+                // ✅ "người ai"   → "người Ai"  (match)
+                // ❌ "đai"        → "đai"       (KHÔNG match - giữ nguyên!)
+                // ❌ "vành đai"   → "vành đai"  (KHÔNG match - giữ nguyên!)
+                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
+                // ================================================================
+                const aiPattern = /(^|\s)(ai)(\s|$|[.,?!;:])/gi;
                 const aiMatches = fixedText.match(aiPattern);
                 if (aiMatches) {
-                    fixedText = fixedText.replace(aiPattern, 'Ai');
+                    // Replace: giữ nguyên prefix/suffix, chỉ uppercase "ai"
+                    fixedText = fixedText.replace(aiPattern, (match, prefix, word, suffix) => {
+                        return prefix + 'Ai' + suffix;
+                    });
                     fixCount += aiMatches.length;
-                    console.log(`Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
+                    console.log(`[fixVietnameseWords] Fixed ${aiMatches.length} occurrences of "ai" → "Ai"`);
                 }
                 
-                // Fix "im" → "Im" (chỉ khi đứng độc lập)
-                // Ví dụ: "im lặng" → "Im lặng" ✅
-                // Ví dụ: "kim loại" → KHÔNG đổi ❌
-                const imPattern = /\bim\b/g;
+                // ================================================================
+                // ✅ FIX: "im" → "Im" (CHỈ KHI ĐỨNG ĐỘC LẬP)
+                // ================================================================
+                // Tương tự như "ai"
+                //
+                // Examples:
+                // ✅ "im lặng"    → "Im lặng"   (match)
+                // ❌ "kim loại"   → "kim loại"  (KHÔNG match - giữ nguyên!)
+                // ================================================================
+                const imPattern = /(^|\s)(im)(\s|$|[.,?!;:])/gi;
                 const imMatches = fixedText.match(imPattern);
                 if (imMatches) {
-                    fixedText = fixedText.replace(imPattern, 'Im');
+                    fixedText = fixedText.replace(imPattern, (match, prefix, word, suffix) => {
+                        return prefix + 'Im' + suffix;
+                    });
                     fixCount += imMatches.length;
-                    console.log(`Fixed ${imMatches.length} occurrences of "im" → "Im"`);
+                    console.log(`[fixVietnameseWords] Fixed ${imMatches.length} occurrences of "im" → "Im"`);
                 }
                 
                 if (fixCount > 0) {
-                    console.log(`Total Vietnamese word fixes: ${fixCount}`);
+                    console.log(`[fixVietnameseWords] Total Vietnamese word fixes: ${fixCount}`);
                 }
                 
                 return fixedText;
@@ -3600,11 +4360,13 @@ async function waitForVoiceModelReady() {
                 const textarea = document.getElementById('gemini-main-textarea');
                 const defaultPunctuation = document.getElementById('default-punctuation-select');
                 const modal = document.getElementById('punctuation-detection-modal');
+                const isBatchMode = window.batchState && window.batchState.isProcessing;
 
                 console.log('Elements found:', {
                     textarea: !!textarea,
                     defaultPunctuation: !!defaultPunctuation,
                     modal: !!modal,
+                    isBatchMode: isBatchMode,
                     issuesCount: detectedPunctuationIssues.length
                 });
 
@@ -3618,14 +4380,15 @@ async function waitForVoiceModelReady() {
                     return;
                 }
 
-                if (!modal) {
+                // Modal không bắt buộc khi batch mode
+                if (!modal && !isBatchMode) {
                     console.error('Modal not found');
                     return;
                 }
 
                 if (!detectedPunctuationIssues.length) {
                     console.log('No issues to fix');
-                    modal.style.display = 'none';
+                    if (modal) modal.style.display = 'none';
                     return;
                 }
 
@@ -3639,54 +4402,70 @@ async function waitForVoiceModelReady() {
                 const punctuationIssues = detectedPunctuationIssues.filter(issue => !issue.isVietnameseWord);
                 const vietnameseWordIssues = detectedPunctuationIssues.filter(issue => issue.isVietnameseWord);
 
-                // Sắp xếp punctuation issues theo thứ tự ngược để tránh ảnh hưởng đến index
-                const sortedPunctuationIssues = [...punctuationIssues].sort((a, b) => b.start - a.start);
-                console.log('Punctuation issues to fix:', sortedPunctuationIssues.length);
+                console.log('Punctuation issues:', punctuationIssues.length);
+                console.log('Vietnamese word issues:', vietnameseWordIssues.length);
 
-                sortedPunctuationIssues.forEach((issue, index) => {
-                    console.log(`Fixing punctuation issue ${index + 1}:`, issue);
+                // ========================================
+                // 🔧 FIX BUG: MERGE TẤT CẢ ISSUES THÀNH 1 MẢNG
+                // Merge thành 1 mảng với replacement được set sẵn
+                // ========================================
+                const allIssues = [
+                    ...punctuationIssues.map(issue => ({
+                        ...issue,
+                        replacement: punctuationValue  // Dùng punctuation user chọn
+                    })),
+                    ...vietnameseWordIssues.map(issue => ({
+                        ...issue,
+                        replacement: issue.suggestion  // Dùng suggestion (Ai, Im)
+                    }))
+                ];
+
+                console.log(`Total issues to fix: ${allIssues.length}`);
+
+                // Sort TẤT CẢ issues theo thứ tự NGƯỢC (từ cuối lên đầu)
+                // Vì fix từ cuối, nên KHÔNG BAO GIỜ ảnh hưởng đến index của issues phía trước
+                const sortedAllIssues = allIssues.sort((a, b) => b.start - a.start);
+
+                // Fix TẤT CẢ issues từ CUỐI lên ĐẦU
+                sortedAllIssues.forEach((issue, index) => {
+                    console.log(`Fixing issue ${index + 1}/${sortedAllIssues.length}: "${issue.text}" → "${issue.replacement}"`);
                     const beforeText = text.substring(0, issue.start);
                     const afterText = text.substring(issue.end);
-                    // Thay thế toàn bộ cụm dấu câu bằng dấu câu mặc định
-                    text = beforeText + punctuationValue + afterText;
-                });
-
-                // Sắp xếp Vietnamese word issues theo thứ tự ngược
-                const sortedVietnameseIssues = [...vietnameseWordIssues].sort((a, b) => b.start - a.start);
-                console.log('Vietnamese word issues to fix:', sortedVietnameseIssues.length);
-
-                sortedVietnameseIssues.forEach((issue, index) => {
-                    console.log(`Fixing Vietnamese word issue ${index + 1}:`, issue);
-                    const beforeText = text.substring(0, issue.start);
-                    const afterText = text.substring(issue.end);
-                    // Thay thế bằng suggestion (Ai hoặc Im)
-                    text = beforeText + issue.suggestion + afterText;
+                    text = beforeText + issue.replacement + afterText;
                 });
 
                 textarea.value = text;
                 detectedPunctuationIssues = [];
 
-                // Đóng modal
-                modal.style.display = 'none';
-                console.log('Modal closed');
+                // Đóng modal (nếu có)
+                if (modal) {
+                    modal.style.display = 'none';
+                    console.log('Modal closed');
+                }
 
                 // Trigger input event để cập nhật stats
                 textarea.dispatchEvent(new Event('input'));
 
                 // Hiển thị thông báo thành công
-                const totalIssues = sortedPunctuationIssues.length + sortedVietnameseIssues.length;
-                if (typeof Swal !== 'undefined') {
+                const totalIssues = sortedAllIssues.length;
+                const punctuationCount = punctuationIssues.length;
+                const vietnameseCount = vietnameseWordIssues.length;
+                
+                // Chỉ hiển thị toast khi KHÔNG trong batch mode
+                if (!isBatchMode && typeof Swal !== 'undefined') {
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
                         title: 'Đã sửa dấu câu & từ Tiếng Việt',
-                        text: `Đã tự động sửa ${sortedPunctuationIssues.length} lỗi dấu câu và ${sortedVietnameseIssues.length} từ Tiếng Việt`,
+                        text: `Đã tự động sửa ${punctuationCount} lỗi dấu câu và ${vietnameseCount} từ Tiếng Việt`,
                         showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true
                     });
                 }
+                
+                console.log(`Fixed ${punctuationCount} punctuation issues and ${vietnameseCount} Vietnamese word issues`);
             }
 
             // Hàm bỏ qua tất cả lỗi dấu câu
@@ -4518,6 +5297,10 @@ async function waitForVoiceModelReady() {
         isStopped: true,
         startTime: null,
     };
+    
+    // Expose ra global scope cho tạo file hàng loạt
+    window.processingState = processingState;
+    
     const MAX_RETRIES_PER_CHUNK = 5;
     const RETRY_DELAY_MS = 5000;
     let n_WwsStaC$jzsWjOIjRqedTG = null; // WaveSurfer instance
@@ -5014,6 +5797,9 @@ async function waitForVoiceModelReady() {
         document.getElementById('gemini-pause-btn').style.display = 'none';
         document.getElementById('gemini-stop-btn').style.display = 'none';
     }
+    
+    // Expose ra global scope cho tạo file hàng loạt
+    window.manageFullQueue = manageFullQueue;
 
 
 
@@ -5094,6 +5880,22 @@ async function waitForVoiceModelReady() {
 
             addLogEntry("🎉 Ghép file thành công! File âm thanh đã sẵn sàng!", 'success');
 
+            // Lưu file đã merge vào lịch sử IndexedDB (flow mới - nếu được dùng)
+            try {
+                const fileName = downloadBtn.download || 'merged_audio.mp3';
+                const db = window.historyDB || historyDB;
+                
+                if (db && typeof db.saveMergedFile === 'function') {
+                    await db.saveMergedFile(fileName, mergedBlob, {
+                        chunkCount: orderedBlobs.length,
+                        totalChunks: processingState.chunks.length
+                    });
+                    addLogEntry(`📚 Đã lưu "${fileName}" vào lịch sử`, 'success');
+                }
+            } catch (historyError) {
+                console.error('Lỗi lưu lịch sử:', historyError);
+            }
+
         } catch (e) {
             addLogEntry(`❌ Lỗi khi tạo file âm thanh cuối cùng: ${e.message}`, 'error');
         }
@@ -5169,6 +5971,16 @@ async function waitForVoiceModelReady() {
                 return;
             }
 
+            // 🔧 XÓA SẠCH CÁC BIẾN TOÀN CỤC CŨ ĐỂ TRÁNH NỐI THỪA AUDIO
+            ZTQj$LF$o = [];
+            SI$acY = [];
+            ttuo$y_KhCV = 0;
+            window.chunkBlobs = []; // Force reset
+            window.totalChunksForCurrentBatch = 0; // Thêm biến đếm chunk cho batch hiện tại
+            window.chunkStatus = []; // Reset trạng thái chunk
+            window.failedChunks = []; // Reset danh sách chunk thất bại
+            addLogEntry('🧹 Đã xóa sạch dữ liệu audio cũ', 'info');
+
             // 1. Khởi tạo trạng thái (ĐÃ NÂNG CẤP)
             processingState.isPaused = false;
             processingState.isStopped = false;
@@ -5186,6 +5998,15 @@ async function waitForVoiceModelReady() {
                 originalIndex: index,
                 audioBlob: null
             }));
+
+            // 🔧 KHỞI TẠO LẠI ARRAYS VỚI ĐÚNG SỐ LƯỢNG CHUNKS
+            window.totalChunksForCurrentBatch = chunksArray.length;
+            window.chunkBlobs = new Array(chunksArray.length).fill(null);
+            ZTQj$LF$o = new Array(chunksArray.length).fill(null);
+            SI$acY = chunksArray; // Cập nhật SI$acY với chunks mới
+            window.chunkStatus = new Array(chunksArray.length).fill('pending'); // Khởi tạo trạng thái chunk
+            window.failedChunks = []; // Reset danh sách chunk thất bại
+            addLogEntry(`🔧 Đã khởi tạo arrays với ${chunksArray.length} vị trí cho batch mới`, 'info');
 
             // 2. Cập nhật giao diện
             startBtn.disabled = true;
@@ -5217,6 +6038,17 @@ async function waitForVoiceModelReady() {
             processingState.isStopped = true;
             processingState.isPaused = false;
             addLogEntry("🔴 Người dùng đã yêu cầu dừng hẳn quá trình.", 'error');
+
+            // 🔧 XÓA SẠCH DỮ LIỆU KHI DỪNG
+            ZTQj$LF$o = [];
+            SI$acY = [];
+            ttuo$y_KhCV = 0;
+            window.chunkBlobs = [];
+            window.totalChunksForCurrentBatch = 0;
+            window.chunkStatus = [];
+            window.failedChunks = [];
+            processingState.chunks = [];
+            addLogEntry('🧹 Đã xóa sạch dữ liệu khi dừng', 'info');
 
             // Reset giao diện
             startBtn.disabled = false;
@@ -5514,12 +6346,12 @@ async function waitForVoiceModelReady() {
         errorObserver = observeErrorMessages();
     }, 2000);
     
-    // Override user info text to show "Đã đăng nhập" and keep it
+    // Override user info text to show "Kz Tool" and keep it
     function setUserInfoText() {
         const userInfo = document.getElementById('gemini-user-info');
-        if (userInfo && userInfo.textContent !== '✅ Đã đăng nhập') {
-            userInfo.textContent = '✅ Đã đăng nhập';
-            userInfo.innerHTML = '✅ Đã đăng nhập';
+        if (userInfo && userInfo.textContent !== '✅ Kz Tool') {
+            userInfo.textContent = '✅ Kz Tool';
+            userInfo.innerHTML = '✅ Kz Tool';
         }
     }
     
@@ -5544,10 +6376,1067 @@ async function waitForVoiceModelReady() {
         }
     }, 100);
     
+    // =================================================================
+    // == INDEXEDDB - LƯU AUDIO ĐÃ UPLOAD ==
+    // =================================================================
+    
+    const DB_NAME = 'SavedAudioDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'audios';
+    let db = null;
+    
+    // Initialize IndexedDB
+    function initIndexedDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            
+            request.onerror = () => {
+                addLogEntry('❌ Không thể mở IndexedDB', 'error');
+                reject(request.error);
+            };
+            
+            request.onsuccess = () => {
+                db = request.result;
+                addLogEntry('✅ IndexedDB đã khởi tạo', 'success');
+                resolve(db);
+            };
+            
+            request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                    objectStore.createIndex('name', 'name', { unique: false });
+                    objectStore.createIndex('uploadDate', 'uploadDate', { unique: false });
+                    addLogEntry('✅ Đã tạo object store cho audio', 'success');
+                }
+            };
+        });
+    }
+    
+    // Check if audio already exists in IndexedDB
+    async function isAudioExists(fileName) {
+        if (!db) return false;
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.getAll();
+            
+            return new Promise((resolve) => {
+                request.onsuccess = () => {
+                    const audios = request.result;
+                    const exists = audios.some(audio => audio.name === fileName);
+                    resolve(exists);
+                };
+                
+                request.onerror = () => {
+                    resolve(false);
+                };
+            });
+        } catch (error) {
+            return false;
+        }
+    }
+    
+    // Save audio to IndexedDB
+    async function saveAudioToIndexedDB(file, duration) {
+        if (!db) {
+            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
+            return;
+        }
+        
+        // Check if audio already exists
+        const exists = await isAudioExists(file.name);
+        if (exists) {
+            addLogEntry(`⚠️ Audio "${file.name}" đã tồn tại, bỏ qua`, 'warning');
+            return;
+        }
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            
+            const audioData = {
+                name: file.name,
+                blob: file,
+                duration: duration,
+                uploadDate: new Date().toISOString(),
+                size: file.size,
+                type: file.type
+            };
+            
+            const request = objectStore.add(audioData);
+            
+            return new Promise((resolve, reject) => {
+                request.onsuccess = () => {
+                    addLogEntry(`💾 Đã lưu audio: ${file.name}`, 'success');
+                    loadSavedAudios(); // Refresh list
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    addLogEntry(`❌ Lỗi lưu audio: ${request.error}`, 'error');
+                    reject(request.error);
+                };
+            });
+        } catch (error) {
+            addLogEntry(`❌ Lỗi saveAudioToIndexedDB: ${error}`, 'error');
+        }
+    }
+    
+    // Load saved audios from IndexedDB
+    async function loadSavedAudios() {
+        if (!db) {
+            addLogEntry('⚠️ IndexedDB chưa sẵn sàng', 'warning');
+            return;
+        }
+        
+        try {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.getAll();
+            
+            request.onsuccess = () => {
+                const audios = request.result;
+                renderSavedAudiosList(audios);
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi load audio: ${request.error}`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi loadSavedAudios: ${error}`, 'error');
+        }
+    }
+    
+    // Render saved audios list
+    function renderSavedAudiosList(audios) {
+        const savedAudioList = document.getElementById('saved-audio-list');
+        const clearBtn = document.getElementById('clear-saved-audio-btn');
+        
+        if (!savedAudioList) return;
+        
+        if (audios.length === 0) {
+            savedAudioList.innerHTML = '<div style="padding: 10px; text-align: center; color: #94a3b8;">Chưa có audio nào được lưu</div>';
+            if (clearBtn) clearBtn.style.display = 'none';
+            return;
+        }
+        
+        savedAudioList.innerHTML = '';
+        if (clearBtn) clearBtn.style.display = 'block';
+        
+        audios.forEach(audio => {
+            
+            const item = document.createElement('div');
+            item.className = 'saved-audio-item';
+            
+            const name = document.createElement('span');
+            name.className = 'saved-audio-name';
+            name.textContent = audio.name;
+            name.title = audio.name;
+            
+            const duration = document.createElement('span');
+            duration.className = 'saved-audio-duration';
+            duration.textContent = formatDuration(audio.duration);
+            
+            const date = document.createElement('span');
+            date.className = 'saved-audio-date';
+            const uploadDate = new Date(audio.uploadDate);
+            date.textContent = uploadDate.toLocaleDateString('vi-VN');
+            date.title = uploadDate.toLocaleString('vi-VN');
+            
+            const useBtn = document.createElement('button');
+            useBtn.className = 'use-saved-audio-btn';
+            useBtn.textContent = '🔄';
+            useBtn.title = 'Chọn audio này';
+            useBtn.onclick = (e) => {
+                e.stopPropagation();
+                useSavedAudio(audio);
+            };
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-saved-audio-btn';
+            deleteBtn.textContent = '🗑️';
+            deleteBtn.title = 'Xóa audio này';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                deleteSavedAudio(audio.id);
+            };
+            
+            item.appendChild(name);
+            item.appendChild(duration);
+            item.appendChild(date);
+            item.appendChild(useBtn);
+            item.appendChild(deleteBtn);
+            
+            savedAudioList.appendChild(item);
+        });
+    }
+    
+    // Format duration (helper function)
+    function formatDuration(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Use saved audio (populate file input)
+    async function useSavedAudio(audio) {
+        try {
+            addLogEntry(`🔄 Đang chọn audio: ${audio.name}`, 'info');
+            
+            // Create a new File object from blob
+            const file = new File([audio.blob], audio.name, { type: audio.type });
+            
+            // Create DataTransfer to populate file input
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            
+            const fileInput = document.getElementById('gemini-file-input');
+            if (fileInput) {
+                fileInput.files = dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+                
+                addLogEntry(`✅ Đã chọn audio: ${audio.name}`, 'success');
+                
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã chọn audio',
+                    text: audio.name,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            }
+        } catch (error) {
+            addLogEntry(`❌ Lỗi useSavedAudio: ${error}`, 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Không thể chọn audio này'
+            });
+        }
+    }
+    
+    // Delete saved audio
+    async function deleteSavedAudio(id) {
+        if (!db) return;
+        
+        // Check if Swal exists
+        if (typeof Swal === 'undefined') {
+            const nativeConfirm = confirm('Bạn có chắc muốn xóa audio này?');
+            if (!nativeConfirm) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.delete(id);
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa audio', 'success');
+                loadSavedAudios();
+                alert('Đã xóa audio!');
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa audio`, 'error');
+            };
+            return;
+        }
+        
+        try {
+            const result = await Swal.fire({
+                title: 'Xác nhận xóa',
+                text: 'Bạn có chắc muốn xóa audio này?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#ff5555',
+                customClass: {
+                    container: 'delete-audio-swal-container',
+                    popup: 'delete-audio-swal-popup'
+                },
+                backdrop: true
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.delete(id);
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa audio', 'success');
+                loadSavedAudios();
+                
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã xóa',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa audio`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
+        }
+    }
+    
+    // Clear all saved audios
+    async function clearAllSavedAudios() {
+        if (!db) return;
+        
+        // Check if Swal exists
+        if (typeof Swal === 'undefined') {
+            const nativeConfirm = confirm('Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?');
+            if (!nativeConfirm) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.clear();
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa tất cả audio', 'success');
+                loadSavedAudios();
+                alert('Đã xóa tất cả audio!');
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
+            };
+            return;
+        }
+        
+        try {
+            const result = await Swal.fire({
+                title: 'Xóa tất cả?',
+                text: 'Bạn có chắc muốn xóa TẤT CẢ audio đã lưu?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa tất cả',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#ff5555',
+                customClass: {
+                    container: 'delete-audio-swal-container',
+                    popup: 'delete-audio-swal-popup'
+                },
+                backdrop: true
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const objectStore = transaction.objectStore(STORE_NAME);
+            const request = objectStore.clear();
+            
+            request.onsuccess = () => {
+                addLogEntry('✅ Đã xóa tất cả audio', 'success');
+                loadSavedAudios();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã xóa tất cả',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
+            
+            request.onerror = () => {
+                addLogEntry(`❌ Lỗi xóa tất cả`, 'error');
+            };
+        } catch (error) {
+            addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
+        }
+    }
+    
+    // Initialize IndexedDB and load saved audios
+    setTimeout(async () => {
+        try {
+            await initIndexedDB();
+            await loadSavedAudios();
+            
+            // Setup clear all button
+            const clearBtn = document.getElementById('clear-saved-audio-btn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearAllSavedAudios);
+            }
+            
+            addLogEntry('✅ Hệ thống lưu audio đã sẵn sàng', 'success');
+        } catch (error) {
+            addLogEntry(`❌ Lỗi khởi tạo IndexedDB: ${error}`, 'error');
+        }
+    }, 2000);
+    
+    // Hook into file upload success to auto-save
+    // We'll intercept the gemini-file-input change event
+    setTimeout(() => {
+        const fileInput = document.getElementById('gemini-file-input');
+        if (fileInput) {
+            // Store original change handler
+            const originalOnChange = fileInput.onchange;
+            
+            fileInput.addEventListener('change', async function(e) {
+                const files = e.target.files;
+                if (!files || files.length === 0) {
+                    // Nếu xóa file, disable nút "Bắt đầu"
+                    const startBtn = document.getElementById('gemini-start-queue-btn');
+                    if (startBtn) startBtn.disabled = true;
+                    return;
+                }
+                
+                // Auto-save each audio file
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (file.type.startsWith('audio/') || file.name.match(/\.(mp3|wav|m4a|mpeg)$/i)) {
+                        try {
+                            // Get audio duration
+                            const duration = await getAudioDuration(file);
+                            
+                            // Validate duration: only save if 20-60 seconds
+                            if (duration >= 20 && duration <= 60) {
+                                // Save to IndexedDB
+                                await saveAudioToIndexedDB(file, duration);
+                            } else {
+                                addLogEntry(`⚠️ Audio "${file.name}" (${Math.floor(duration)}s) không hợp lệ, không lưu vào thư viện`, 'warning');
+                            }
+                        } catch (error) {
+                            // Silent fail
+                        }
+                    }
+                }
+                
+                // ✅ ENABLE nút "Bắt đầu" sau khi upload audio thành công
+                const startBtn = document.getElementById('gemini-start-queue-btn');
+                const mainTextarea = document.getElementById('gemini-main-textarea');
+                if (startBtn && files.length > 0) {
+                    startBtn.disabled = !mainTextarea || mainTextarea.value.trim() === '';
+                }
+            }, false); // Use capture: false to not interfere with validation
+        }
+    }, 2500);
+    
+    // Helper: Get audio duration (reuse existing function if available)
+    async function getAudioDuration(file) {
+        return new Promise((resolve, reject) => {
+            const audio = document.createElement('audio');
+            const url = URL.createObjectURL(file);
+            
+            audio.addEventListener('loadedmetadata', () => {
+                URL.revokeObjectURL(url);
+                resolve(audio.duration);
+            });
+            
+            audio.addEventListener('error', () => {
+                URL.revokeObjectURL(url);
+                reject(new Error('Không thể load audio'));
+            });
+            
+            audio.src = url;
+        });
+    }
+    
+    // =================================================================
+    // == END INDEXEDDB ==
+    // =================================================================
+
+    // =================================================================
+    // == HISTORY MODAL - HIỂN THỊ AUDIO ĐÃ TẠO ==
+    // =================================================================
+    
+    function initHistoryModal() {
+        // Khởi tạo modal "Audio đã tạo" và các event listeners
+        const openHistoryBtn = document.getElementById('open-history-modal-btn');
+        const historyModal = document.getElementById('history-modal');
+        const clearAllHistoryBtn = document.getElementById('clear-all-history-btn');
+        
+        if (!openHistoryBtn || !historyModal) {
+            console.warn('Không tìm thấy nút hoặc modal history');
+            return;
+        }
+
+        // Đảm bảo HistoryDB đã được init (với delay để tránh race condition)
+        setTimeout(async () => {
+            try {
+                await historyDB.init();
+            } catch (error) {
+                console.error('Lỗi khởi tạo HistoryDB:', error);
+            }
+        }, 2000);
+
+        // Mở modal khi click nút "Audio đã tạo"
+        openHistoryBtn.addEventListener('click', async () => {
+            try {
+                historyModal.style.display = 'flex';
+                await renderHistory();
+            } catch (error) {
+                console.error('Lỗi mở history modal:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Không thể tải lịch sử audio!'
+                });
+            }
+        });
+
+        // Xóa tất cả lịch sử - không cần confirm
+        if (clearAllHistoryBtn) {
+            clearAllHistoryBtn.addEventListener('click', async () => {
+                try {
+                    // Xóa trực tiếp không cần confirm
+                    await historyDB.clearAllHistory();
+                    await renderHistory();
+                    addLogEntry('✅ Đã xóa toàn bộ lịch sử', 'success');
+                    
+                    // Hiển thị toast notification
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Đã xóa tất cả',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                } catch (error) {
+                    console.error('❌ Lỗi xóa tất cả:', error);
+                    addLogEntry(`❌ Lỗi xóa tất cả: ${error.message}`, 'error');
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Không thể xóa lịch sử',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        }
+
+        // Helper functions
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Vừa xong';
+            if (diffMins < 60) return `${diffMins} phút trước`;
+            if (diffHours < 24) return `${diffHours} giờ trước`;
+            if (diffDays < 7) return `${diffDays} ngày trước`;
+            
+            return date.toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
+            return (bytes / 1048576).toFixed(2) + ' MB';
+        }
+
+        async function renderHistory() {
+            // Render danh sách audio đã lưu vào modal
+            const historyList = document.getElementById('history-list');
+            if (!historyList) {
+                console.error('Element #history-list không tồn tại');
+                return;
+            }
+
+            try {
+                if (!historyDB) {
+                    throw new Error('HistoryDB chưa được khởi tạo');
+                }
+                
+                console.log('Đang lấy history từ IndexedDB...');
+                const history = await historyDB.getAllHistory();
+                console.log('Đã lấy history:', history.length, 'items');
+                
+                if (history.length === 0) {
+                    historyList.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">🎵</div>
+                            <div style="font-size: 16px;">Chưa có audio nào được tạo</div>
+                            <div style="font-size: 14px; margin-top: 8px;">Audio sẽ tự động lưu sau khi tạo xong</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                historyList.innerHTML = history.map((item, index) => {
+                    // Đảm bảo item có ID (fallback nếu cũ không có)
+                    const itemId = item.id !== undefined ? item.id : index;
+                    return `
+                    <div style="background: #1e1e2e; border: 1px solid #6272a4; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s;">
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="color: #f8f8f2; font-weight: 600; font-size: 15px; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                🎵 ${item.fileName || 'Không có tên'}
+                            </div>
+                            <div style="display: flex; gap: 12px; color: #94a3b8; font-size: 13px;">
+                                <span>📊 ${formatSize(item.size || 0)}</span>
+                                <span>•</span>
+                                <span>🕒 ${formatTime(item.timestamp || Date.now())}</span>
+                                ${item.chunkCount ? `<span>•</span><span>🔢 ${item.chunkCount} chunks</span>` : ''}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-left: 16px;">
+                            <button class="download-history-btn" data-id="${itemId}" style="background: #50fa7b; color: #282a36; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s;">
+                                ⬇️ Tải
+                            </button>
+                            <button class="delete-history-btn" data-id="${itemId}" style="background: #ff5555; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s;">
+                                🗑️ Xóa
+                            </button>
+                        </div>
+                    </div>
+                `;}).join('');
+
+                // Gắn event listeners cho các nút download và delete
+                historyList.querySelectorAll('.download-history-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = parseInt(btn.dataset.id);
+                        await downloadHistoryItem(id);
+                    });
+                });
+
+                historyList.querySelectorAll('.delete-history-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = parseInt(btn.dataset.id);
+                        await deleteHistoryItem(id);
+                    });
+                });
+
+            } catch (error) {
+                console.error('Lỗi render history:', error);
+                addLogEntry(`❌ Lỗi render history: ${error.message}`, 'error');
+                historyList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #ff5555;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <div style="font-size: 16px;">Lỗi tải lịch sử audio</div>
+                        <div style="font-size: 12px; margin-top: 8px; color: #94a3b8;">${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function downloadHistoryItem(id) {
+            try {
+                console.log('Download item with ID:', id);
+                const history = await historyDB.getAllHistory();
+                console.log('History items:', history.map(h => ({ id: h.id, fileName: h.fileName })));
+                const item = history.find(h => h.id == id); // Dùng == để so sánh loose (string vs number)
+                
+                if (!item) {
+                    throw new Error(`Không tìm thấy file với ID ${id}`);
+                }
+
+                const url = URL.createObjectURL(item.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = item.fileName;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                addLogEntry(`✅ Đã tải xuống: ${item.fileName}`, 'success');
+            } catch (error) {
+                console.error('❌ Lỗi tải xuống:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Không thể tải xuống file!'
+                });
+            }
+        }
+
+        async function deleteHistoryItem(id) {
+            try {
+                console.log('Delete item with ID:', id);
+                
+                // Xóa trực tiếp không cần confirm
+                await historyDB.deleteHistoryItem(id);
+                await renderHistory();
+                addLogEntry('✅ Đã xóa audio khỏi lịch sử', 'success');
+                
+                // Hiển thị toast notification
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã xóa',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } catch (error) {
+                console.error('❌ Lỗi xóa:', error);
+                addLogEntry(`❌ Lỗi xóa: ${error.message}`, 'error');
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Không thể xóa file',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        }
+    }
+
+    // Khởi tạo history modal sau khi DOM sẵn sàng
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHistoryModal);
+    } else {
+        setTimeout(initHistoryModal, 100);
+    }
+
+    // =======================================================
+    // == BATCH PROCESSING SYSTEM ==
+    // =======================================================
+    
+    // Batch state management
+    let batchState = {
+        files: [],              // Danh sách File objects
+        selectedFiles: [],      // Danh sách file đã chọn (checked)
+        currentIndex: 0,        // Index file đang xử lý
+        isProcessing: false,    // Đang xử lý hay không
+        isStopped: false,       // User bấm dừng
+        successCount: 0,
+        failedCount: 0
+    };
+    
+    // Expose batchState ra global scope để auto-fix punctuation có thể truy cập
+    window.batchState = batchState;
+
+    // Hàm đọc file text
+    function readTextFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = (e) => reject(e);
+            reader.readAsText(file, 'UTF-8');
+        });
+    }
+
+    // Hàm render danh sách file
+    function renderBatchFilesList() {
+        const listContainer = document.getElementById('batch-files-list');
+        const startBtn = document.getElementById('start-batch-btn');
+        
+        if (batchState.files.length === 0) {
+            listContainer.innerHTML = `
+                <div style="text-align: center; color: #94a3b8; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
+                    <div>Chưa có file nào được chọn</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Click nút "Chọn file text" để bắt đầu</div>
+                </div>
+            `;
+            startBtn.disabled = true;
+            return;
+        }
+
+        let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+        batchState.files.forEach((file, index) => {
+            const sizeKB = (file.size / 1024).toFixed(2);
+            const isSelected = batchState.selectedFiles.includes(index);
+            html += `
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #282a36; border: 1px solid #6272a4; border-radius: 6px; transition: all 0.2s;">
+                    <input type="checkbox" class="batch-file-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''} 
+                           style="width: 18px; height: 18px; cursor: pointer;">
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="color: #f8f8f2; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            📄 ${file.name}
+                        </div>
+                        <div style="color: #94a3b8; font-size: 12px; margin-top: 4px;">
+                            ${sizeKB} KB
+                        </div>
+                    </div>
+                    <div style="color: #8be9fd; font-size: 20px;">
+                        ${index + 1}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        listContainer.innerHTML = html;
+
+        // Attach event listeners cho checkboxes
+        document.querySelectorAll('.batch-file-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const index = parseInt(e.target.dataset.index);
+                if (e.target.checked) {
+                    if (!batchState.selectedFiles.includes(index)) {
+                        batchState.selectedFiles.push(index);
+                    }
+                } else {
+                    batchState.selectedFiles = batchState.selectedFiles.filter(i => i !== index);
+                }
+                startBtn.disabled = batchState.selectedFiles.length === 0;
+            });
+        });
+
+        // Enable start button nếu có file được chọn
+        startBtn.disabled = batchState.selectedFiles.length === 0;
+    }
+
+    // Hàm xử lý 1 file - Sử dụng simulate click thay vì gọi hàm trực tiếp
+    async function processSingleBatchFile(file, index, total) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                addLogEntry(`📄 [Batch ${index + 1}/${total}] Bắt đầu xử lý: ${file.name}`, 'info');
+                
+                // === QUAN TRỌNG: SET BATCH FLAG SỚM ===
+                // Đảm bảo flag được set TRƯỚC KHI click nút để auto-fix punctuation hoạt động
+                if (!window.batchState) {
+                    window.batchState = {};
+                }
+                window.batchState.isProcessing = true;
+                // ===================================
+                
+                // 1. Đọc nội dung file
+                const textContent = await readTextFile(file);
+                addLogEntry(`✅ Đã đọc file (${(file.size / 1024).toFixed(2)} KB)`, 'info');
+                
+                // 2. Gán vào textarea
+                const textarea = document.getElementById('gemini-main-textarea');
+                if (!textarea) {
+                    throw new Error('Không tìm thấy textarea');
+                }
+                textarea.value = textContent;
+                
+                // 3. Update batch progress UI
+                document.getElementById('batch-current-file').textContent = file.name;
+                document.getElementById('batch-progress-text').textContent = `${index + 1}/${total}`;
+                const progressPercent = Math.round(((index + 1) / total) * 100);
+                document.getElementById('batch-progress-bar').style.width = `${progressPercent}%`;
+                
+                // 4. Tìm nút Start
+                const startBtn = document.getElementById('gemini-start-queue-btn');
+                if (!startBtn) {
+                    throw new Error('Không tìm thấy nút Start');
+                }
+                
+                // 5. Setup listener để biết khi nào xử lý xong
+                let audioCompleted = false;
+                let checkInterval = null;
+                
+                // Function để check xem đã xong chưa
+                const checkCompletion = () => {
+                    const downloadBtn = document.getElementById('gemini-download-merged-btn');
+                    const finalResult = document.getElementById('gemini-final-result');
+                    
+                    // Check nếu UI hiển thị kết quả cuối cùng
+                    if (finalResult && finalResult.style.display === 'block' && 
+                        downloadBtn && downloadBtn.href && downloadBtn.href.startsWith('blob:')) {
+                        audioCompleted = true;
+                        if (checkInterval) clearInterval(checkInterval);
+                        
+                        addLogEntry(`✅ [Batch ${index + 1}/${total}] Hoàn thành: ${file.name}`, 'success');
+                        batchState.successCount++;
+                        
+                        // Đợi thêm chút để đảm bảo đã lưu vào history
+                        setTimeout(() => resolve(true), 2000);
+                    }
+                };
+                
+                // 6. SIMULATE CLICK nút Start để trigger flow tự nhiên
+                addLogEntry(`🖱️ Đang trigger tạo audio...`, 'info');
+                startBtn.click();
+                
+                // 7. Poll để check xem đã xong chưa (check mỗi 2 giây)
+                checkInterval = setInterval(checkCompletion, 2000);
+                
+                // 8. Timeout sau 5 phút
+                setTimeout(() => {
+                    if (!audioCompleted) {
+                        if (checkInterval) clearInterval(checkInterval);
+                        addLogEntry(`❌ [Batch ${index + 1}/${total}] Timeout: ${file.name}`, 'error');
+                        batchState.failedCount++;
+                        resolve(false);
+                    }
+                }, 300000); // 5 phút
+                
+            } catch (error) {
+                addLogEntry(`❌ [Batch ${index + 1}/${total}] Lỗi: ${file.name} - ${error.message}`, 'error');
+                console.error('Lỗi tạo file hàng loạt:', error);
+                batchState.failedCount++;
+                reject(error);
+            }
+        });
+    }
+
+    // Hàm xử lý batch chính
+    async function processBatchQueue() {
+        if (batchState.selectedFiles.length === 0) {
+            addLogEntry('⚠️ Chưa chọn file nào để xử lý', 'warning');
+            return;
+        }
+
+        // Set flag batch mode NGAY từ đầu
+        batchState.isProcessing = true;
+        window.batchState = batchState; // Expose ra global
+        batchState.isStopped = false;
+        batchState.currentIndex = 0;
+        batchState.successCount = 0;
+        batchState.failedCount = 0;
+        
+        console.log('🚀 [Batch] Bắt đầu - isProcessing:', batchState.isProcessing);
+
+        // Show progress, hide start button
+        document.getElementById('batch-progress').style.display = 'block';
+        document.getElementById('start-batch-btn').style.display = 'none';
+        document.getElementById('stop-batch-btn').style.display = 'block';
+        document.getElementById('select-batch-files-btn').disabled = true;
+
+        addLogEntry(`🚀 Bắt đầu tạo file hàng loạt ${batchState.selectedFiles.length} file...`, 'success');
+
+        // Sort selected files để xử lý theo thứ tự
+        const sortedIndices = [...batchState.selectedFiles].sort((a, b) => a - b);
+
+        for (let i = 0; i < sortedIndices.length; i++) {
+            if (batchState.isStopped) {
+                addLogEntry('⏹️ Tạo file hàng loạt đã bị dừng bởi người dùng', 'warning');
+                batchState.isProcessing = false; // Reset flag khi stop
+                break;
+            }
+
+            const fileIndex = sortedIndices[i];
+            const file = batchState.files[fileIndex];
+            batchState.currentIndex = i;
+
+            await processSingleBatchFile(file, i, sortedIndices.length);
+
+            // Delay nhỏ giữa các file
+            if (i < sortedIndices.length - 1) {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+        }
+
+        // Hoàn thành (nếu chưa reset ở trên do stop)
+        batchState.isProcessing = false;
+        console.log('✅ [Batch] Hoàn thành - isProcessing:', batchState.isProcessing);
+        
+        document.getElementById('batch-progress').style.display = 'none';
+        document.getElementById('start-batch-btn').style.display = 'block';
+        document.getElementById('stop-batch-btn').style.display = 'none';
+        document.getElementById('select-batch-files-btn').disabled = false;
+
+        addLogEntry(`🎉 Tạo file hàng loạt hoàn thành!`, 'success');
+        addLogEntry(`✅ Thành công: ${batchState.successCount}/${sortedIndices.length}`, 'success');
+        if (batchState.failedCount > 0) {
+            addLogEntry(`❌ Thất bại: ${batchState.failedCount}/${sortedIndices.length}`, 'error');
+        }
+
+        // Show notification
+        Swal.fire({
+            icon: batchState.failedCount === 0 ? 'success' : 'warning',
+            title: 'Tạo File Hàng Loạt Hoàn Thành!',
+            html: `
+                <div style="text-align: left;">
+                    <p>✅ Thành công: ${batchState.successCount} file</p>
+                    ${batchState.failedCount > 0 ? `<p>❌ Thất bại: ${batchState.failedCount} file</p>` : ''}
+                    <p style="margin-top: 10px; color: #8be9fd;">Kiểm tra "Audio đã tạo" để xem kết quả!</p>
+                </div>
+            `
+        });
+    }
+
+    // Initialize batch modal
+    function initBatchModal() {
+        // Debug: Check if required functions are available
+        addLogEntry('🔍 [BATCH INIT] Đang khởi tạo batch modal...', 'info');
+        addLogEntry(`🔍 [BATCH INIT] window.smartSplitter: ${typeof window.smartSplitter}`, 'info');
+        addLogEntry(`🔍 [BATCH INIT] window.manageFullQueue: ${typeof window.manageFullQueue}`, 'info');
+        addLogEntry(`🔍 [BATCH INIT] window.processingState: ${typeof window.processingState}`, 'info');
+        
+        const openBtn = document.getElementById('open-batch-modal-btn');
+        const modal = document.getElementById('batch-modal');
+        const selectBtn = document.getElementById('select-batch-files-btn');
+        const fileInput = document.getElementById('batch-files-input');
+        const startBtn = document.getElementById('start-batch-btn');
+        const stopBtn = document.getElementById('stop-batch-btn');
+
+        if (!openBtn || !modal) {
+            addLogEntry('⚠️ [BATCH INIT] Không tìm thấy elements!', 'warning');
+            return;
+        }
+        
+        addLogEntry('✅ [BATCH INIT] Batch modal đã sẵn sàng!', 'success');
+
+        // Mở modal
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        // Chọn files
+        selectBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            batchState.files = files;
+            // Mặc định select all files
+            batchState.selectedFiles = files.map((_, index) => index);
+            
+            addLogEntry(`📚 Đã chọn ${files.length} file text`, 'success');
+            renderBatchFilesList();
+        });
+
+        // Start batch
+        startBtn.addEventListener('click', () => {
+            processBatchQueue();
+        });
+
+        // Stop batch
+        stopBtn.addEventListener('click', () => {
+            batchState.isStopped = true;
+            batchState.isProcessing = false;
+            const ps = window.processingState || processingState;
+            if (ps) ps.isStopped = true;
+            addLogEntry('⏹️ Đang dừng tạo file hàng loạt...', 'warning');
+        });
+    }
+
+    // Khởi tạo batch modal sau khi DOM và tất cả scripts đã sẵn sàng
+    // Timeout lâu hơn để đảm bảo smartSplitter và các hàm khác đã được định nghĩa
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initBatchModal, 2000);
+        });
+    } else {
+        setTimeout(initBatchModal, 2000);
+    }
+
     // Lắng nghe sự kiện beforeunload để dọn dẹp
     window.addEventListener('beforeunload', () => {
         stopAutoReset403();
         if (errorObserver) {
             errorObserver.disconnect();
+        }
+        
+        // Close IndexedDB connection
+        if (db) {
+            db.close();
         }
     });
