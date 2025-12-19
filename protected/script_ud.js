@@ -1156,7 +1156,7 @@ button:disabled {
             "></textarea></div><div id="file-input-area" class="input-area" style="display: none;"><div class="file-upload-section"><div class="file-upload-area" id="file-upload-area" style="display: none;"><div class="upload-icon">📄</div><div class="upload-text"><strong>Kéo thả file vào đây hoặc click để chọn</strong><br><small>Hỗ trợ: TXT, DOC, DOCX, RTF, ODT, PDF, MD, HTML, XML, CSV, JSON</small></div></div><div id="file-info" class="file-info" style="display: none;"><div class="file-details"><span class="file-name"></span><span class="file-size"></span><button id="remove-file-btn" class="remove-file-btn">×</button></div></div></div></div></div>
     <div id="gemini-text-stats"><span>Ký tự: 0</span><span>Từ: 0</span><span>Câu: 0</span><span>Đoạn: 0</span></div>
 
-<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Tạo đoạn liền mạch</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Cài đặt</button><button id="open-history-modal-btn" style="flex: 1;">🎵 Audio đã tạo</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div><div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="open-batch-modal-btn" style="flex: 1; background: linear-gradient(135deg, #f1fa8c 0%, #e8ea75 100%); color: #282a36; font-weight: 600;">📚 Tạo file hàng loạt</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;"><button id="gemini-merge-btn" style="flex: 1;">Tạo đoạn liền mạch</button><button id="open-punctuation-settings-btn" style="flex: 1;">⚙️ Cài đặt</button><button id="open-history-modal-btn" style="flex: 1;">🎵 Audio đã tạo</button><button id="open-log-modal-btn" style="flex: 1;" onclick="document.getElementById('log-modal').style.display='flex'">📋 Xem Log</button></div> </div> <button id="gemini-start-queue-btn" disabled>Bắt đầu tạo âm thanh</button> <button id="apply-punctuation-btn" style="display:none; background-color: #ffb86c; color: #282a36; margin-top: 10px;">Áp dụng thiết lập dấu câu</button> <div style="display: flex; gap: 10px;"><button id="gemini-pause-btn" style="display:none; flex: 1;">Tạm dừng</button> <button id="gemini-stop-btn" style="display:none; flex: 1;">Dừng hẳn</button></div> <div id="gemini-progress-container" style="display:none;"><div id="gemini-progress-bar"></div><span id="gemini-progress-label">0%</span></div> <div id="gemini-final-result" style="display:none;"> <h4>Kết quả cuối cùng</h4> <div id="gemini-time-taken"></div> <div id="gemini-waveform"></div> <div id="waveform-controls" style="display:none; margin-top: 10px;"><div style="display: flex; gap: 10px; justify-content: center;"><button id="waveform-play-pause" style="flex: 1; max-width: 150px;">Play</button><a id="gemini-download-merged-btn" href="#" download="merged_output.mp3" style="flex: 1; max-width: 150px; display: flex; align-items: center; justify-content: center; text-decoration: none;">Download Audio</a><button id="gemini-download-chunks-btn" style="display: none; flex: 1; max-width: 150px;">Download Chunks</button></div></div> </div> </div> </div> <textarea id="gemini-hidden-text-for-request" style="display:none;"></textarea>
 
     <!-- Modal phát hiện dấu câu -->
     <div id="punctuation-detection-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; justify-content: center; align-items: center;">
@@ -1618,7 +1618,393 @@ button:disabled {
         }
     });
 
-const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();
+const aZpcvyD_mnWYN_qgEq=DHk$uTvcFuLEMnixYuADkCeA;let SI$acY=[],ZTQj$LF$o=[],ttuo$y_KhCV=Number(0x90d)+Number(0xdac)+parseFloat(-0x16b9),EfNjYNYj_O_CGB=![],MEpJezGZUsmpZdAgFRBRZW=![],xlgJHLP$MATDT$kTXWV=null,Srnj$swt=null,n_WwsStaC$jzsWjOIjRqedTG=null,dqj_t_Mr=null;const FMFjWZYZzPXRHIjRRnOwV_G=JSON[aZpcvyD_mnWYN_qgEq(0x1df)];
+
+// ====================================================================
+// 🔒 HỆ THỐNG GIỚI HẠN CHUNK THEO PROFILE (30 CHUNK/NGÀY)
+// ====================================================================
+
+// Cấu hình giới hạn chunk
+const CHUNK_LIMIT_CONFIG = {
+    maxChunksPerDay: 30,  // Giới hạn tối đa 30 chunk/ngày
+    storageKey: 'chunkUsageTracker_v1',  // Key lưu trong localStorage
+    profileKey: 'userProfile_v1'  // Key lưu profile hiện tại
+};
+
+// Class quản lý giới hạn chunk
+class ChunkLimitManager {
+    constructor() {
+        this.maxChunks = CHUNK_LIMIT_CONFIG.maxChunksPerDay;
+        this.storageKey = CHUNK_LIMIT_CONFIG.storageKey;
+        this.profileKey = CHUNK_LIMIT_CONFIG.profileKey;
+        this.init();
+    }
+
+    // Khởi tạo
+    init() {
+        this.ensureProfile();
+        this.cleanOldData();
+        addLogEntry('🔒 Hệ thống giới hạn chunk đã được khởi tạo', 'info');
+    }
+
+    // Đảm bảo có profile, nếu chưa thì yêu cầu user nhập
+    ensureProfile() {
+        let profile = localStorage.getItem(this.profileKey);
+        if (!profile) {
+            profile = this.requestProfileName();
+            localStorage.setItem(this.profileKey, profile);
+        }
+        return profile;
+    }
+
+    // Yêu cầu user nhập tên profile
+    requestProfileName() {
+        let profile = prompt(
+            '🔐 VUI LÒNG NHẬP TÊN PROFILE CỦA BẠN:\n\n' +
+            'Tên này sẽ được sử dụng để theo dõi số lượng chunk sử dụng.\n' +
+            'Mỗi profile giới hạn 30 chunk/ngày.\n\n' +
+            'Ví dụ: Profile1, Chrome1, User1, v.v.',
+            'Profile1'
+        );
+        
+        if (!profile || profile.trim() === '') {
+            profile = 'DefaultProfile';
+        }
+        
+        addLogEntry(`🔐 Profile đã đăng ký: ${profile}`, 'success');
+        return profile.trim();
+    }
+
+    // Lấy ngày hiện tại (format: YYYY-MM-DD)
+    getCurrentDate() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    // Lấy dữ liệu usage từ localStorage
+    getUsageData() {
+        const data = localStorage.getItem(this.storageKey);
+        if (!data) return {};
+        
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            console.error('❌ Lỗi parse usage data:', e);
+            return {};
+        }
+    }
+
+    // Lưu dữ liệu usage vào localStorage
+    saveUsageData(data) {
+        try {
+            localStorage.setItem(this.storageKey, JSON.stringify(data));
+        } catch (e) {
+            console.error('❌ Lỗi lưu usage data:', e);
+        }
+    }
+
+    // Xóa dữ liệu cũ (khác ngày hôm nay)
+    cleanOldData() {
+        const data = this.getUsageData();
+        const today = this.getCurrentDate();
+        
+        let cleaned = 0;
+        Object.keys(data).forEach(profile => {
+            if (data[profile].date !== today) {
+                delete data[profile];
+                cleaned++;
+            }
+        });
+        
+        if (cleaned > 0) {
+            this.saveUsageData(data);
+            addLogEntry(`🧹 Đã xóa dữ liệu cũ của ${cleaned} profile(s)`, 'info');
+        }
+    }
+
+    // Lấy số chunk đã dùng hôm nay
+    getChunksUsedToday() {
+        const profile = this.ensureProfile();
+        const data = this.getUsageData();
+        const today = this.getCurrentDate();
+        
+        if (!data[profile] || data[profile].date !== today) {
+            return 0;
+        }
+        
+        return data[profile].count || 0;
+    }
+
+    // Lấy số chunk còn lại
+    getRemainingChunks() {
+        return this.maxChunks - this.getChunksUsedToday();
+    }
+
+    // Kiểm tra xem có thể xử lý thêm chunk không
+    canProcessChunks(requestedChunks = 1) {
+        return this.getRemainingChunks() >= requestedChunks;
+    }
+
+    // Ghi nhận chunk đã xử lý
+    recordChunkUsage(count = 1) {
+        const profile = this.ensureProfile();
+        const data = this.getUsageData();
+        const today = this.getCurrentDate();
+        
+        if (!data[profile] || data[profile].date !== today) {
+            data[profile] = {
+                date: today,
+                count: 0
+            };
+        }
+        
+        data[profile].count += count;
+        this.saveUsageData(data);
+        
+        const remaining = this.getRemainingChunks();
+        addLogEntry(`📊 Profile "${profile}" đã dùng ${data[profile].count}/${this.maxChunks} chunk hôm nay (còn ${remaining})`, 'info');
+        
+        return data[profile].count;
+    }
+
+    // Reset profile (cho phép user đổi profile)
+    resetProfile() {
+        const oldProfile = localStorage.getItem(this.profileKey);
+        localStorage.removeItem(this.profileKey);
+        const newProfile = this.ensureProfile();
+        addLogEntry(`🔄 Đã chuyển từ profile "${oldProfile}" sang "${newProfile}"`, 'success');
+        this.showUsageStatus();
+    }
+
+    // Hiển thị trạng thái sử dụng
+    showUsageStatus() {
+        const profile = this.ensureProfile();
+        const used = this.getChunksUsedToday();
+        const remaining = this.getRemainingChunks();
+        const percentage = Math.round((used / this.maxChunks) * 100);
+        
+        const statusColor = remaining > 10 ? '#28a745' : (remaining > 0 ? '#ffc107' : '#dc3545');
+        
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: '📊 Trạng thái sử dụng',
+                html: `
+                    <div style="text-align: left; padding: 15px;">
+                        <p style="font-size: 16px; margin-bottom: 15px;">
+                            <strong>👤 Profile:</strong> <span style="color: #007bff; font-weight: bold;">${profile}</span>
+                        </p>
+                        <hr style="margin: 15px 0;">
+                        
+                        <div style="margin: 20px 0;">
+                            <div style="background: #f0f0f0; border-radius: 10px; height: 30px; overflow: hidden; position: relative;">
+                                <div style="background: linear-gradient(90deg, ${statusColor}, ${statusColor}dd); height: 100%; width: ${percentage}%; transition: width 0.3s;"></div>
+                                <span style="position: absolute; width: 100%; text-align: center; line-height: 30px; font-weight: bold; color: #333;">
+                                    ${used} / ${this.maxChunks} chunks (${percentage}%)
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 15px; margin: 10px 0;">
+                            <strong>✅ Đã sử dụng:</strong> <span style="color: #dc3545; font-weight: bold;">${used} chunk</span>
+                        </p>
+                        <p style="font-size: 15px; margin: 10px 0;">
+                            <strong>⏳ Còn lại:</strong> <span style="color: ${statusColor}; font-weight: bold; font-size: 18px;">${remaining} chunk</span>
+                        </p>
+                        <p style="font-size: 14px; margin: 10px 0; color: #666;">
+                            <strong>📅 Ngày:</strong> ${this.getCurrentDate()}
+                        </p>
+                        
+                        <hr style="margin: 15px 0;">
+                        
+                        <div style="background: #e8f4f8; padding: 10px; border-radius: 5px; margin-top: 15px;">
+                            <p style="font-size: 13px; color: #0066cc; margin: 0;">
+                                💡 <strong>Lưu ý:</strong> Giới hạn sẽ được reset vào <strong>00:00</strong> ngày mai
+                            </p>
+                        </div>
+                    </div>
+                `,
+                icon: 'info',
+                width: '500px',
+                confirmButtonText: 'Đóng',
+                showCancelButton: true,
+                cancelButtonText: '🔄 Đổi Profile',
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                    this.resetProfile();
+                }
+            });
+        } else {
+            alert(`📊 TRẠNG THÁI SỬ DỤNG\n\n👤 Profile: ${profile}\n✅ Đã dùng: ${used}/${this.maxChunks}\n⏳ Còn lại: ${remaining} chunk\n📅 Ngày: ${this.getCurrentDate()}`);
+        }
+    }
+
+    // Kiểm tra và chặn nếu vượt giới hạn
+    checkLimitBeforeStart(totalChunks) {
+        const remaining = this.getRemainingChunks();
+        const profile = this.ensureProfile();
+        const used = this.getChunksUsedToday();
+        
+        if (remaining <= 0) {
+            const message = `
+                <div style="text-align: left; padding: 10px;">
+                    <h3 style="color: #dc3545; margin-top: 0;">🚫 Đã hết giới hạn chunk hôm nay!</h3>
+                    
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #ffc107;">
+                        <p style="margin: 5px 0;"><strong>👤 Profile:</strong> ${profile}</p>
+                        <p style="margin: 5px 0;"><strong>✅ Đã sử dụng:</strong> ${used}/${this.maxChunks} chunk</p>
+                        <p style="margin: 5px 0;"><strong>⏳ Còn lại:</strong> <span style="color: #dc3545; font-weight: bold;">0 chunk</span></p>
+                        <p style="margin: 5px 0;"><strong>📅 Ngày:</strong> ${this.getCurrentDate()}</p>
+                    </div>
+                    
+                    <h4>💡 Bạn có thể:</h4>
+                    <ol style="padding-left: 20px;">
+                        <li>⏰ Đợi đến ngày mai (giới hạn sẽ reset vào 00:00)</li>
+                        <li>🔄 Đổi sang profile khác (click nút "Đổi Profile" bên dưới)</li>
+                        <li>👥 Sử dụng Chrome profile khác</li>
+                    </ol>
+                </div>
+            `;
+            
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: '🚫 Hết giới hạn chunk!',
+                    html: message,
+                    icon: 'error',
+                    width: '550px',
+                    showCancelButton: true,
+                    confirmButtonText: '📊 Xem chi tiết',
+                    cancelButtonText: '🔄 Đổi Profile',
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#007bff'
+                }).then((result) => {
+                    if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                        this.resetProfile();
+                    } else if (result.isConfirmed) {
+                        this.showUsageStatus();
+                    }
+                });
+            } else {
+                alert(`🚫 HẾT GIỚI HẠN!\n\n👤 Profile: ${profile}\n✅ Đã dùng: ${used}/${this.maxChunks}\n⏳ Còn lại: 0\n\n💡 Vui lòng đợi đến ngày mai hoặc đổi profile!`);
+            }
+            
+            addLogEntry(`🚫 Profile "${profile}" đã hết giới hạn chunk hôm nay!`, 'error');
+            return false;
+        }
+        
+        if (totalChunks > remaining) {
+            const message = `
+                <div style="text-align: left; padding: 10px;">
+                    <h3 style="color: #ffc107; margin-top: 0;">⚠️ Không đủ chunk quota!</h3>
+                    
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #ffc107;">
+                        <p style="margin: 5px 0;"><strong>👤 Profile:</strong> ${profile}</p>
+                        <p style="margin: 5px 0;"><strong>📝 Bạn cần xử lý:</strong> <span style="color: #dc3545; font-weight: bold;">${totalChunks} chunks</span></p>
+                        <p style="margin: 5px 0;"><strong>⏳ Còn lại hôm nay:</strong> <span style="color: #ffc107; font-weight: bold;">${remaining} chunks</span></p>
+                        <p style="margin: 5px 0;"><strong>❌ Thiếu:</strong> <span style="color: #dc3545; font-weight: bold;">${totalChunks - remaining} chunks</span></p>
+                    </div>
+                    
+                    <h4>💡 Giải pháp:</h4>
+                    <ol style="padding-left: 20px;">
+                        <li>✂️ Giảm số chunk xuống còn <strong>${remaining}</strong> hoặc ít hơn</li>
+                        <li>⏰ Đợi đến ngày mai (reset: 00:00)</li>
+                        <li>🔄 Đổi sang profile khác</li>
+                        <li>📝 Chia text thành nhiều phần nhỏ hơn</li>
+                    </ol>
+                </div>
+            `;
+            
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: '⚠️ Không đủ quota!',
+                    html: message,
+                    icon: 'warning',
+                    width: '550px',
+                    showCancelButton: true,
+                    confirmButtonText: '📊 Xem chi tiết',
+                    cancelButtonText: '🔄 Đổi Profile',
+                    confirmButtonColor: '#ffc107',
+                    cancelButtonColor: '#007bff'
+                }).then((result) => {
+                    if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                        this.resetProfile();
+                    } else if (result.isConfirmed) {
+                        this.showUsageStatus();
+                    }
+                });
+            } else {
+                alert(`⚠️ KHÔNG ĐỦ QUOTA!\n\n👤 Profile: ${profile}\n📝 Cần: ${totalChunks} chunks\n⏳ Còn: ${remaining} chunks\n❌ Thiếu: ${totalChunks - remaining} chunks`);
+            }
+            
+            addLogEntry(`⚠️ Không đủ quota! Cần ${totalChunks} nhưng chỉ còn ${remaining} chunks`, 'warning');
+            return false;
+        }
+        
+        // Cảnh báo khi còn ít
+        if (remaining <= 10 && remaining > 5) {
+            addLogEntry(`⚠️ Cảnh báo: Chỉ còn ${remaining} chunk cho profile "${profile}" hôm nay!`, 'warning');
+        } else if (remaining <= 5 && remaining > 0) {
+            addLogEntry(`🚨 CẢNH BÁO: Chỉ còn ${remaining} chunk! Sắp hết quota!`, 'error');
+            
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: '🚨 Cảnh báo quota!',
+                    text: `Chỉ còn ${remaining} chunk cho hôm nay. Hãy cân nhắc sử dụng!`,
+                    icon: 'warning',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                });
+            }
+        }
+        
+        addLogEntry(`✅ Kiểm tra quota OK: Có thể xử lý ${totalChunks} chunks (còn ${remaining} chunks)`, 'success');
+        return true;
+    }
+}
+
+// Khởi tạo chunk limit manager
+let chunkLimitManager = null;
+setTimeout(() => {
+    chunkLimitManager = new ChunkLimitManager();
+    addLogEntry('🔒 Chunk Limit Manager đã sẵn sàng', 'success');
+    
+    // Hiển thị trạng thái ban đầu
+    const profile = chunkLimitManager.ensureProfile();
+    const remaining = chunkLimitManager.getRemainingChunks();
+    addLogEntry(`👤 Profile hiện tại: ${profile} - Còn ${remaining}/${chunkLimitManager.maxChunks} chunks hôm nay`, 'info');
+    
+    // [TẠM ẨN] Event listeners cho các nút chunk limit (có thể bật lại sau)
+    /*
+    const chunkStatusBtn = document.getElementById('chunk-status-btn');
+    const changeProfileBtn = document.getElementById('change-profile-btn');
+    
+    if (chunkStatusBtn) {
+        chunkStatusBtn.addEventListener('click', () => {
+            if (chunkLimitManager) {
+                chunkLimitManager.showUsageStatus();
+            } else {
+                alert('Chunk Limit Manager chưa được khởi tạo!');
+            }
+        });
+        addLogEntry('✅ Đã thêm event listener cho nút "Trạng thái Chunk"', 'success');
+    }
+    
+    if (changeProfileBtn) {
+        changeProfileBtn.addEventListener('click', () => {
+            if (chunkLimitManager) {
+                chunkLimitManager.resetProfile();
+            } else {
+                alert('Chunk Limit Manager chưa được khởi tạo!');
+            }
+        });
+        addLogEntry('✅ Đã thêm event listener cho nút "Đổi Profile"', 'success');
+    }
+    */
+}, 1000);JSON[aZpcvyD_mnWYN_qgEq(0x1df)]=function(o__htsdYW,...YxPU$_FEFzDUACWyi){const civchWuTNrKOGccx_eNld=aZpcvyD_mnWYN_qgEq;if(o__htsdYW&&typeof o__htsdYW===civchWuTNrKOGccx_eNld(0x231)&&o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]&&o__htsdYW[civchWuTNrKOGccx_eNld(0x208)]){const xlxXwB$xg_wWLUkKDoPeWvBcc=document[civchWuTNrKOGccx_eNld(0x1de)](civchWuTNrKOGccx_eNld(0x235));if(xlxXwB$xg_wWLUkKDoPeWvBcc&&EfNjYNYj_O_CGB){const guKwlTGjKUCtXQplrcc=xlxXwB$xg_wWLUkKDoPeWvBcc[civchWuTNrKOGccx_eNld(0x24c)];guKwlTGjKUCtXQplrcc&&(o__htsdYW[civchWuTNrKOGccx_eNld(0x1ca)]=guKwlTGjKUCtXQplrcc);}}return FMFjWZYZzPXRHIjRRnOwV_G[civchWuTNrKOGccx_eNld(0x22c)](this,o__htsdYW,...YxPU$_FEFzDUACWyi);},window[aZpcvyD_mnWYN_qgEq(0x25f)](aZpcvyD_mnWYN_qgEq(0x1c9),()=>{const AP$u_huhInYfTj=aZpcvyD_mnWYN_qgEq;function spAghkbWog(){const DWWeZydubZoTFZs$ck_jg=DHk$uTvcFuLEMnixYuADkCeA;GM_addStyle(SCRIPT_CSS);const UdJdhwBFovFArs=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));UdJdhwBFovFArs[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x250),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](UdJdhwBFovFArs);const sIzV_BK=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x269));sIzV_BK[DWWeZydubZoTFZs$ck_jg(0x1f1)]=DWWeZydubZoTFZs$ck_jg(0x1d2),document[DWWeZydubZoTFZs$ck_jg(0x205)][DWWeZydubZoTFZs$ck_jg(0x1eb)](sIzV_BK);const fCNFI$elNjn=document[DWWeZydubZoTFZs$ck_jg(0x25a)](DWWeZydubZoTFZs$ck_jg(0x215));fCNFI$elNjn['id']=DWWeZydubZoTFZs$ck_jg(0x25b),fCNFI$elNjn[DWWeZydubZoTFZs$ck_jg(0x1c7)]=APP_HTML,document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1eb)](fCNFI$elNjn),document[DWWeZydubZoTFZs$ck_jg(0x248)][DWWeZydubZoTFZs$ck_jg(0x1d9)][DWWeZydubZoTFZs$ck_jg(0x203)](DWWeZydubZoTFZs$ck_jg(0x201)),BZr$GS$CqnCyt(),setTimeout(()=>{const lVvu_IZabWk=DWWeZydubZoTFZs$ck_jg,iItyHbcTDrfnQk=document[lVvu_IZabWk(0x1cd)](lVvu_IZabWk(0x21e));iItyHbcTDrfnQk&&(iItyHbcTDrfnQk[lVvu_IZabWk(0x24c)]=lVvu_IZabWk(0x1c4),iItyHbcTDrfnQk[lVvu_IZabWk(0x1c1)](new Event(lVvu_IZabWk(0x229),{'bubbles':!![]}))),s_BrlXXxPOJaBMKQX();},0x8*parseInt(0x182)+0x17*Math.trunc(parseInt(0xd3))+Math.max(-0x1541,-0x1541));}spAghkbWog();
 
 // === AUDIO DURATION VALIDATION FOR DIRECT FILE INPUT ===
 // Intercept gemini-file-input để validate độ dài audio trước khi upload
@@ -2748,6 +3134,19 @@ async function uSTZrHUt_IC() {
                     addLogEntry(`✅ [Chunk ${ttuo$y_KhCV + 1}/${SI$acY.length}] Xử lý thành công!`, 'success');
                     window.retryCount = 0; // Reset bộ đếm retry khi thành công
                     window.chunkStatus[ttuo$y_KhCV] = 'success'; // Đánh dấu chunk này đã thành công
+
+                    // ✅ GHI NHẬN CHUNK ĐÃ HOÀN THÀNH VÀO HỆ THỐNG GIỚI HẠN
+                    if (chunkLimitManager) {
+                        chunkLimitManager.recordChunkUsage(1);
+                        const remaining = chunkLimitManager.getRemainingChunks();
+                        
+                        // Cảnh báo khi còn ít chunk
+                        if (remaining <= 5 && remaining > 0) {
+                            addLogEntry(`🚨 CẢNH BÁO: Chỉ còn ${remaining} chunk! Sắp hết quota!`, 'warning');
+                        } else if (remaining === 0) {
+                            addLogEntry(`⚠️ Đây là chunk cuối cùng trong ngày! Quota đã hết.`, 'error');
+                        }
+                    }
 
                     // Nếu đang trong giai đoạn kiểm tra cuối, loại bỏ chunk này khỏi danh sách thất bại
                     if (window.isFinalCheck && window.failedChunks.includes(ttuo$y_KhCV)) {
@@ -6046,6 +6445,18 @@ async function waitForVoiceModelReady() {
             addLogEntry('🧠 Áp dụng tách chunk thông minh.', 'info');
             const chunksArray = smartSplitter(text, 3000);
 
+            // ✅ KIỂM TRA GIỚI HẠN CHUNK TRƯỚC KHI BẮT ĐẦU
+            if (chunkLimitManager) {
+                const canProceed = chunkLimitManager.checkLimitBeforeStart(chunksArray.length);
+                if (!canProceed) {
+                    addLogEntry(`🚫 Không thể bắt đầu: Profile đã hết quota chunk!`, 'error');
+                    return; // Dừng lại, không cho phép tiếp tục
+                }
+                addLogEntry(`✅ Kiểm tra giới hạn OK: Có thể xử lý ${chunksArray.length} chunks`, 'success');
+            } else {
+                addLogEntry(`⚠️ Chunk Limit Manager chưa sẵn sàng`, 'warning');
+            }
+
             // Gán mảng chunk đã xử lý vào processingState
             processingState.chunks = chunksArray.map((txt, index) => ({
                 text: txt.trim(), // Thêm .trim() để đảm bảo sạch sẽ
@@ -7481,6 +7892,8 @@ async function waitForVoiceModelReady() {
         });
     }
 
+    // [TẠM ẨN] Khởi tạo batch modal (có thể bật lại sau)
+    /*
     // Khởi tạo batch modal sau khi DOM và tất cả scripts đã sẵn sàng
     // Timeout lâu hơn để đảm bảo smartSplitter và các hàm khác đã được định nghĩa
     if (document.readyState === 'loading') {
@@ -7490,6 +7903,7 @@ async function waitForVoiceModelReady() {
     } else {
         setTimeout(initBatchModal, 2000);
     }
+    */
 
     // Lắng nghe sự kiện beforeunload để dọn dẹp
     window.addEventListener('beforeunload', () => {
