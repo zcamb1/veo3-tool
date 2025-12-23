@@ -2146,9 +2146,28 @@ function getRemainChunksFromWebsite() {
         // ============================================================
         const allElements = document.querySelectorAll('div, span, p, button, a, li');
         
+        // KIỂM TRA XEM CÓ "Credit Usage" KHÔNG (nghĩa là hết preview)
+        let hasOnlyCreditUsage = false;
+        for (const el of allElements) {
+            const text = (el.textContent || el.innerText || '').trim();
+            const lowerText = text.toLowerCase();
+            
+            // Nếu thấy "Credit Usage" mà KHÔNG có "Remaining Previews" → Đã hết preview
+            if ((lowerText.includes('credit') && lowerText.includes('usage')) || 
+                lowerText.match(/credit\s+usage\s*:?\s*\d+/i)) {
+                hasOnlyCreditUsage = true;
+            }
+        }
+        
         // Tìm text khớp pattern chính xác: "Remaining Previews: 10"
         for (const el of allElements) {
             const text = (el.textContent || el.innerText || '').trim();
+            const lowerText = text.toLowerCase();
+            
+            // LOẠI TRỪ các element có chứa "Credit Usage"
+            if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
+                continue; // Bỏ qua element này
+            }
             
             // Pattern chính xác: "Remaining Previews: X" hoặc "Remaining Previews X"
             const exactPattern = text.match(/remaining\s+previews?\s*:?\s*(\d+)/i);
@@ -2164,12 +2183,18 @@ function getRemainChunksFromWebsite() {
         // ============================================================
         for (const el of allElements) {
             const text = (el.textContent || el.innerText || '').trim();
+            const lowerText = text.toLowerCase();
+            
+            // LOẠI TRỪ các element có chứa "Credit Usage"
+            if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
+                continue; // Bỏ qua element này
+            }
             
             // Chỉ kiểm tra text ngắn (< 200 ký tự) để tránh bắt nhầm
             if (text.length < 200) {
                 // Pattern: "10/30 Previews" hoặc "Previews: 10/30"
                 const slashPreview = text.match(/(?:previews?\s*:?\s*)?(\d+)\s*\/\s*(\d+)(?:\s*previews?)?/i);
-                if (slashPreview && text.toLowerCase().includes('preview')) {
+                if (slashPreview && lowerText.includes('preview')) {
                     const remaining = parseInt(slashPreview[1]);
                     addLogEntry(`✅ [Method 2] Bắt được từ pattern X/Y: "${text}" → ${remaining}`, 'success');
                     return remaining;
@@ -2188,6 +2213,13 @@ function getRemainChunksFromWebsite() {
                     const iframeElements = iframeDoc.querySelectorAll('div, span, p');
                     for (const el of iframeElements) {
                         const text = (el.textContent || el.innerText || '').trim();
+                        const lowerText = text.toLowerCase();
+                        
+                        // LOẠI TRỪ các element có chứa "Credit Usage"
+                        if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
+                            continue;
+                        }
+                        
                         const exactPattern = text.match(/remaining\s+previews?\s*:?\s*(\d+)/i);
                         if (exactPattern && text.length < 100) {
                             const remaining = parseInt(exactPattern[1]);
@@ -2199,6 +2231,14 @@ function getRemainChunksFromWebsite() {
             } catch (e) {
                 // Cross-origin iframe, skip
             }
+        }
+        
+        // ============================================================
+        // KIỂM TRA CUỐI CÙNG: Nếu chỉ thấy "Credit Usage" → Hết preview
+        // ============================================================
+        if (hasOnlyCreditUsage) {
+            addLogEntry('🚫 Phát hiện "Credit Usage" mà không có "Remaining Previews" → ĐÃ HẾT PREVIEW!', 'error');
+            return 0; // Trả về 0 thay vì null
         }
         
         addLogEntry('⚠️ Không tìm thấy thông tin "Remaining Previews" trên trang', 'warning');
