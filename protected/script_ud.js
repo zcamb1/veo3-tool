@@ -1375,12 +1375,12 @@ button:disabled {
                             <span class="slider round"></span>
                         </label>
                         <label for="chunk-size-toggle" style="color: #f8f8f2; font-size: 14px; cursor: pointer;">
-                            Chunk size (700-900 ký tự)
+                            Chunk size (600-800 ký tự)
                         </label>
                     </div>
                     <small style="color: #94a3b8; font-size: 12px; display: block; padding: 12px; background: #44475a; border-radius: 6px; border: 1px solid #6272a4;">
                         💡 <strong>Tách theo dòng trống:</strong> Khi bật - ưu tiên tách tại dòng trống. Khi tắt - bỏ qua dòng trống, tách theo dấu câu.<br><br>
-                        🔧 <strong>Chunk size:</strong> Mỗi đoạn từ 700-900 ký tự (idealLength=800, minLength=700, maxLength=900)
+                        🔧 <strong>Chunk size:</strong> Mỗi đoạn từ 600-800 ký tự (idealLength=700, minLength=600, maxLength=800)
                     </small>
                 </div>
             </div>
@@ -2615,11 +2615,11 @@ if(LrkOcBYz_$AGjPqXLWnyiATpCI){
 
     // Trả về tên file hoàn chỉnh với đuôi .mp3
     return fileName + '.mp3';
-}function nWHrScjZnIyNYzztyEWwM(RHDrdenxMcTQywSbrFGWcRi,supYmMedzDRWZEr){const j$DXl$iN=AP$u_huhInYfTj;if(supYmMedzDRWZEr===-parseInt(0x1)*-parseInt(0x9ff)+parseInt(0x4)*parseInt(0x6d7)+Math.trunc(0x49)*-parseInt(0x83))return;const W_gEcM_tWt=Math[j$DXl$iN(0x238)](RHDrdenxMcTQywSbrFGWcRi/supYmMedzDRWZEr*(Number(parseInt(0x24f2))*0x1+-parseInt(0x1af3)+parseInt(-0x99b)));pemHAD[j$DXl$iN(0x1fb)][j$DXl$iN(0x24b)]=W_gEcM_tWt+'%',SCOcXEQXTPOOS[j$DXl$iN(0x273)]=W_gEcM_tWt+j$DXl$iN(0x1c3)+RHDrdenxMcTQywSbrFGWcRi+'/'+supYmMedzDRWZEr+')';}function NrfPVBbJv_Dph$tazCpJ(text, idealLength = 800, minLength = 700, maxLength = 900) {
+}function nWHrScjZnIyNYzztyEWwM(RHDrdenxMcTQywSbrFGWcRi,supYmMedzDRWZEr){const j$DXl$iN=AP$u_huhInYfTj;if(supYmMedzDRWZEr===-parseInt(0x1)*-parseInt(0x9ff)+parseInt(0x4)*parseInt(0x6d7)+Math.trunc(0x49)*-parseInt(0x83))return;const W_gEcM_tWt=Math[j$DXl$iN(0x238)](RHDrdenxMcTQywSbrFGWcRi/supYmMedzDRWZEr*(Number(parseInt(0x24f2))*0x1+-parseInt(0x1af3)+parseInt(-0x99b)));pemHAD[j$DXl$iN(0x1fb)][j$DXl$iN(0x24b)]=W_gEcM_tWt+'%',SCOcXEQXTPOOS[j$DXl$iN(0x273)]=W_gEcM_tWt+j$DXl$iN(0x1c3)+RHDrdenxMcTQywSbrFGWcRi+'/'+supYmMedzDRWZEr+')';}function NrfPVBbJv_Dph$tazCpJ(text, idealLength = 700, minLength = 600, maxLength = 800) {
     // Lấy giá trị từ công tắc chunk size
     const chunkSizeToggle = document.getElementById('chunk-size-toggle');
     const useLargeChunks = chunkSizeToggle ? chunkSizeToggle.checked : false;
-    const actualMaxLength = 900; // Cố định 900 ký tự theo yêu cầu
+    const actualMaxLength = 800; // Cố định 800 ký tự (giảm từ 900 để tránh timeout)
     const chunks = [];
     if (!text || typeof text !== 'string') {
         return chunks;
@@ -2731,11 +2731,11 @@ if(LrkOcBYz_$AGjPqXLWnyiATpCI){
 }
 
 // Hàm tách chunk thông minh mới - ưu tiên theo đoạn văn
-function smartSplitter(text, maxLength = 900) {
+function smartSplitter(text, maxLength = 800) {
     // Lấy giá trị từ công tắc chunk size
     const chunkSizeToggle = document.getElementById('chunk-size-toggle');
     const useLargeChunks = chunkSizeToggle ? chunkSizeToggle.checked : false;
-    const actualMaxLength = 900; // Cố định 900 ký tự theo yêu cầu
+    const actualMaxLength = 800; // Cố định 800 ký tự (giảm từ 900 để tránh timeout)
 
     const finalChunks = [];
     if (!text || typeof text !== 'string') {
@@ -2791,7 +2791,7 @@ function smartSplitter(text, maxLength = 900) {
             // Nếu đoạn này quá dài, chúng ta sẽ dùng lại hàm tách CŨ
             // (NrfPVBbJv_Dph$tazCpJ) để chia nhỏ chính đoạn này.
             addLogEntry(`🧠 Đoạn văn dài ${trimmedPara.length} ký tự, đang chia nhỏ...`, 'info');
-            const subChunks = NrfPVBbJv_Dph$tazCpJ(trimmedPara, 800, 700, actualMaxLength);
+            const subChunks = NrfPVBbJv_Dph$tazCpJ(trimmedPara, 700, 600, actualMaxLength);
 
             // Thêm các chunk con vào kết quả cuối cùng
             finalChunks.push(...subChunks);
@@ -5339,9 +5339,9 @@ async function waitForVoiceModelReady() {
                 // Tính số chunks sẽ được tạo - SỬ DỤNG HÀM CHIA CHUNK CHÍNH THỨC
                 let chunks = 0;
                 if (text.trim()) {
-                    // Sử dụng NrfPVBbJv_Dph$tazCpJ(text, 800, 700, 900) - đếm theo 700,800,900
+                    // Sử dụng NrfPVBbJv_Dph$tazCpJ(text, 700, 600, 800) - đếm theo 600,700,800
                     const testChunks = typeof NrfPVBbJv_Dph$tazCpJ === 'function'
-                        ? NrfPVBbJv_Dph$tazCpJ(text, 800, 700, 900)
+                        ? NrfPVBbJv_Dph$tazCpJ(text, 700, 600, 800)
                         : [];
                     chunks = testChunks.length;
                     // Lưu vào biến global để validation sử dụng
@@ -5561,8 +5561,8 @@ async function waitForVoiceModelReady() {
                     // Lấy giá trị từ công tắc chunk size
                     const chunkSizeToggle = document.getElementById('chunk-size-toggle');
                     const useLargeChunks = chunkSizeToggle ? chunkSizeToggle.checked : false;
-                    const actualMaxLength = 900; // Cố định 900 ký tự theo yêu cầu
-                    window.SI$acY = chiaVanBanThongMinh(newText, 800, 700, actualMaxLength);
+                    const actualMaxLength = 800; // Cố định 800 ký tự (giảm từ 900 để tránh timeout)
+                    window.SI$acY = chiaVanBanThongMinh(newText, 700, 600, actualMaxLength);
                     console.log(`Tổng văn bản: ${newText.length} ký tự`);
                     console.log(`Số chunk được tách: ${window.SI$acY.length}`);
                     console.log(`Chunk đầu tiên: ${window.SI$acY[0] ? window.SI$acY[0].length : 0} ký tự`);
