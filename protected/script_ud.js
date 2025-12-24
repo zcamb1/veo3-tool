@@ -1976,97 +1976,8 @@ class ChunkLimitManager {
 // ===================================================================
 // HỆ THỐNG LẤY REMAINING CHUNKS TỪ WEBSITE MINIMAX
 // ===================================================================
-
-// Hàm lấy số chunk còn lại từ DOM của minimax.io
-function getRemainChunksFromWebsite() {
-    try {
-        // Tìm element chứa "Remaining Previews" trên trang minimax.io
-        // Thử nhiều selector khác nhau để tăng khả năng tìm thấy
-        const selectors = [
-            '[class*="remaining"]',
-            '[class*="preview"]',
-            '[class*="quota"]',
-            '[class*="limit"]',
-            'div[class*="account"]',
-            'div[class*="resource"]',
-            'span:contains("Remaining")',
-            'div:contains("Previews")'
-        ];
-        
-        let remainingElement = null;
-        let remainingText = '';
-        
-        // Tìm theo text content
-        const allElements = document.querySelectorAll('div, span, p');
-        for (const el of allElements) {
-            const text = el.textContent || el.innerText || '';
-            if (text.toLowerCase().includes('remaining') && text.toLowerCase().includes('preview')) {
-                remainingElement = el;
-                remainingText = text;
-                break;
-            }
-        }
-        
-        // Nếu không tìm thấy, thử tìm theo class
-        if (!remainingElement) {
-            for (const selector of selectors) {
-                const elements = document.querySelectorAll(selector);
-                for (const el of elements) {
-                    const text = el.textContent || el.innerText || '';
-                    if (text.toLowerCase().includes('remaining') || text.toLowerCase().includes('preview')) {
-                        remainingElement = el;
-                        remainingText = text;
-                        break;
-                    }
-                }
-                if (remainingElement) break;
-            }
-        }
-        
-        if (remainingElement && remainingText) {
-            // Trích xuất số từ text (ví dụ: "Remaining Previews: 10" -> 10)
-            const matches = remainingText.match(/\d+/);
-            if (matches && matches[0]) {
-                const remaining = parseInt(matches[0]);
-                addLogEntry(`✅ Đã lấy được số chunk còn lại từ website: ${remaining}`, 'success');
-                return remaining;
-            }
-        }
-        
-        addLogEntry('⚠️ Không tìm thấy thông tin chunk còn lại trên website', 'warning');
-        return null;
-    } catch (error) {
-        addLogEntry(`❌ Lỗi khi lấy remaining chunks: ${error.message}`, 'error');
-        return null;
-    }
-}
-
-// Hàm cập nhật UI hiển thị remaining chunks
-function updateRemainingChunksDisplay() {
-    const remaining = getRemainChunksFromWebsite();
-    const displayDiv = document.getElementById('remaining-chunks-display');
-    const valueSpan = document.getElementById('remaining-chunks-value');
-    
-    if (displayDiv && valueSpan) {
-        if (remaining !== null) {
-            displayDiv.style.display = 'block';
-            valueSpan.textContent = `${remaining}`;
-            
-            // Thay đổi màu sắc theo số lượng còn lại
-            displayDiv.classList.remove('warning', 'danger');
-            if (remaining <= 5) {
-                displayDiv.classList.add('danger');
-            } else if (remaining <= 15) {
-                displayDiv.classList.add('warning');
-            }
-        } else {
-            // Nếu không lấy được, hiển thị thông báo
-            displayDiv.style.display = 'block';
-            valueSpan.textContent = 'Không tìm thấy thông tin chunk';
-            displayDiv.classList.add('warning');
-        }
-    }
-}
+// ⚠️ HÀM NÀY ĐÃ BỊ XÓA - DÙNG HÀM MỚI PHÍA DƯỚI (line ~2142)
+// ===================================================================
 
 // ===================================================================
 // HÀM KIỂM TRA CHUNK QUOTA TRƯỚC KHI TẠO AUDIO
@@ -2142,6 +2053,20 @@ function validateChunksBeforeGeneration() {
 function getRemainChunksFromWebsite() {
     try {
         // ============================================================
+        // LOẠI TRỪ LOG CONTAINER - QUAN TRỌNG!
+        // ============================================================
+        const logContainerSelectors = [
+            '#log-container',
+            '#log-entries',
+            '.log-container',
+            '.log-entries',
+            '[id*="log"]',
+            '[class*="log"]',
+            '[id*="console"]',
+            '[class*="console"]'
+        ];
+        
+        // ============================================================
         // PHƯƠNG PHÁP 1: Tìm chính xác "Remaining Previews: X"
         // ============================================================
         const allElements = document.querySelectorAll('div, span, p, button, a, li');
@@ -2149,6 +2074,11 @@ function getRemainChunksFromWebsite() {
         // KIỂM TRA XEM CÓ "Credit Usage" KHÔNG (nghĩa là hết preview)
         let hasOnlyCreditUsage = false;
         for (const el of allElements) {
+            // ⚠️ BỎ QUA LOG CONTAINER
+            if (logContainerSelectors.some(selector => el.closest(selector))) {
+                continue;
+            }
+            
             const text = (el.textContent || el.innerText || '').trim();
             const lowerText = text.toLowerCase();
             
@@ -2161,75 +2091,70 @@ function getRemainChunksFromWebsite() {
         
         // Tìm text khớp pattern chính xác: "Remaining Previews: 10"
         for (const el of allElements) {
+            // ⚠️ BỎ QUA LOG CONTAINER
+            if (logContainerSelectors.some(selector => el.closest(selector))) {
+                continue;
+            }
+            
             const text = (el.textContent || el.innerText || '').trim();
             const lowerText = text.toLowerCase();
             
             // LOẠI TRỪ các element có chứa "Credit Usage"
             if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
-                continue; // Bỏ qua element này
+                continue;
+            }
+            
+            // LOẠI TRỪ các element quá dài (log text thường rất dài)
+            if (text.length > 200) {
+                continue;
             }
             
             // Pattern chính xác: "Remaining Previews: X" hoặc "Remaining Previews X"
             const exactPattern = text.match(/remaining\s+previews?\s*:?\s*(\d+)/i);
-            if (exactPattern && text.length < 100) { // Text ngắn = chính xác hơn
+            if (exactPattern) {
                 const remaining = parseInt(exactPattern[1]);
-                addLogEntry(`✅ [Method 1] Bắt được từ pattern chính xác: "${text}" → ${remaining}`, 'success');
+                // CHỈ LOG 1 LẦN KHI TÌM THẤY
+                if (!window._lastRemainingValue || window._lastRemainingValue !== remaining) {
+                    addLogEntry(`✅ Tìm thấy Remaining Previews: ${remaining}`, 'success');
+                    window._lastRemainingValue = remaining;
+                }
                 return remaining;
             }
         }
         
         // ============================================================
-        // PHƯƠNG PHÁP 2: Tìm pattern "X/Y Previews" hoặc "Previews: X/Y"
+        // PHƯƠNG PHÁP 2: Tìm pattern "X/Y Previews" (CHỈ NẾU KO TÌM ĐƯỢC PHƯƠNG PHÁP 1)
         // ============================================================
         for (const el of allElements) {
+            // ⚠️ BỎ QUA LOG CONTAINER
+            if (logContainerSelectors.some(selector => el.closest(selector))) {
+                continue;
+            }
+            
             const text = (el.textContent || el.innerText || '').trim();
             const lowerText = text.toLowerCase();
             
-            // LOẠI TRỪ các element có chứa "Credit Usage"
+            // LOẠI TRỪ các element có chứa "Credit Usage" hoặc "characters"
             if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
-                continue; // Bỏ qua element này
+                continue;
+            }
+            if (lowerText.includes('character')) {
+                continue; // Bỏ qua "151 / 300 characters"
             }
             
-            // Chỉ kiểm tra text ngắn (< 200 ký tự) để tránh bắt nhầm
-            if (text.length < 200) {
-                // Pattern: "10/30 Previews" hoặc "Previews: 10/30"
-                const slashPreview = text.match(/(?:previews?\s*:?\s*)?(\d+)\s*\/\s*(\d+)(?:\s*previews?)?/i);
+            // Chỉ kiểm tra text ngắn (< 80 ký tự) để tránh bắt nhầm
+            if (text.length < 80 && text.length > 5) {
+                // Pattern: "10/30 Previews" - PHẢI CÓ CHỮ "PREVIEW"
+                const slashPreview = text.match(/(\d+)\s*\/\s*(\d+)(?:\s*previews?)/i);
                 if (slashPreview && lowerText.includes('preview')) {
                     const remaining = parseInt(slashPreview[1]);
-                    addLogEntry(`✅ [Method 2] Bắt được từ pattern X/Y: "${text}" → ${remaining}`, 'success');
+                    // CHỈ LOG 1 LẦN KHI TÌM THẤY
+                    if (!window._lastRemainingValue || window._lastRemainingValue !== remaining) {
+                        addLogEntry(`✅ Tìm thấy X/Y Previews: ${remaining}`, 'success');
+                        window._lastRemainingValue = remaining;
+                    }
                     return remaining;
                 }
-            }
-        }
-        
-        // ============================================================
-        // PHƯƠNG PHÁP 3: Tìm trong iframe/shadow DOM
-        // ============================================================
-        const iframes = document.querySelectorAll('iframe');
-        for (const iframe of iframes) {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-                if (iframeDoc) {
-                    const iframeElements = iframeDoc.querySelectorAll('div, span, p');
-                    for (const el of iframeElements) {
-                        const text = (el.textContent || el.innerText || '').trim();
-                        const lowerText = text.toLowerCase();
-                        
-                        // LOẠI TRỪ các element có chứa "Credit Usage"
-                        if (lowerText.includes('credit') && (lowerText.includes('usage') || lowerText.includes('use'))) {
-                            continue;
-                        }
-                        
-                        const exactPattern = text.match(/remaining\s+previews?\s*:?\s*(\d+)/i);
-                        if (exactPattern && text.length < 100) {
-                            const remaining = parseInt(exactPattern[1]);
-                            addLogEntry(`✅ [Method 3] Bắt được từ iframe: "${text}" → ${remaining}`, 'success');
-                            return remaining;
-                        }
-                    }
-                }
-            } catch (e) {
-                // Cross-origin iframe, skip
             }
         }
         
@@ -2237,21 +2162,36 @@ function getRemainChunksFromWebsite() {
         // KIỂM TRA CUỐI CÙNG: Nếu chỉ thấy "Credit Usage" → Hết preview
         // ============================================================
         if (hasOnlyCreditUsage) {
-            addLogEntry('🚫 Phát hiện "Credit Usage" mà không có "Remaining Previews" → ĐÃ HẾT PREVIEW!', 'error');
-            return 0; // Trả về 0 thay vì null
+            if (!window._lastRemainingValue || window._lastRemainingValue !== 0) {
+                addLogEntry('🚫 Đã hết Preview! Hiện đang dùng Credit Usage', 'error');
+                window._lastRemainingValue = 0;
+            }
+            return 0;
         }
         
-        addLogEntry('⚠️ Không tìm thấy thông tin "Remaining Previews" trên trang', 'warning');
+        // CHỈ LOG 1 LẦN
+        if (!window._hasLoggedNotFound) {
+            addLogEntry('⚠️ Không tìm thấy "Remaining Previews" (có thể là tài khoản unlimited)', 'warning');
+            window._hasLoggedNotFound = true;
+        }
         return null;
     } catch (error) {
         console.error('[getRemainChunksFromWebsite] Error:', error);
-        addLogEntry(`❌ Lỗi khi tìm Remaining Previews: ${error.message}`, 'error');
         return null;
     }
 }
 
-// Hàm cập nhật UI hiển thị remaining chunks
+// Hàm cập nhật UI hiển thị remaining chunks (với throttling)
 function updateRemainingChunksDisplay() {
+    // ============================================================
+    // THROTTLING - CHỈ CẬP NHẬT MỖI 5 GIÂY
+    // ============================================================
+    const now = Date.now();
+    if (window._lastUpdateRemainingTime && (now - window._lastUpdateRemainingTime) < 5000) {
+        return; // Bỏ qua nếu chưa đủ 5 giây
+    }
+    window._lastUpdateRemainingTime = now;
+    
     const remaining = getRemainChunksFromWebsite();
     const displayDiv = document.getElementById('remaining-chunks-display');
     const valueSpan = document.getElementById('remaining-chunks-value');
@@ -2357,18 +2297,16 @@ setTimeout(() => {
     chunkLimitManager = new ChunkLimitManager();
     
     // Cập nhật UI remaining chunks lần đầu
+    // ============================================================
+    // CẬP NHẬT UI REMAINING CHUNKS - CHỈ MỘT LẦN SETUP
+    // ============================================================
+    // Gọi lần đầu sau 2 giây (đợi page load xong)
     setTimeout(() => {
         updateRemainingChunksDisplay();
     }, 2000);
     
-    // Cập nhật UI remaining chunks mỗi 10 giây
-    setInterval(updateRemainingChunksDisplay, 10000);
-    
-    // Cập nhật UI remaining chunks lần đầu
-    updateRemainingChunksDisplay();
-    
-    // Cập nhật UI remaining chunks mỗi 10 giây
-    setInterval(updateRemainingChunksDisplay, 10000);
+    // Sau đó cập nhật mỗi 30 giây (kết hợp với throttling 5s trong hàm)
+    setInterval(updateRemainingChunksDisplay, 30000);
     
     // [TẠM ẨN] Event listeners cho các nút chunk limit (có thể bật lại sau)
     /*
