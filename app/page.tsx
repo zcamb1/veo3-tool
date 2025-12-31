@@ -13,6 +13,23 @@ interface User {
   created_at: string
 }
 
+interface GmailAccount {
+  id: number
+  email: string
+  ogg_ticket: string
+  status: string
+}
+
+interface UserResource {
+  id: number
+  gmail_account_id: number
+  gmail_accounts: GmailAccount
+  proxy_host: string
+  proxy_port: number
+  proxy_username: string
+  proxy_password: string
+}
+
 export default function UsersPage() {
   const router = useRouter()
   const [users, setUsers] = useState<User[]>([])
@@ -30,6 +47,19 @@ export default function UsersPage() {
   })
   const [formLoading, setFormLoading] = useState(false)
   const [formError, setFormError] = useState('')
+  
+  // Resources management states
+  const [showResourcesModal, setShowResourcesModal] = useState(false)
+  const [selectedUserForResources, setSelectedUserForResources] = useState<User | null>(null)
+  const [gmailAccounts, setGmailAccounts] = useState<GmailAccount[]>([])
+  const [userResources, setUserResources] = useState<UserResource[]>([])
+  const [selectedGmails, setSelectedGmails] = useState<number[]>([])
+  const [proxyConfig, setProxyConfig] = useState({
+    host: '',
+    port: 50100,
+    username: '',
+    password: ''
+  })
 
   // Load user data when editing
   useEffect(() => {
@@ -264,6 +294,90 @@ export default function UsersPage() {
     }
   }
 
+  // ============================================
+  // RESOURCES MANAGEMENT
+  // ============================================
+  
+  const fetchGmailAccounts = async () => {
+    try {
+      const response = await fetch('/api/gmail-accounts')
+      if (!response.ok) throw new Error('Failed to fetch Gmail accounts')
+      const result = await response.json()
+      setGmailAccounts(result.accounts || [])
+    } catch (error) {
+      console.error('❌ Error fetching Gmail accounts:', error)
+    }
+  }
+
+  const fetchUserResources = async (userId: number) => {
+    try {
+      const response = await fetch(`/api/assign-resources?user_id=${userId}`)
+      if (!response.ok) throw new Error('Failed to fetch user resources')
+      const result = await response.json()
+      setUserResources(result.resources || [])
+      
+      // Pre-select assigned Gmail accounts
+      const assignedGmailIds = result.resources?.map((r: UserResource) => r.gmail_account_id) || []
+      setSelectedGmails(assignedGmailIds)
+      
+      // Pre-fill proxy config (from first assignment)
+      if (result.resources && result.resources.length > 0) {
+        const firstResource = result.resources[0]
+        setProxyConfig({
+          host: firstResource.proxy_host || '',
+          port: firstResource.proxy_port || 50100,
+          username: firstResource.proxy_username || '',
+          password: firstResource.proxy_password || ''
+        })
+      }
+    } catch (error) {
+      console.error('❌ Error fetching user resources:', error)
+    }
+  }
+
+  const openResourcesModal = async (user: User) => {
+    setSelectedUserForResources(user)
+    setShowResourcesModal(true)
+    await fetchGmailAccounts()
+    await fetchUserResources(user.id)
+  }
+
+  const handleAssignResources = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!selectedUserForResources) return
+
+    setFormLoading(true)
+    setFormError('')
+
+    try {
+      const response = await fetch('/api/assign-resources', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: selectedUserForResources.id,
+          gmail_account_ids: selectedGmails,
+          proxy: proxyConfig,
+          assigned_by: 'admin'
+        })
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to assign resources')
+      }
+
+      alert(`✅ ${result.message}`)
+      setShowResourcesModal(false)
+      setSelectedUserForResources(null)
+      setSelectedGmails([])
+    } catch (error: any) {
+      setFormError(error.message)
+    } finally {
+      setFormLoading(false)
+    }
+  }
+
   if (loading || !authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
@@ -348,6 +462,16 @@ export default function UsersPage() {
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex gap-2">
+                        {/* Resources button - only for minimax and all users */}
+                        {(user.account_type === 'minimax' || user.account_type === 'all') && (
+                          <button 
+                            onClick={() => openResourcesModal(user)}
+                            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                            title="Assign Gmail & Proxy"
+                          >
+                            📦
+                          </button>
+                        )}
                         <button 
                           onClick={() => setEditingUser(user)}
                           className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
@@ -449,6 +573,145 @@ export default function UsersPage() {
                   disabled={formLoading}
                 >
                   {formLoading ? '⏳ Creating...' : '✅ Add User'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Assign Resources Modal */}
+      {showResourcesModal && selectedUserForResources && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+          <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 my-8">
+            <h3 className="text-2xl font-bold mb-6">
+              📦 Resources for {selectedUserForResources.username}
+            </h3>
+            
+            {formError && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                {formError}
+              </div>
+            )}
+            
+            <form onSubmit={handleAssignResources}>
+              {/* Gmail Accounts */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium mb-2">
+                  Gmail Accounts ({selectedGmails.length} selected)
+                </label>
+                <div className="max-h-60 overflow-y-auto border rounded-lg p-4 bg-gray-50 space-y-2">
+                  {gmailAccounts.map(gmail => (
+                    <label key={gmail.id} className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedGmails.includes(gmail.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedGmails([...selectedGmails, gmail.id])
+                          } else {
+                            setSelectedGmails(selectedGmails.filter(id => id !== gmail.id))
+                          }
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">{gmail.email}</span>
+                      <span className={`ml-auto px-2 py-1 rounded text-xs ${
+                        gmail.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      }`}>
+                        {gmail.status}
+                      </span>
+                    </label>
+                  ))}
+                  {gmailAccounts.length === 0 && (
+                    <div className="text-center py-4 text-gray-500">
+                      No Gmail accounts available. Add them first.
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* Proxy Config */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
+                <h4 className="font-semibold mb-4">Proxy Configuration</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Host</label>
+                    <input
+                      type="text"
+                      value={proxyConfig.host}
+                      onChange={(e) => setProxyConfig({...proxyConfig, host: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      placeholder="208.214.165.10"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Port</label>
+                    <input
+                      type="number"
+                      value={proxyConfig.port}
+                      onChange={(e) => setProxyConfig({...proxyConfig, port: Number(e.target.value)})}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      placeholder="50100"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Username</label>
+                    <input
+                      type="text"
+                      value={proxyConfig.username}
+                      onChange={(e) => setProxyConfig({...proxyConfig, username: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      placeholder="proxy_username"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Password</label>
+                    <input
+                      type="text"
+                      value={proxyConfig.password}
+                      onChange={(e) => setProxyConfig({...proxyConfig, password: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      placeholder="proxy_password"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Current Assignments */}
+              {userResources.length > 0 && (
+                <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <h4 className="font-semibold mb-2 text-blue-900">Current Assignments:</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    {userResources.map(r => (
+                      <li key={r.id}>
+                        ✓ {r.gmail_accounts.email}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowResourcesModal(false)
+                    setSelectedUserForResources(null)
+                    setSelectedGmails([])
+                    setFormError('')
+                  }}
+                  className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+                  disabled={formLoading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition disabled:bg-gray-400"
+                  disabled={formLoading}
+                >
+                  {formLoading ? '⏳ Assigning...' : '✅ Assign Resources'}
                 </button>
               </div>
             </form>
