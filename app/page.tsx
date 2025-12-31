@@ -765,10 +765,37 @@ export default function UsersPage() {
               {userResources.length > 0 && (
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                   <h4 className="font-semibold mb-2 text-blue-900">Current Assignments:</h4>
-                  <ul className="text-sm text-blue-800 space-y-1">
+                  <ul className="text-sm text-blue-800 space-y-2">
                     {userResources.map(r => (
-                      <li key={r.id}>
-                        ✓ {r.gmail_accounts.email}
+                      <li key={r.id} className="flex items-center justify-between p-2 bg-white rounded">
+                        <span>✓ {r.gmail_accounts.email}</span>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!confirm(`🗑️ Unassign "${r.gmail_accounts.email}" từ user này?`)) return
+                            
+                            try {
+                              const response = await fetch(`/api/assign-resources?id=${r.id}`, {
+                                method: 'DELETE'
+                              })
+                              
+                              if (!response.ok) throw new Error('Failed to unassign')
+                              
+                              alert('✅ Đã xóa assignment!')
+                              
+                              // Refresh user resources
+                              if (selectedUserForResources) {
+                                await fetchUserResources(selectedUserForResources.id)
+                              }
+                            } catch (error: any) {
+                              alert('❌ Lỗi: ' + error.message)
+                            }
+                          }}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded transition-colors"
+                          title="Unassign this Gmail"
+                        >
+                          ✕
+                        </button>
                       </li>
                     ))}
                   </ul>
