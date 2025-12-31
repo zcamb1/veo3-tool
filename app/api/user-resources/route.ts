@@ -22,10 +22,10 @@ import jwt from 'jsonwebtoken'
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
 
 interface JWTPayload {
-  userId: number
+  user_id: number
   username: string
-  deviceId: string
-  accountType: string
+  device_id: string
+  account_type: string
 }
 
 export async function GET(request: NextRequest) {
@@ -62,14 +62,14 @@ export async function GET(request: NextRequest) {
     }
 
     // 4. Verify device ID matches token
-    if (decoded.deviceId !== deviceId) {
+    if (decoded.device_id !== deviceId) {
       return NextResponse.json(
         { success: false, error: 'Device ID mismatch' },
         { status: 403 }
       )
     }
 
-    const userId = decoded.userId
+    const userId = decoded.user_id
 
     // 5. Get user's assigned Gmail accounts from user_resources table
     const { data: userResourcesData, error: resourcesError } = await supabaseAdmin
