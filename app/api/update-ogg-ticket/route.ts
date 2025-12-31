@@ -26,6 +26,18 @@ import { supabaseAdmin } from '@/lib/supabase'
 // Secret key for auto-refresh script (store in .env)
 const AUTO_SCRIPT_SECRET = process.env.AUTO_SCRIPT_SECRET || 'change-this-secret-key-in-production'
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*', // Allow all origins (or specify 'https://www.minimax.io')
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+// Handle OPTIONS preflight request
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders })
+}
+
 export async function POST(request: NextRequest) {
   try {
     // 1. Check authentication (Bearer token with secret key)
@@ -33,7 +45,7 @@ export async function POST(request: NextRequest) {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(
         { success: false, error: 'Authorization required' },
-        { status: 401 }
+        { status: 401, headers: corsHeaders }
       )
     }
 
@@ -43,7 +55,7 @@ export async function POST(request: NextRequest) {
     if (token !== AUTO_SCRIPT_SECRET) {
       return NextResponse.json(
         { success: false, error: 'Invalid authorization token' },
-        { status: 403 }
+        { status: 403, headers: corsHeaders }
       )
     }
 
@@ -55,7 +67,7 @@ export async function POST(request: NextRequest) {
     if (!email || !ogg_ticket) {
       return NextResponse.json(
         { success: false, error: 'Email and ogg_ticket are required' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -96,7 +108,7 @@ export async function POST(request: NextRequest) {
         console.error('❌ [API] Error creating Gmail account:', createError)
         return NextResponse.json(
           { success: false, error: 'Failed to create Gmail account' },
-          { status: 500 }
+          { status: 500, headers: corsHeaders }
         )
       }
 
@@ -115,7 +127,7 @@ export async function POST(request: NextRequest) {
           updated_at: newAccount.last_updated,
           expires_at: newAccount.expires_at,
         },
-      }, { status: 201 })
+      }, { status: 201, headers: corsHeaders })
       
     } else {
       // ========================================
@@ -143,7 +155,7 @@ export async function POST(request: NextRequest) {
         console.error('❌ [API] Error updating ogg_ticket:', updateError)
         return NextResponse.json(
           { success: false, error: 'Failed to update ogg_ticket' },
-          { status: 500 }
+          { status: 500, headers: corsHeaders }
         )
       }
 
@@ -170,13 +182,13 @@ export async function POST(request: NextRequest) {
           updated_at: updatedAccount.last_updated,
           expires_at: updatedAccount.expires_at,
         },
-      })
+      }, { headers: corsHeaders })
     }
   } catch (error: any) {
     console.error('❌ [API] update-ogg-ticket error:', error)
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     )
   }
 }
