@@ -54,6 +54,7 @@ export default function UsersPage() {
   const [gmailAccounts, setGmailAccounts] = useState<GmailAccount[]>([])
   const [userResources, setUserResources] = useState<UserResource[]>([])
   const [selectedGmails, setSelectedGmails] = useState<number[]>([])
+  const [gmailSearchQuery, setGmailSearchQuery] = useState('') // Search filter
   const [proxyConfig, setProxyConfig] = useState({
     host: '',
     port: 50100,
@@ -338,6 +339,7 @@ export default function UsersPage() {
   const openResourcesModal = async (user: User) => {
     setSelectedUserForResources(user)
     setShowResourcesModal(true)
+    setGmailSearchQuery('') // Reset search
     await fetchGmailAccounts()
     await fetchUserResources(user.id)
   }
@@ -371,6 +373,7 @@ export default function UsersPage() {
       setShowResourcesModal(false)
       setSelectedUserForResources(null)
       setSelectedGmails([])
+      setGmailSearchQuery('') // Reset search
     } catch (error: any) {
       setFormError(error.message)
     } finally {
@@ -597,35 +600,115 @@ export default function UsersPage() {
             <form onSubmit={handleAssignResources}>
               {/* Gmail Accounts */}
               <div className="mb-6">
-                <label className="block text-sm font-medium mb-2">
-                  Gmail Accounts ({selectedGmails.length} selected)
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-sm font-medium">
+                    Gmail Accounts ({selectedGmails.length} selected)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const email = prompt('📧 Nhập Gmail:')
+                      if (!email) return
+                      
+                      const ogg_ticket = prompt('🎫 Nhập OGG Ticket:')
+                      if (!ogg_ticket) return
+                      
+                      // Call API to add Gmail
+                      fetch('/api/gmail-accounts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, ogg_ticket })
+                      })
+                      .then(res => res.json())
+                      .then(result => {
+                        if (result.success) {
+                          alert('✅ Gmail account đã được thêm!')
+                          fetchGmailAccounts() // Refresh list
+                        } else {
+                          throw new Error(result.error)
+                        }
+                      })
+                      .catch(err => alert('❌ Lỗi: ' + err.message))
+                    }}
+                    className="px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition"
+                  >
+                    ➕ Add Gmail
+                  </button>
+                </div>
+                
+                {/* Search Input */}
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    value={gmailSearchQuery}
+                    onChange={(e) => setGmailSearchQuery(e.target.value)}
+                    placeholder="🔍 Search Gmail accounts..."
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+                
+                {/* Gmail List with Checkbox */}
                 <div className="max-h-60 overflow-y-auto border rounded-lg p-4 bg-gray-50 space-y-2">
-                  {gmailAccounts.map(gmail => (
-                    <label key={gmail.id} className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedGmails.includes(gmail.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedGmails([...selectedGmails, gmail.id])
-                          } else {
-                            setSelectedGmails(selectedGmails.filter(id => id !== gmail.id))
-                          }
-                        }}
-                        className="w-4 h-4"
-                      />
-                      <span className="text-sm">{gmail.email}</span>
-                      <span className={`ml-auto px-2 py-1 rounded text-xs ${
-                        gmail.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                        {gmail.status}
-                      </span>
-                    </label>
-                  ))}
-                  {gmailAccounts.length === 0 && (
+                  {gmailAccounts
+                    .filter(gmail => 
+                      gmail.email.toLowerCase().includes(gmailSearchQuery.toLowerCase())
+                    )
+                    .map(gmail => (
+                      <div key={gmail.id} className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={selectedGmails.includes(gmail.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedGmails([...selectedGmails, gmail.id])
+                            } else {
+                              setSelectedGmails(selectedGmails.filter(id => id !== gmail.id))
+                            }
+                          }}
+                          className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className="text-sm flex-1">{gmail.email}</span>
+                        <span className={`px-2 py-1 rounded text-xs ${
+                          gmail.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {gmail.status}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={async (e) => {
+                            e.stopPropagation()
+                            if (!confirm(`🗑️ Xóa Gmail "${gmail.email}" khỏi hệ thống?\n\nCảnh báo: Hành động này không thể hoàn tác!`)) return
+                            
+                            try {
+                              const response = await fetch(`/api/gmail-accounts/${gmail.id}`, {
+                                method: 'DELETE'
+                              })
+                              
+                              if (!response.ok) throw new Error('Failed to delete Gmail account')
+                              
+                              alert('✅ Đã xóa Gmail account!')
+                              
+                              // Remove from selected list
+                              setSelectedGmails(selectedGmails.filter(id => id !== gmail.id))
+                              
+                              // Refresh Gmail accounts list
+                              await fetchGmailAccounts()
+                            } catch (error: any) {
+                              alert('❌ Lỗi: ' + error.message)
+                            }
+                          }}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded transition-colors"
+                          title="Delete Gmail account"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    ))}
+                  {gmailAccounts.filter(gmail => 
+                    gmail.email.toLowerCase().includes(gmailSearchQuery.toLowerCase())
+                  ).length === 0 && (
                     <div className="text-center py-4 text-gray-500">
-                      No Gmail accounts available. Add them first.
+                      {gmailSearchQuery ? '❌ No matching Gmail accounts' : 'No Gmail accounts available. Add them first.'}
                     </div>
                   )}
                 </div>
@@ -699,6 +782,7 @@ export default function UsersPage() {
                     setShowResourcesModal(false)
                     setSelectedUserForResources(null)
                     setSelectedGmails([])
+                    setGmailSearchQuery('') // Reset search
                     setFormError('')
                   }}
                   className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
