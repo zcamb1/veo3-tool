@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       .insert({
         name,
         description: description || null,
-        proxies: JSON.stringify(proxies), // JSONB
+        proxies: proxies, // JSONB - Supabase auto-handles JSON, no need to stringify!
         created_by: created_by || 'admin',
         notes: notes || null,
       })
