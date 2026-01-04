@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 
     const userId = decoded.user_id
 
-    // 5. Get user's assigned Gmail accounts from user_resources table
+    // 5. Get user's assigned Gmail accounts + proxy from user_resources table
     const { data: userResourcesData, error: resourcesError } = await supabaseAdmin
       .from('user_resources')
       .select(`
@@ -81,12 +81,19 @@ export async function GET(request: NextRequest) {
         proxy_port,
         proxy_username,
         proxy_password,
+        proxy_pool_id,
         gmail_accounts (
           id,
           email,
           ogg_ticket,
           status,
           expires_at
+        ),
+        proxy_pools (
+          id,
+          name,
+          proxies,
+          is_active
         )
       `)
       .eq('user_id', userId)
@@ -110,15 +117,29 @@ export async function GET(request: NextRequest) {
         expires_at: resource.gmail_accounts.expires_at,
       }))
 
-    // Get proxy config (assume same proxy for all accounts, use first one)
-    const proxyConfig = userResourcesData.length > 0
-      ? {
-          host: userResourcesData[0].proxy_host,
-          port: userResourcesData[0].proxy_port,
-          username: userResourcesData[0].proxy_username,
-          password: userResourcesData[0].proxy_password,
+    // Get proxy config: Check proxy_pool_id first, then fall back to single proxy
+    let proxyConfig = null
+    let proxyList = null
+
+    if (userResourcesData.length > 0) {
+      const firstResource = userResourcesData[0]
+
+      // Option 1: Proxy Pool (NEW - list of proxies)
+      if (firstResource.proxy_pools && firstResource.proxy_pools.is_active) {
+        proxyList = firstResource.proxy_pools.proxies // Array of proxies
+        console.log(`✅ [API] User ${decoded.username} using Proxy Pool: ${firstResource.proxy_pools.name} (${proxyList.length} proxies)`)
+      }
+      // Option 2: Single Proxy (OLD - backward compatibility)
+      else if (firstResource.proxy_host) {
+        proxyConfig = {
+          host: firstResource.proxy_host,
+          port: firstResource.proxy_port,
+          username: firstResource.proxy_username,
+          password: firstResource.proxy_password,
         }
-      : null
+        console.log(`✅ [API] User ${decoded.username} using single proxy: ${proxyConfig.host}:${proxyConfig.port}`)
+      }
+    }
 
     console.log(`✅ [API] User ${decoded.username} (ID: ${userId}) fetched ${gmailAccounts.length} Gmail accounts`)
 
@@ -126,7 +147,8 @@ export async function GET(request: NextRequest) {
       success: true,
       resources: {
         gmail_accounts: gmailAccounts,
-        proxy: proxyConfig,
+        proxy: proxyConfig, // Single proxy (backward compatibility)
+        proxy_list: proxyList, // New: Array of proxies from proxy pool
       },
     })
   } catch (error: any) {
