@@ -28,6 +28,16 @@ interface UserResource {
   proxy_port: number
   proxy_username: string
   proxy_password: string
+  proxy_pool_id: number | null
+}
+
+interface ProxyPool {
+  id: number
+  name: string
+  description: string
+  proxies: any[]
+  is_active: boolean
+  created_at: string
 }
 
 export default function UsersPage() {
@@ -55,6 +65,11 @@ export default function UsersPage() {
   const [userResources, setUserResources] = useState<UserResource[]>([])
   const [selectedGmails, setSelectedGmails] = useState<number[]>([])
   const [gmailSearchQuery, setGmailSearchQuery] = useState('') // Search filter
+  
+  // Proxy configuration states
+  const [proxyPools, setProxyPools] = useState<ProxyPool[]>([])
+  const [selectedProxyPoolId, setSelectedProxyPoolId] = useState<number | null>(null)
+  const [useProxyPool, setUseProxyPool] = useState(false) // Toggle between pool and manual
   const [proxyConfig, setProxyConfig] = useState({
     host: '',
     port: 50100,
@@ -352,15 +367,24 @@ export default function UsersPage() {
     setFormError('')
 
     try {
+      // Build request body based on proxy mode
+      const requestBody: any = {
+        user_id: selectedUserForResources.id,
+        gmail_account_ids: selectedGmails,
+        assigned_by: 'admin'
+      }
+      
+      // Add proxy config based on mode
+      if (useProxyPool && selectedProxyPoolId) {
+        requestBody.proxy_pool_id = selectedProxyPoolId
+      } else if (!useProxyPool) {
+        requestBody.proxy = proxyConfig
+      }
+      
       const response = await fetch('/api/assign-resources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user_id: selectedUserForResources.id,
-          gmail_account_ids: selectedGmails,
-          proxy: proxyConfig,
-          assigned_by: 'admin'
-        })
+        body: JSON.stringify(requestBody)
       })
 
       const result = await response.json()
@@ -717,48 +741,101 @@ export default function UsersPage() {
               {/* Proxy Config */}
               <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
                 <h4 className="font-semibold mb-4">Proxy Configuration</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Host</label>
+                
+                {/* Toggle: Proxy Pool vs Manual Proxy */}
+                <div className="mb-4 flex items-center gap-4">
+                  <label className="flex items-center cursor-pointer">
                     <input
-                      type="text"
-                      value={proxyConfig.host}
-                      onChange={(e) => setProxyConfig({...proxyConfig, host: e.target.value})}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="208.214.165.10"
+                      type="radio"
+                      checked={useProxyPool}
+                      onChange={() => setUseProxyPool(true)}
+                      className="mr-2"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Port</label>
+                    <span className="text-sm font-medium">Use Proxy Pool (Recommended)</span>
+                  </label>
+                  <label className="flex items-center cursor-pointer">
                     <input
-                      type="number"
-                      value={proxyConfig.port}
-                      onChange={(e) => setProxyConfig({...proxyConfig, port: Number(e.target.value)})}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="50100"
+                      type="radio"
+                      checked={!useProxyPool}
+                      onChange={() => setUseProxyPool(false)}
+                      className="mr-2"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Username</label>
-                    <input
-                      type="text"
-                      value={proxyConfig.username}
-                      onChange={(e) => setProxyConfig({...proxyConfig, username: e.target.value})}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="proxy_username"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Password</label>
-                    <input
-                      type="text"
-                      value={proxyConfig.password}
-                      onChange={(e) => setProxyConfig({...proxyConfig, password: e.target.value})}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="proxy_password"
-                    />
-                  </div>
+                    <span className="text-sm font-medium">Manual Single Proxy</span>
+                  </label>
                 </div>
+                
+                {/* Proxy Pool Dropdown */}
+                {useProxyPool && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">
+                      Select Proxy Pool 
+                      <span className="text-xs text-gray-500 ml-2">(Multiple IPs for anti-ban)</span>
+                    </label>
+                    <select
+                      value={selectedProxyPoolId || ''}
+                      onChange={(e) => setSelectedProxyPoolId(e.target.value ? Number(e.target.value) : null)}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">-- Select Proxy Pool --</option>
+                      {proxyPools.map(pool => (
+                        <option key={pool.id} value={pool.id}>
+                          {pool.name} ({pool.proxies?.length || 0} proxies)
+                        </option>
+                      ))}
+                    </select>
+                    {proxyPools.length === 0 && (
+                      <p className="text-sm text-orange-600 mt-2">
+                        ⚠️ No proxy pools available. Contact admin to create proxy pools.
+                      </p>
+                    )}
+                  </div>
+                )}
+                
+                {/* Manual Proxy Fields */}
+                {!useProxyPool && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Host</label>
+                      <input
+                        type="text"
+                        value={proxyConfig.host}
+                        onChange={(e) => setProxyConfig({...proxyConfig, host: e.target.value})}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="208.214.165.10"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Port</label>
+                      <input
+                        type="number"
+                        value={proxyConfig.port}
+                        onChange={(e) => setProxyConfig({...proxyConfig, port: Number(e.target.value)})}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="50100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Username</label>
+                      <input
+                        type="text"
+                        value={proxyConfig.username}
+                        onChange={(e) => setProxyConfig({...proxyConfig, username: e.target.value})}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="proxy_username"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Password</label>
+                      <input
+                        type="text"
+                        value={proxyConfig.password}
+                        onChange={(e) => setProxyConfig({...proxyConfig, password: e.target.value})}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="proxy_password"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Current Assignments */}
