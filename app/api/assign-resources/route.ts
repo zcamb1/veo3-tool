@@ -1,18 +1,21 @@
 /**
  * API Endpoint: POST /api/assign-resources
  * 
- * Purpose: Assign Gmail accounts + proxy to a user
+ * Purpose: Assign Gmail accounts + proxy/proxy_pool to a user
  * 
  * Request Body:
  * {
  *   user_id: 123,
  *   gmail_account_ids: [1, 2, 3],
+ *   // Option 1: Single proxy (backward compatibility)
  *   proxy: {
  *     host: "208.214.165.10",
  *     port: 50100,
  *     username: "proxy_user",
  *     password: "proxy_pass"
  *   },
+ *   // Option 2: Proxy Pool (NEW)
+ *   proxy_pool_id: 5,
  *   assigned_by: "admin_username",
  *   notes: "Optional notes"
  * }
@@ -24,7 +27,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { user_id, gmail_account_ids, proxy, assigned_by, notes } = body
+    const { user_id, gmail_account_ids, proxy, proxy_pool_id, assigned_by, notes } = body
 
     // Validation
     if (!user_id || !gmail_account_ids || !Array.isArray(gmail_account_ids)) {
@@ -39,6 +42,29 @@ export async function POST(request: NextRequest) {
         { success: false, error: 'At least one Gmail account must be provided' },
         { status: 400 }
       )
+    }
+
+    // Validate proxy_pool_id if provided
+    if (proxy_pool_id) {
+      const { data: proxyPool, error: poolError } = await supabaseAdmin
+        .from('proxy_pools')
+        .select('id, name, is_active')
+        .eq('id', proxy_pool_id)
+        .single()
+
+      if (poolError || !proxyPool) {
+        return NextResponse.json(
+          { success: false, error: 'Proxy pool not found' },
+          { status: 404 }
+        )
+      }
+
+      if (!proxyPool.is_active) {
+        return NextResponse.json(
+          { success: false, error: 'Proxy pool is not active' },
+          { status: 400 }
+        )
+      }
     }
 
     // Check if user exists
@@ -72,10 +98,13 @@ export async function POST(request: NextRequest) {
     const assignments = gmail_account_ids.map((gmail_account_id: number) => ({
       user_id: user_id,
       gmail_account_id: gmail_account_id,
+      // Single proxy fields (backward compatibility)
       proxy_host: proxy?.host || null,
       proxy_port: proxy?.port || null,
       proxy_username: proxy?.username || null,
       proxy_password: proxy?.password || null,
+      // New: Proxy pool ID
+      proxy_pool_id: proxy_pool_id || null,
       assigned_by: assigned_by || 'admin',
       notes: notes || null,
     }))
