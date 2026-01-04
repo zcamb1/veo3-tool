@@ -69,7 +69,7 @@ export default function UsersPage() {
   // Proxy configuration states
   const [proxyPools, setProxyPools] = useState<ProxyPool[]>([])
   const [selectedProxyPoolId, setSelectedProxyPoolId] = useState<number | null>(null)
-  const [useProxyPool, setUseProxyPool] = useState(false) // Toggle between pool and manual
+  const [useProxyPool, setUseProxyPool] = useState(true) // Toggle between pool and manual (DEFAULT: true)
   const [proxyConfig, setProxyConfig] = useState({
     host: '',
     port: 50100,
@@ -148,6 +148,35 @@ export default function UsersPage() {
       alert('Failed to fetch users. Check console for details.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  // Fetch proxy pools from API
+  const fetchProxyPools = async () => {
+    try {
+      console.log('🔍 Fetching proxy pools from API...')
+      
+      const timestamp = new Date().getTime()
+      const response = await fetch(`/api/proxy-pools?t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        }
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch proxy pools')
+      }
+      
+      const result = await response.json()
+      
+      if (result.success && result.proxy_pools) {
+        console.log('✅ Proxy pools fetched:', result.proxy_pools.length)
+        setProxyPools(result.proxy_pools)
+      }
+    } catch (error) {
+      console.error('❌ Error fetching proxy pools:', error)
+      // Non-critical error, don't show alert
     }
   }
 
@@ -357,6 +386,7 @@ export default function UsersPage() {
     setGmailSearchQuery('') // Reset search
     await fetchGmailAccounts()
     await fetchUserResources(user.id)
+    await fetchProxyPools() // ← FETCH PROXY POOLS!
   }
 
   const handleAssignResources = async (e: React.FormEvent) => {
