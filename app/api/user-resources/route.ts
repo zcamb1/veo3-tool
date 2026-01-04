@@ -122,10 +122,10 @@ export async function GET(request: NextRequest) {
     let proxyList = null
 
     if (userResourcesData.length > 0) {
-      const firstResource = userResourcesData[0]
+      const firstResource = userResourcesData[0] as any
 
       // Option 1: Proxy Pool (NEW - list of proxies)
-      if (firstResource.proxy_pools && firstResource.proxy_pools.is_active) {
+      if (firstResource.proxy_pools && typeof firstResource.proxy_pools === 'object' && firstResource.proxy_pools.is_active) {
         proxyList = firstResource.proxy_pools.proxies // Array of proxies
         console.log(`✅ [API] User ${decoded.username} using Proxy Pool: ${firstResource.proxy_pools.name} (${proxyList.length} proxies)`)
       }
