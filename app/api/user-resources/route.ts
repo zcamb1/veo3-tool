@@ -126,8 +126,19 @@ export async function GET(request: NextRequest) {
 
       // Option 1: Proxy Pool (NEW - list of proxies)
       if (firstResource.proxy_pools && typeof firstResource.proxy_pools === 'object' && firstResource.proxy_pools.is_active) {
-        proxyList = firstResource.proxy_pools.proxies // Array of proxies
-        console.log(`✅ [API] User ${decoded.username} using Proxy Pool: ${firstResource.proxy_pools.name} (${proxyList.length} proxies)`)
+        proxyList = firstResource.proxy_pools.proxies
+        
+        // Parse proxies if stored as string (compatibility fix)
+        if (typeof proxyList === 'string') {
+          try {
+            proxyList = JSON.parse(proxyList)
+          } catch (e) {
+            console.error(`❌ [API] Failed to parse proxies for user ${decoded.username}:`, e)
+            proxyList = []
+          }
+        }
+        
+        console.log(`✅ [API] User ${decoded.username} using Proxy Pool: ${firstResource.proxy_pools.name} (${proxyList?.length || 0} proxies)`)
       }
       // Option 2: Single Proxy (OLD - backward compatibility)
       else if (firstResource.proxy_host) {
