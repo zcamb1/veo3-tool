@@ -37,6 +37,18 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Parse proxies if stored as string (compatibility fix)
+    proxyPools?.forEach(pool => {
+      if (typeof pool.proxies === 'string') {
+        try {
+          pool.proxies = JSON.parse(pool.proxies)
+        } catch (e) {
+          console.error(`Failed to parse proxies for pool ${pool.id}:`, e)
+          pool.proxies = []
+        }
+      }
+    })
+
     return NextResponse.json({
       success: true,
       proxy_pools: proxyPools || [],
