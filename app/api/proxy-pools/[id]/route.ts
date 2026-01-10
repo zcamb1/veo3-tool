@@ -37,6 +37,16 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       )
     }
 
+    // Parse proxies if stored as string (compatibility fix)
+    if (typeof proxyPool.proxies === 'string') {
+      try {
+        proxyPool.proxies = JSON.parse(proxyPool.proxies)
+      } catch (e) {
+        console.error(`Failed to parse proxies for pool ${id}:`, e)
+        proxyPool.proxies = []
+      }
+    }
+
     return NextResponse.json({
       success: true,
       proxy_pool: proxyPool,
@@ -82,7 +92,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     const updateData: any = {}
     if (name !== undefined) updateData.name = name
     if (description !== undefined) updateData.description = description
-    if (proxies !== undefined) updateData.proxies = JSON.stringify(proxies)
+    if (proxies !== undefined) updateData.proxies = proxies // Supabase JSONB auto-handles JSON
     if (is_active !== undefined) updateData.is_active = is_active
     if (notes !== undefined) updateData.notes = notes
 
@@ -185,4 +195,5 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     )
   }
 }
+
 
