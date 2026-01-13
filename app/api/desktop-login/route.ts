@@ -75,6 +75,39 @@ export async function POST(request: NextRequest) {
 
     console.log('✅ [LOGIN API] Password verified for:', username)
 
+    // ============================================
+    // QUOTA SYSTEM: Check tool version for limited users
+    // ============================================
+    const supportsQuota = body.supports_quota === true
+    
+    if (user.monthly_char_limit !== null && user.monthly_char_limit !== undefined) {
+      // User has quota limit → Must use new tool version
+      console.log(`🔍 [QUOTA CHECK] User ${username} has quota limit: ${user.monthly_char_limit}`)
+      console.log(`   Tool supports_quota flag: ${supportsQuota}`)
+      
+      if (!supportsQuota) {
+        // Old tool version detected → REJECT
+        console.log(`❌ [QUOTA CHECK] Rejecting old tool version for limited user`)
+        
+        return NextResponse.json(
+          {
+            success: false,
+            error: '⚠️ Tài khoản của bạn yêu cầu phiên bản tool mới!\n\n' +
+                   'Vui lòng liên hệ admin để nhận bản cập nhật.\n\n' +
+                   '📌 Lý do: Tài khoản có giới hạn quota tháng.',
+            requires_update: true,
+            quota_limit: user.monthly_char_limit
+          },
+          { status: 426 }  // 426 Upgrade Required
+        )
+      }
+      
+      console.log(`✅ [QUOTA CHECK] Tool version supports quota system`)
+    } else {
+      // Unlimited user → Allow both old and new tool
+      console.log(`✅ [QUOTA CHECK] Unlimited user - all tool versions allowed`)
+    }
+
     // Handle device binding
     if (device_id) {
       const storedDeviceId = user.device_id
