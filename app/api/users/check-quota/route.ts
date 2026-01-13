@@ -77,6 +77,13 @@ export async function GET(request: NextRequest) {
     }
 
     const user = users[0]
+    
+    console.log('📊 [DEBUG] User data from DB:')
+    console.log('   ID:', user.id)
+    console.log('   Username:', user.username)
+    console.log('   monthly_char_limit:', user.monthly_char_limit)
+    console.log('   current_month_usage:', user.current_month_usage)
+    console.log('   usage_reset_date:', user.usage_reset_date)
 
     // ============================================
     // STEP 3: Check if usage needs to be reset
