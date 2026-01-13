@@ -11,6 +11,9 @@ interface User {
   account_type: 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all'
   status: 'active' | 'inactive' | 'banned'
   created_at: string
+  monthly_char_limit: number | null
+  current_month_usage: number
+  usage_reset_date: string | null
 }
 
 interface GmailAccount {
@@ -53,7 +56,9 @@ export default function UsersPage() {
     username: '',
     password: '',
     account_type: 'all' as 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all',
-    status: 'active' as 'active' | 'inactive' | 'banned'
+    status: 'active' as 'active' | 'inactive' | 'banned',
+    monthly_char_limit: null as number | null,
+    is_unlimited: true
   })
   const [formLoading, setFormLoading] = useState(false)
   const [formError, setFormError] = useState('')
@@ -84,14 +89,18 @@ export default function UsersPage() {
         username: editingUser.username,
         password: '', // Don't populate password
         account_type: editingUser.account_type,
-        status: editingUser.status
+        status: editingUser.status,
+        monthly_char_limit: editingUser.monthly_char_limit,
+        is_unlimited: editingUser.monthly_char_limit === null
       })
     } else {
       setFormData({
         username: '',
         password: '',
         account_type: 'all',
-        status: 'active'
+        status: 'active',
+        monthly_char_limit: null,
+        is_unlimited: true
       })
     }
   }, [editingUser])
@@ -226,7 +235,8 @@ export default function UsersPage() {
           username: formData.username,
           password: formData.password || undefined, // Only send if provided
           account_type: formData.account_type,
-          status: formData.status
+          status: formData.status,
+          monthly_char_limit: formData.is_unlimited ? null : formData.monthly_char_limit
         })
       })
       
@@ -240,7 +250,7 @@ export default function UsersPage() {
       alert('✅ User updated successfully!')
       
       // Reset form
-      setFormData({ username: '', password: '', account_type: 'all', status: 'active' })
+      setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
       setEditingUser(null)
       
       // Refresh users list
@@ -315,7 +325,7 @@ export default function UsersPage() {
       alert('✅ User created successfully!')
       
       // Reset form
-      setFormData({ username: '', password: '', account_type: 'all', status: 'active' })
+      setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
       setShowAddModal(false)
       
       // Refresh users list
@@ -453,6 +463,36 @@ export default function UsersPage() {
           </div>
           <div className="flex gap-3">
             <button 
+              onClick={async () => {
+                if (!confirm('🔄 Reset quota cho TẤT CẢ users có giới hạn?\n\nUsage sẽ về 0 cho tất cả users.')) return
+                
+                try {
+                  const password = prompt('Nhập admin password:')
+                  if (!password) return
+                  
+                  const response = await fetch('/api/users/reset-monthly-usage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ admin_password: password })
+                  })
+                  
+                  const result = await response.json()
+                  
+                  if (result.success) {
+                    alert(`✅ ${result.message}\n\nUsers reset: ${result.users_reset}`)
+                    fetchUsers() // Refresh list
+                  } else {
+                    alert(`❌ Error: ${result.error}`)
+                  }
+                } catch (error: any) {
+                  alert(`❌ Lỗi: ${error.message}`)
+                }
+              }}
+              className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition shadow-lg"
+            >
+              🔄 Reset All Quotas
+            </button>
+            <button 
               onClick={handleLogout}
               className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition shadow-lg"
             >
@@ -478,6 +518,7 @@ export default function UsersPage() {
                   <th className="py-3 px-4 text-white font-semibold">Username</th>
                   <th className="py-3 px-4 text-white font-semibold">Device ID</th>
                   <th className="py-3 px-4 text-white font-semibold">Account Type</th>
+                  <th className="py-3 px-4 text-white font-semibold">Monthly Quota</th>
                   <th className="py-3 px-4 text-white font-semibold">Status</th>
                   <th className="py-3 px-4 text-white font-semibold">Created</th>
                   <th className="py-3 px-4 text-white font-semibold">Actions</th>
@@ -501,6 +542,20 @@ export default function UsersPage() {
                       }`}>
                         {user.account_type.toUpperCase()}
                       </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      {user.monthly_char_limit === null ? (
+                        <span className="text-green-400 font-semibold">∞ Unlimited</span>
+                      ) : (
+                        <div className="text-white text-sm">
+                          <div className="font-semibold">
+                            {(user.current_month_usage || 0).toLocaleString()} / {user.monthly_char_limit.toLocaleString()}
+                          </div>
+                          <div className="text-xs text-white/70">
+                            {Math.round((user.current_month_usage || 0) / user.monthly_char_limit * 100)}% used
+                          </div>
+                        </div>
+                      )}
                     </td>
                     <td className="py-3 px-4">
                       <button
@@ -527,6 +582,43 @@ export default function UsersPage() {
                             title="Assign Gmail & Proxy"
                           >
                             📦
+                          </button>
+                        )}
+                        {/* Reset Quota button - only for limited users */}
+                        {user.monthly_char_limit !== null && (
+                          <button 
+                            onClick={async () => {
+                              if (!confirm(`🔄 Reset quota cho user "${user.username}"?\n\nUsage sẽ về 0.`)) return
+                              
+                              try {
+                                const password = prompt('Nhập admin password:')
+                                if (!password) return
+                                
+                                const response = await fetch('/api/users/reset-monthly-usage', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ 
+                                    admin_password: password,
+                                    user_id: user.id
+                                  })
+                                })
+                                
+                                const result = await response.json()
+                                
+                                if (result.success) {
+                                  alert(`✅ ${result.message}`)
+                                  fetchUsers() // Refresh list
+                                } else {
+                                  alert(`❌ Error: ${result.error}`)
+                                }
+                              } catch (error: any) {
+                                alert(`❌ Lỗi: ${error.message}`)
+                              }
+                            }}
+                            className="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
+                            title="Reset Quota"
+                          >
+                            🔄
                           </button>
                         )}
                         <button 
@@ -616,7 +708,7 @@ export default function UsersPage() {
                   type="button"
                   onClick={() => {
                     setShowAddModal(false)
-                    setFormData({ username: '', password: '', account_type: 'all', status: 'active' })
+                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
                     setFormError('')
                   }}
                   className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
@@ -1001,13 +1093,59 @@ export default function UsersPage() {
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
+                
+                {/* Monthly Character Limit */}
+                <div className="border-t pt-4 mt-4">
+                  <label className="block text-sm font-medium mb-3">📊 Monthly Character Limit</label>
+                  
+                  <div className="space-y-3">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        checked={formData.is_unlimited}
+                        onChange={() => setFormData({...formData, is_unlimited: true, monthly_char_limit: null})}
+                        className="mr-2"
+                        disabled={formLoading}
+                      />
+                      <span className="text-sm">∞ Unlimited (No restrictions)</span>
+                    </label>
+                    
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        checked={!formData.is_unlimited}
+                        onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: 10800000})}
+                        className="mr-2"
+                        disabled={formLoading}
+                      />
+                      <span className="text-sm">Limited</span>
+                    </label>
+                    
+                    {!formData.is_unlimited && (
+                      <div className="ml-6">
+                        <input
+                          type="number"
+                          value={formData.monthly_char_limit || 10800000}
+                          onChange={(e) => setFormData({...formData, monthly_char_limit: Number(e.target.value)})}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                          placeholder="10800000"
+                          min="1"
+                          disabled={formLoading}
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Recommended: 10,800,000 chars/month (~200 hours/day)
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="flex gap-3 mt-6">
                 <button
                   type="button"
                   onClick={() => {
                     setEditingUser(null)
-                    setFormData({ username: '', password: '', account_type: 'all', status: 'active' })
+                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
                     setFormError('')
                   }}
                   className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
