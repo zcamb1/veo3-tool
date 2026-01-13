@@ -93,8 +93,7 @@ export async function POST(request: NextRequest) {
           {
             success: false,
             error: '⚠️ Tài khoản của bạn yêu cầu phiên bản tool mới!\n\n' +
-                   'Vui lòng liên hệ admin để nhận bản cập nhật.\n\n' +
-                   '📌 Lý do: Tài khoản có giới hạn quota tháng.',
+                   'Vui lòng liên hệ admin để nhận bản cập nhật.',
             requires_update: true,
             quota_limit: user.monthly_char_limit
           },
