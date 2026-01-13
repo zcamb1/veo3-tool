@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     if (shouldReset) {
       console.log('🔄 [TRACK USAGE] Resetting monthly usage before tracking')
       currentUsage = 0
-      resetDate = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString()
+      resetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString()
     }
 
     // ============================================
