@@ -92,8 +92,8 @@ export async function GET(request: NextRequest) {
       if (shouldReset) {
         console.log('🔄 [CHECK QUOTA] Resetting monthly usage')
         
-        // Reset usage and set next reset date
-        const nextResetDate = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+        // Reset usage and set next reset date (30 days from now)
+        const nextResetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
         
         const { error: updateError } = await supabaseAdmin
           .from('users')
