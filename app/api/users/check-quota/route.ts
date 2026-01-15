@@ -77,13 +77,6 @@ export async function GET(request: NextRequest) {
     }
 
     const user = users[0]
-    
-    console.log('📊 [DEBUG] User data from DB:')
-    console.log('   ID:', user.id)
-    console.log('   Username:', user.username)
-    console.log('   monthly_char_limit:', user.monthly_char_limit)
-    console.log('   current_month_usage:', user.current_month_usage)
-    console.log('   usage_reset_date:', user.usage_reset_date)
 
     // ============================================
     // STEP 3: Check if usage needs to be reset
@@ -122,6 +115,7 @@ export async function GET(request: NextRequest) {
     // STEP 4: Build quota response
     // ============================================
     const isUnlimited = user.monthly_char_limit === null
+    const isAccountBased = user.monthly_char_limit === -1
 
     if (isUnlimited) {
       // Unlimited user
@@ -130,6 +124,7 @@ export async function GET(request: NextRequest) {
         success: true,
         quota: {
           is_unlimited: true,
+          is_account_based: false,
           monthly_limit: null,
           current_usage: 0,
           remaining: null,
@@ -137,13 +132,25 @@ export async function GET(request: NextRequest) {
           reset_date: null
         }
       })
+    } else if (isAccountBased) {
+      // Account-based quota (tool will calculate from Gmail accounts)
+      console.log('📊 [CHECK QUOTA] User has account-based quota:', user.username)
+      return NextResponse.json({
+        success: true,
+        quota: {
+          is_unlimited: false,
+          is_account_based: true,
+          monthly_limit: -1,
+          message: 'Quota based on Gmail accounts. Tool will calculate from account equity API.'
+        }
+      })
     } else {
-      // Limited user
+      // Fixed limit user
       const monthlyLimit = user.monthly_char_limit
       const remaining = Math.max(0, monthlyLimit - currentUsage)
       const percentageUsed = monthlyLimit > 0 ? (currentUsage / monthlyLimit) * 100 : 0
 
-      console.log('✅ [CHECK QUOTA] Limited user:', user.username)
+      console.log('✅ [CHECK QUOTA] Fixed limit user:', user.username)
       console.log('   Limit:', monthlyLimit.toLocaleString())
       console.log('   Used:', currentUsage.toLocaleString())
       console.log('   Remaining:', remaining.toLocaleString())
@@ -153,6 +160,7 @@ export async function GET(request: NextRequest) {
         success: true,
         quota: {
           is_unlimited: false,
+          is_account_based: false,
           monthly_limit: monthlyLimit,
           current_usage: currentUsage,
           remaining: remaining,
