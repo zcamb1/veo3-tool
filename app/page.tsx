@@ -546,6 +546,8 @@ export default function UsersPage() {
                     <td className="py-3 px-4">
                       {user.monthly_char_limit === null ? (
                         <span className="text-green-400 font-semibold">∞ Unlimited</span>
+                      ) : user.monthly_char_limit === -1 ? (
+                        <span className="text-blue-400 font-semibold">📊 Account-Based</span>
                       ) : (
                         <div className="text-white text-sm">
                           <div className="font-semibold">
@@ -1113,15 +1115,15 @@ export default function UsersPage() {
                     <label className="flex items-center cursor-pointer">
                       <input
                         type="radio"
-                        checked={!formData.is_unlimited}
+                        checked={!formData.is_unlimited && formData.monthly_char_limit !== -1}
                         onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: 10800000})}
                         className="mr-2"
                         disabled={formLoading}
                       />
-                      <span className="text-sm">Limited</span>
+                      <span className="text-sm">Fixed Limit</span>
                     </label>
                     
-                    {!formData.is_unlimited && (
+                    {!formData.is_unlimited && formData.monthly_char_limit !== -1 && (
                       <div className="ml-6">
                         <input
                           type="number"
@@ -1135,6 +1137,22 @@ export default function UsersPage() {
                         <p className="text-xs text-gray-500 mt-1">
                           Recommended: 10,800,000 chars/month (~200 hours/day)
                         </p>
+                      </div>
+                    )}
+                    
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        checked={formData.monthly_char_limit === -1}
+                        onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: -1})}
+                        className="mr-2"
+                        disabled={formLoading}
+                      />
+                      <span className="text-sm">📊 Account-Based (quota from Gmail accounts)</span>
+                    </label>
+                    {formData.monthly_char_limit === -1 && (
+                      <div className="ml-6 text-xs text-gray-500">
+                        Tool will calculate quota from assigned Gmail accounts' daily quota (leftQuota × 668 chars).
                       </div>
                     )}
                   </div>
