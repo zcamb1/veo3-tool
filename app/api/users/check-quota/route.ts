@@ -77,6 +77,12 @@ export async function GET(request: NextRequest) {
     }
 
     const user = users[0]
+    
+    // ✅ DEBUG: Log user data from database
+    console.log('🔍 [CHECK QUOTA] User data from DB:')
+    console.log('   username:', user.username)
+    console.log('   monthly_char_limit:', user.monthly_char_limit, '(type:', typeof user.monthly_char_limit + ')')
+    console.log('   current_month_usage:', user.current_month_usage)
 
     // ============================================
     // STEP 3: Check if usage needs to be reset
