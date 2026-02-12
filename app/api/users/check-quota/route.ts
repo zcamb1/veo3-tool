@@ -20,6 +20,8 @@ if (!JWT_SECRET) {
  * - 200: Quota information
  * - 401: Unauthorized
  * - 500: Server error
+ * 
+ * Updated: 2026-01-13 - Add account-based quota support (monthly_char_limit = -1)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -56,7 +58,7 @@ export async function GET(request: NextRequest) {
     // ============================================
     const { data: users, error: queryError } = await supabaseAdmin
       .from('users')
-      .select('id, username, monthly_char_limit, current_month_usage, usage_reset_date')
+      .select('id, username, quota_mode, monthly_char_limit, current_month_usage, monthly_voice_limit, current_month_voice_usage, usage_reset_date')
       .eq('id', payload.user_id)
       .limit(1)
 
@@ -77,21 +79,31 @@ export async function GET(request: NextRequest) {
     }
 
     const user = users[0]
+    const quotaMode = user.quota_mode || 'characters'
     
     // ✅ DEBUG: Log user data from database
     console.log('🔍 [CHECK QUOTA] User data from DB:')
     console.log('   username:', user.username)
+    console.log('   quota_mode:', quotaMode)
     console.log('   monthly_char_limit:', user.monthly_char_limit, '(type:', typeof user.monthly_char_limit + ')')
     console.log('   current_month_usage:', user.current_month_usage)
+    console.log('   monthly_voice_limit:', user.monthly_voice_limit)
+    console.log('   current_month_voice_usage:', user.current_month_voice_usage)
 
     // ============================================
     // STEP 3: Check if usage needs to be reset
     // ============================================
-    let currentUsage = user.current_month_usage || 0
+    let currentUsage = quotaMode === 'characters' 
+      ? (user.current_month_usage || 0)
+      : (user.current_month_voice_usage || 0)
     let resetDate = user.usage_reset_date
 
     // If reset date is in the past or not set, reset usage
-    if (user.monthly_char_limit !== null) {
+    const hasLimit = quotaMode === 'characters' 
+      ? user.monthly_char_limit !== null
+      : user.monthly_voice_limit !== null
+
+    if (hasLimit) {
       const now = new Date()
       const shouldReset = !resetDate || new Date(resetDate) <= now
 
@@ -101,12 +113,19 @@ export async function GET(request: NextRequest) {
         // Reset usage and set next reset date (30 days from now)
         const nextResetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
         
+        const updateData: any = {
+          usage_reset_date: nextResetDate.toISOString()
+        }
+        
+        if (quotaMode === 'characters') {
+          updateData.current_month_usage = 0
+        } else {
+          updateData.current_month_voice_usage = 0
+        }
+        
         const { error: updateError } = await supabaseAdmin
           .from('users')
-          .update({
-            current_month_usage: 0,
-            usage_reset_date: nextResetDate.toISOString()
-          })
+          .update(updateData)
           .eq('id', user.id)
 
         if (!updateError) {
@@ -120,8 +139,10 @@ export async function GET(request: NextRequest) {
     // ============================================
     // STEP 4: Build quota response
     // ============================================
-    const isUnlimited = user.monthly_char_limit === null
-    const isAccountBased = user.monthly_char_limit === -1
+    const isUnlimited = quotaMode === 'characters'
+      ? user.monthly_char_limit === null
+      : user.monthly_voice_limit === null
+    const isAccountBased = quotaMode === 'characters' && user.monthly_char_limit === -1
 
     if (isUnlimited) {
       // Unlimited user
@@ -129,6 +150,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         success: true,
         quota: {
+          quota_mode: quotaMode,
           is_unlimited: true,
           is_account_based: false,
           monthly_limit: null,
@@ -144,6 +166,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         success: true,
         quota: {
+          quota_mode: 'characters',
           is_unlimited: false,
           is_account_based: true,
           monthly_limit: -1,
@@ -152,27 +175,38 @@ export async function GET(request: NextRequest) {
       })
     } else {
       // Fixed limit user
-      const monthlyLimit = user.monthly_char_limit
+      const monthlyLimit = quotaMode === 'characters' ? user.monthly_char_limit : user.monthly_voice_limit
       const remaining = Math.max(0, monthlyLimit - currentUsage)
       const percentageUsed = monthlyLimit > 0 ? (currentUsage / monthlyLimit) * 100 : 0
 
       console.log('✅ [CHECK QUOTA] Fixed limit user:', user.username)
-      console.log('   Limit:', monthlyLimit.toLocaleString())
-      console.log('   Used:', currentUsage.toLocaleString())
-      console.log('   Remaining:', remaining.toLocaleString())
+      console.log('   Mode:', quotaMode)
+      console.log('   Limit:', quotaMode === 'characters' ? monthlyLimit.toLocaleString() : `${Math.round(monthlyLimit / 60)} min`)
+      console.log('   Used:', quotaMode === 'characters' ? currentUsage.toLocaleString() : `${Math.round(currentUsage / 60)} min`)
+      console.log('   Remaining:', quotaMode === 'characters' ? remaining.toLocaleString() : `${Math.round(remaining / 60)} min`)
       console.log('   Percentage:', percentageUsed.toFixed(1) + '%')
+
+      const quotaResponse: any = {
+        quota_mode: quotaMode,
+        is_unlimited: false,
+        is_account_based: false,
+        monthly_limit: monthlyLimit,
+        current_usage: currentUsage,
+        remaining: remaining,
+        percentage_used: Math.round(percentageUsed * 10) / 10,
+        reset_date: resetDate
+      }
+
+      // Add human-readable formats for voice mode
+      if (quotaMode === 'voice_duration') {
+        quotaResponse.monthly_limit_minutes = Math.round(monthlyLimit / 60)
+        quotaResponse.current_usage_minutes = Math.round(currentUsage / 60)
+        quotaResponse.remaining_minutes = Math.round(remaining / 60)
+      }
 
       return NextResponse.json({
         success: true,
-        quota: {
-          is_unlimited: false,
-          is_account_based: false,
-          monthly_limit: monthlyLimit,
-          current_usage: currentUsage,
-          remaining: remaining,
-          percentage_used: Math.round(percentageUsed * 10) / 10,
-          reset_date: resetDate
-        }
+        quota: quotaResponse
       })
     }
 
