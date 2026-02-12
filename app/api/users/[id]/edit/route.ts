@@ -9,7 +9,7 @@ export async function PUT(
   try {
     const params = await context.params
     const userId = parseInt(params.id)
-    const { username, password, account_type, status, monthly_char_limit } = await request.json()
+    const { username, password, account_type, status, quota_mode, monthly_char_limit, monthly_voice_limit } = await request.json()
 
     if (isNaN(userId)) {
       return NextResponse.json(
@@ -27,10 +27,22 @@ export async function PUT(
     if (account_type) updateData.account_type = account_type
     if (status) updateData.status = status
     
+    // Update quota mode
+    if (quota_mode !== undefined) {
+      updateData.quota_mode = quota_mode
+      console.log('📊 Quota mode updated:', quota_mode)
+    }
+    
     // Update monthly character limit (can be null for unlimited)
     if (monthly_char_limit !== undefined) {
       updateData.monthly_char_limit = monthly_char_limit
-      console.log('📊 Monthly char limit updated:', monthly_char_limit === null ? 'Unlimited' : monthly_char_limit.toLocaleString())
+      console.log('📝 Monthly char limit updated:', monthly_char_limit === null ? 'Unlimited' : monthly_char_limit.toLocaleString())
+    }
+    
+    // Update monthly voice limit (can be null for unlimited)
+    if (monthly_voice_limit !== undefined) {
+      updateData.monthly_voice_limit = monthly_voice_limit
+      console.log('🎵 Monthly voice limit updated:', monthly_voice_limit === null ? 'Unlimited' : `${Math.round(monthly_voice_limit / 60)} minutes`)
     }
     
     // Hash new password if provided
