@@ -11,8 +11,11 @@ interface User {
   account_type: 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all'
   status: 'active' | 'inactive' | 'banned'
   created_at: string
+  quota_mode: 'characters' | 'voice_duration'
   monthly_char_limit: number | null
   current_month_usage: number
+  monthly_voice_limit: number | null
+  current_month_voice_usage: number
   usage_reset_date: string | null
 }
 
@@ -57,7 +60,9 @@ export default function UsersPage() {
     password: '',
     account_type: 'all' as 'trial' | 'veo3' | 'whisk' | 'minimax' | 'all',
     status: 'active' as 'active' | 'inactive' | 'banned',
+    quota_mode: 'characters' as 'characters' | 'voice_duration',
     monthly_char_limit: null as number | null,
+    monthly_voice_limit: null as number | null,
     is_unlimited: true
   })
   const [formLoading, setFormLoading] = useState(false)
@@ -85,13 +90,18 @@ export default function UsersPage() {
   // Load user data when editing
   useEffect(() => {
     if (editingUser) {
+      const isUnlimited = editingUser.quota_mode === 'characters' 
+        ? editingUser.monthly_char_limit === null 
+        : editingUser.monthly_voice_limit === null
       setFormData({
         username: editingUser.username,
         password: '', // Don't populate password
         account_type: editingUser.account_type,
         status: editingUser.status,
+        quota_mode: editingUser.quota_mode || 'characters',
         monthly_char_limit: editingUser.monthly_char_limit,
-        is_unlimited: editingUser.monthly_char_limit === null
+        monthly_voice_limit: editingUser.monthly_voice_limit,
+        is_unlimited: isUnlimited
       })
     } else {
       setFormData({
@@ -99,7 +109,9 @@ export default function UsersPage() {
         password: '',
         account_type: 'all',
         status: 'active',
+        quota_mode: 'characters',
         monthly_char_limit: null,
+        monthly_voice_limit: null,
         is_unlimited: true
       })
     }
@@ -236,7 +248,13 @@ export default function UsersPage() {
           password: formData.password || undefined, // Only send if provided
           account_type: formData.account_type,
           status: formData.status,
-          monthly_char_limit: formData.is_unlimited ? null : formData.monthly_char_limit
+          quota_mode: formData.quota_mode,
+          monthly_char_limit: formData.quota_mode === 'characters' 
+            ? (formData.is_unlimited ? null : formData.monthly_char_limit)
+            : null,
+          monthly_voice_limit: formData.quota_mode === 'voice_duration'
+            ? (formData.is_unlimited ? null : formData.monthly_voice_limit)
+            : null
         })
       })
       
@@ -250,7 +268,7 @@ export default function UsersPage() {
       alert('✅ User updated successfully!')
       
       // Reset form
-      setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
+      setFormData({ username: '', password: '', account_type: 'all', status: 'active', quota_mode: 'characters', monthly_char_limit: null, monthly_voice_limit: null, is_unlimited: true })
       setEditingUser(null)
       
       // Refresh users list
@@ -325,7 +343,7 @@ export default function UsersPage() {
       alert('✅ User created successfully!')
       
       // Reset form
-      setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
+      setFormData({ username: '', password: '', account_type: 'all', status: 'active', quota_mode: 'characters', monthly_char_limit: null, monthly_voice_limit: null, is_unlimited: true })
       setShowAddModal(false)
       
       // Refresh users list
@@ -544,19 +562,38 @@ export default function UsersPage() {
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      {user.monthly_char_limit === null ? (
-                        <span className="text-green-400 font-semibold">∞ Unlimited</span>
-                      ) : user.monthly_char_limit === -1 ? (
-                        <span className="text-blue-400 font-semibold">📊 Account-Based</span>
+                      {user.quota_mode === 'voice_duration' ? (
+                        // Voice Duration Mode
+                        user.monthly_voice_limit === null ? (
+                          <span className="text-green-400 font-semibold">∞ Unlimited Voice</span>
+                        ) : (
+                          <div className="text-white text-sm">
+                            <div className="text-xs text-purple-400 mb-1">🎵 Voice Duration</div>
+                            <div className="font-semibold">
+                              {Math.round((user.current_month_voice_usage || 0) / 60)} / {Math.round((user.monthly_voice_limit || 0) / 60)} min
+                            </div>
+                            <div className="text-xs text-white/70">
+                              {Math.round((user.current_month_voice_usage || 0) / (user.monthly_voice_limit || 1) * 100)}% used
+                            </div>
+                          </div>
+                        )
                       ) : (
-                        <div className="text-white text-sm">
-                          <div className="font-semibold">
-                            {(user.current_month_usage || 0).toLocaleString()} / {user.monthly_char_limit.toLocaleString()}
+                        // Character Mode (default)
+                        user.monthly_char_limit === null ? (
+                          <span className="text-green-400 font-semibold">∞ Unlimited</span>
+                        ) : user.monthly_char_limit === -1 ? (
+                          <span className="text-blue-400 font-semibold">📊 Account-Based</span>
+                        ) : (
+                          <div className="text-white text-sm">
+                            <div className="text-xs text-blue-400 mb-1">📝 Characters</div>
+                            <div className="font-semibold">
+                              {(user.current_month_usage || 0).toLocaleString()} / {user.monthly_char_limit.toLocaleString()}
+                            </div>
+                            <div className="text-xs text-white/70">
+                              {Math.round((user.current_month_usage || 0) / user.monthly_char_limit * 100)}% used
+                            </div>
                           </div>
-                          <div className="text-xs text-white/70">
-                            {Math.round((user.current_month_usage || 0) / user.monthly_char_limit * 100)}% used
-                          </div>
-                        </div>
+                        )
                       )}
                     </td>
                     <td className="py-3 px-4">
@@ -621,6 +658,35 @@ export default function UsersPage() {
                             title="Reset Quota"
                           >
                             🔄
+                          </button>
+                        )}
+                        {/* Reset Device button - only for users with device_id */}
+                        {user.device_id && (
+                          <button 
+                            onClick={async () => {
+                              if (!confirm(`🖥️ Reset device binding for "${user.username}"?\n\nUser sẽ có thể login từ máy mới.`)) return
+                              
+                              try {
+                                const response = await fetch(`/api/users/${user.id}/reset-device`, {
+                                  method: 'POST'
+                                })
+                                
+                                const result = await response.json()
+                                
+                                if (result.success) {
+                                  alert(`✅ ${result.message}`)
+                                  fetchUsers() // Refresh list
+                                } else {
+                                  alert(`❌ Error: ${result.error}`)
+                                }
+                              } catch (error: any) {
+                                alert(`❌ Lỗi: ${error.message}`)
+                              }
+                            }}
+                            className="px-3 py-1 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+                            title="Reset Device Binding"
+                          >
+                            🖥️
                           </button>
                         )}
                         <button 
@@ -710,7 +776,7 @@ export default function UsersPage() {
                   type="button"
                   onClick={() => {
                     setShowAddModal(false)
-                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
+                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', quota_mode: 'characters', monthly_char_limit: null, monthly_voice_limit: null, is_unlimited: true })
                     setFormError('')
                   }}
                   className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
@@ -1068,6 +1134,58 @@ export default function UsersPage() {
                     disabled={formLoading}
                   />
                 </div>
+                
+                {/* Device Binding Info */}
+                <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="block text-sm font-medium mb-1">🖥️ Device Binding</label>
+                      <p className="text-xs text-gray-600">
+                        {editingUser.device_id ? (
+                          <>
+                            <span className="font-mono text-gray-700">{editingUser.device_id.substring(0, 16)}...</span>
+                            <span className="block text-gray-500 mt-1">User đã bind device</span>
+                          </>
+                        ) : (
+                          <span className="text-gray-500">Not bound - User chưa login lần đầu</span>
+                        )}
+                      </p>
+                    </div>
+                    {editingUser.device_id && (
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!confirm(`🖥️ Reset device binding?\n\nUser "${editingUser.username}" sẽ có thể login từ máy mới.`)) return
+                          
+                          try {
+                            const response = await fetch(`/api/users/${editingUser.id}/reset-device`, {
+                              method: 'POST'
+                            })
+                            
+                            const result = await response.json()
+                            
+                            if (result.success) {
+                              alert(`✅ ${result.message}`)
+                              // Update local state
+                              setEditingUser({...editingUser, device_id: null})
+                              // Refresh list
+                              fetchUsers()
+                            } else {
+                              alert(`❌ Error: ${result.error}`)
+                            }
+                          } catch (error: any) {
+                            alert(`❌ Lỗi: ${error.message}`)
+                          }
+                        }}
+                        className="px-3 py-1 bg-purple-500 text-white text-xs rounded hover:bg-purple-600 transition"
+                        disabled={formLoading}
+                      >
+                        Reset Device
+                      </button>
+                    )}
+                  </div>
+                </div>
+                
                 <div>
                   <label className="block text-sm font-medium mb-2">Account Type</label>
                   <select 
@@ -1096,66 +1214,149 @@ export default function UsersPage() {
                   </select>
                 </div>
                 
-                {/* Monthly Character Limit */}
+                {/* Quota Configuration */}
                 <div className="border-t pt-4 mt-4">
-                  <label className="block text-sm font-medium mb-3">📊 Monthly Character Limit</label>
+                  <label className="block text-sm font-medium mb-3">📊 Quota Configuration</label>
                   
-                  <div className="space-y-3">
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        checked={formData.is_unlimited}
-                        onChange={() => setFormData({...formData, is_unlimited: true, monthly_char_limit: null})}
-                        className="mr-2"
+                  {/* Quota Mode Selection */}
+                  <div className="mb-4">
+                    <div className="flex gap-2 border-b">
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, quota_mode: 'characters', is_unlimited: true, monthly_char_limit: null})}
+                        className={`px-4 py-2 font-medium transition ${
+                          formData.quota_mode === 'characters'
+                            ? 'border-b-2 border-blue-500 text-blue-600'
+                            : 'text-gray-500 hover:text-gray-700'
+                        }`}
                         disabled={formLoading}
-                      />
-                      <span className="text-sm">∞ Unlimited (No restrictions)</span>
-                    </label>
-                    
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        checked={!formData.is_unlimited && formData.monthly_char_limit !== -1}
-                        onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: 10800000})}
-                        className="mr-2"
+                      >
+                        📝 Characters
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, quota_mode: 'voice_duration', is_unlimited: true, monthly_voice_limit: null})}
+                        className={`px-4 py-2 font-medium transition ${
+                          formData.quota_mode === 'voice_duration'
+                            ? 'border-b-2 border-blue-500 text-blue-600'
+                            : 'text-gray-500 hover:text-gray-700'
+                        }`}
                         disabled={formLoading}
-                      />
-                      <span className="text-sm">Fixed Limit</span>
-                    </label>
-                    
-                    {!formData.is_unlimited && formData.monthly_char_limit !== -1 && (
-                      <div className="ml-6">
+                      >
+                        🎵 Voice Duration
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Character Mode */}
+                  {formData.quota_mode === 'characters' && (
+                    <div className="space-y-3">
+                      <label className="flex items-center cursor-pointer">
                         <input
-                          type="number"
-                          value={formData.monthly_char_limit || 10800000}
-                          onChange={(e) => setFormData({...formData, monthly_char_limit: Number(e.target.value)})}
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                          placeholder="10800000"
-                          min="1"
+                          type="radio"
+                          checked={formData.is_unlimited}
+                          onChange={() => setFormData({...formData, is_unlimited: true, monthly_char_limit: null})}
+                          className="mr-2"
                           disabled={formLoading}
                         />
-                        <p className="text-xs text-gray-500 mt-1">
-                          Recommended: 10,800,000 chars/month (~200 hours/day)
-                        </p>
-                      </div>
-                    )}
-                    
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        checked={formData.monthly_char_limit === -1}
-                        onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: -1})}
-                        className="mr-2"
-                        disabled={formLoading}
-                      />
-                      <span className="text-sm">📊 Account-Based (quota from Gmail accounts)</span>
-                    </label>
-                    {formData.monthly_char_limit === -1 && (
-                      <div className="ml-6 text-xs text-gray-500">
-                        Tool will calculate quota from assigned Gmail accounts' daily quota (leftQuota × 668 chars).
-                      </div>
-                    )}
-                  </div>
+                        <span className="text-sm">∞ Unlimited (No restrictions)</span>
+                      </label>
+                      
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={!formData.is_unlimited && formData.monthly_char_limit !== -1}
+                          onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: 10800000})}
+                          className="mr-2"
+                          disabled={formLoading}
+                        />
+                        <span className="text-sm">Fixed Limit</span>
+                      </label>
+                      
+                      {!formData.is_unlimited && formData.monthly_char_limit !== -1 && (
+                        <div className="ml-6">
+                          <input
+                            type="number"
+                            value={formData.monthly_char_limit || 10800000}
+                            onChange={(e) => setFormData({...formData, monthly_char_limit: Number(e.target.value)})}
+                            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="10800000"
+                            min="1"
+                            disabled={formLoading}
+                          />
+                          <p className="text-xs text-gray-500 mt-1">
+                            Recommended: 10,800,000 chars/month (~200 hours voice for Vietnamese)
+                          </p>
+                        </div>
+                      )}
+                      
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={formData.monthly_char_limit === -1}
+                          onChange={() => setFormData({...formData, is_unlimited: false, monthly_char_limit: -1})}
+                          className="mr-2"
+                          disabled={formLoading}
+                        />
+                        <span className="text-sm">📊 Account-Based (quota from Gmail accounts)</span>
+                      </label>
+                      {formData.monthly_char_limit === -1 && (
+                        <div className="ml-6 text-xs text-gray-500">
+                          Tool will calculate quota from assigned Gmail accounts' daily quota (leftQuota × 668 chars).
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Voice Duration Mode */}
+                  {formData.quota_mode === 'voice_duration' && (
+                    <div className="space-y-3">
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={formData.is_unlimited}
+                          onChange={() => setFormData({...formData, is_unlimited: true, monthly_voice_limit: null})}
+                          className="mr-2"
+                          disabled={formLoading}
+                        />
+                        <span className="text-sm">∞ Unlimited (No restrictions)</span>
+                      </label>
+                      
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={!formData.is_unlimited}
+                          onChange={() => setFormData({...formData, is_unlimited: false, monthly_voice_limit: 3600})}
+                          className="mr-2"
+                          disabled={formLoading}
+                        />
+                        <span className="text-sm">Fixed Limit (in minutes)</span>
+                      </label>
+                      
+                      {!formData.is_unlimited && (
+                        <div className="ml-6 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="number"
+                              value={Math.round((formData.monthly_voice_limit || 3600) / 60)}
+                              onChange={(e) => setFormData({...formData, monthly_voice_limit: Number(e.target.value) * 60})}
+                              className="w-32 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                              placeholder="60"
+                              min="1"
+                              disabled={formLoading}
+                            />
+                            <span className="text-sm text-gray-600">minutes/month</span>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            = {(formData.monthly_voice_limit || 3600).toLocaleString()} seconds/month
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            Common values: 60 min (1h), 120 min (2h), 300 min (5h), 600 min (10h)
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex gap-3 mt-6">
@@ -1163,7 +1364,7 @@ export default function UsersPage() {
                   type="button"
                   onClick={() => {
                     setEditingUser(null)
-                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', monthly_char_limit: null, is_unlimited: true })
+                    setFormData({ username: '', password: '', account_type: 'all', status: 'active', quota_mode: 'characters', monthly_char_limit: null, monthly_voice_limit: null, is_unlimited: true })
                     setFormError('')
                   }}
                   className="flex-1 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
