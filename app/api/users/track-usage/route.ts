@@ -15,11 +15,13 @@ if (!JWT_SECRET) {
  * 
  * Endpoint: POST /api/users/track-usage
  * Headers: Authorization: Bearer <token>
- * Body: { characters_used: number }
+ * Body: { characters_used?: number, voice_duration?: number }
+ * 
+ * Note: Send either characters_used OR voice_duration based on user's quota_mode
  * 
  * Returns:
  * - 200: Usage tracked successfully
- * - 400: Bad request (missing characters_used or invalid)
+ * - 400: Bad request (missing usage data or invalid)
  * - 401: Unauthorized
  * - 403: Quota exceeded
  * - 500: Server error
@@ -41,13 +43,29 @@ export async function POST(request: NextRequest) {
 
     const token = authHeader.substring(7)
     const body = await request.json()
-    const { characters_used } = body
+    const { characters_used, voice_duration } = body
 
-    // Validate input
-    if (typeof characters_used !== 'number' || characters_used <= 0) {
+    // Validate input - at least one must be provided
+    if (!characters_used && !voice_duration) {
+      console.log('❌ [TRACK USAGE] No usage data provided')
+      return NextResponse.json(
+        { success: false, error: 'Either characters_used or voice_duration must be provided' },
+        { status: 400 }
+      )
+    }
+
+    if (characters_used && (typeof characters_used !== 'number' || characters_used <= 0)) {
       console.log('❌ [TRACK USAGE] Invalid characters_used:', characters_used)
       return NextResponse.json(
         { success: false, error: 'Invalid characters_used value' },
+        { status: 400 }
+      )
+    }
+
+    if (voice_duration && (typeof voice_duration !== 'number' || voice_duration <= 0)) {
+      console.log('❌ [TRACK USAGE] Invalid voice_duration:', voice_duration)
+      return NextResponse.json(
+        { success: false, error: 'Invalid voice_duration value' },
         { status: 400 }
       )
     }
@@ -64,14 +82,19 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('📊 [TRACK USAGE] Tracking usage for user:', payload.username)
-    console.log('   Characters:', characters_used.toLocaleString())
+    if (characters_used) {
+      console.log('   Characters:', characters_used.toLocaleString())
+    }
+    if (voice_duration) {
+      console.log('   Voice Duration:', voice_duration, 'seconds (', Math.round(voice_duration / 60), 'minutes)')
+    }
 
     // ============================================
     // STEP 2: Get user data from database
     // ============================================
     const { data: users, error: queryError } = await supabaseAdmin
       .from('users')
-      .select('id, username, monthly_char_limit, current_month_usage, usage_reset_date')
+      .select('id, username, quota_mode, monthly_char_limit, current_month_usage, monthly_voice_limit, current_month_voice_usage, usage_reset_date')
       .eq('id', payload.user_id)
       .limit(1)
 
@@ -92,17 +115,23 @@ export async function POST(request: NextRequest) {
     }
 
     const user = users[0]
+    const quotaMode = user.quota_mode || 'characters'
 
     // ============================================
     // STEP 3: Check if user is unlimited
     // ============================================
-    if (user.monthly_char_limit === null) {
+    const isUnlimited = quotaMode === 'characters' 
+      ? user.monthly_char_limit === null 
+      : user.monthly_voice_limit === null
+
+    if (isUnlimited) {
       // Unlimited user - no tracking needed
       console.log('✅ [TRACK USAGE] User is unlimited - skipping tracking')
       return NextResponse.json({
         success: true,
         message: 'Usage tracked (unlimited user)',
         quota: {
+          quota_mode: quotaMode,
           is_unlimited: true,
           remaining: null,
           exceeded: false
@@ -110,10 +139,29 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Validate that the correct usage type is being tracked
+    if (quotaMode === 'characters' && !characters_used) {
+      console.log('❌ [TRACK USAGE] User is in character mode but voice_duration was sent')
+      return NextResponse.json(
+        { success: false, error: 'User is in character quota mode. Please send characters_used.' },
+        { status: 400 }
+      )
+    }
+
+    if (quotaMode === 'voice_duration' && !voice_duration) {
+      console.log('❌ [TRACK USAGE] User is in voice mode but characters_used was sent')
+      return NextResponse.json(
+        { success: false, error: 'User is in voice duration quota mode. Please send voice_duration.' },
+        { status: 400 }
+      )
+    }
+
     // ============================================
     // STEP 4: Check and reset usage if needed
     // ============================================
-    let currentUsage = user.current_month_usage || 0
+    let currentUsage = quotaMode === 'characters' 
+      ? (user.current_month_usage || 0)
+      : (user.current_month_voice_usage || 0)
     let resetDate = user.usage_reset_date
 
     const now = new Date()
@@ -128,28 +176,38 @@ export async function POST(request: NextRequest) {
     // ============================================
     // STEP 5: Calculate new usage and check quota
     // ============================================
-    const newUsage = currentUsage + characters_used
-    const monthlyLimit = user.monthly_char_limit
+    const usageIncrement = quotaMode === 'characters' ? (characters_used || 0) : (voice_duration || 0)
+    const newUsage = currentUsage + usageIncrement
+    const monthlyLimit = quotaMode === 'characters' ? user.monthly_char_limit : user.monthly_voice_limit
     const remaining = Math.max(0, monthlyLimit - newUsage)
     const exceeded = newUsage > monthlyLimit
 
     console.log('📈 [TRACK USAGE] Quota calculation:')
-    console.log('   Previous usage:', currentUsage.toLocaleString())
-    console.log('   New usage:', newUsage.toLocaleString())
-    console.log('   Limit:', monthlyLimit.toLocaleString())
-    console.log('   Remaining:', remaining.toLocaleString())
+    console.log('   Mode:', quotaMode)
+    console.log('   Previous usage:', quotaMode === 'characters' ? currentUsage.toLocaleString() : `${Math.round(currentUsage / 60)} min`)
+    console.log('   Increment:', quotaMode === 'characters' ? usageIncrement.toLocaleString() : `${Math.round(usageIncrement / 60)} min`)
+    console.log('   New usage:', quotaMode === 'characters' ? newUsage.toLocaleString() : `${Math.round(newUsage / 60)} min`)
+    console.log('   Limit:', quotaMode === 'characters' ? monthlyLimit.toLocaleString() : `${Math.round(monthlyLimit / 60)} min`)
+    console.log('   Remaining:', quotaMode === 'characters' ? remaining.toLocaleString() : `${Math.round(remaining / 60)} min`)
     console.log('   Exceeded:', exceeded)
 
     // ============================================
     // STEP 6: Update usage in database
     // ============================================
+    const updateData: any = {
+      usage_reset_date: resetDate,
+      last_usage_update: new Date().toISOString()
+    }
+
+    if (quotaMode === 'characters') {
+      updateData.current_month_usage = newUsage
+    } else {
+      updateData.current_month_voice_usage = newUsage
+    }
+
     const { error: updateError } = await supabaseAdmin
       .from('users')
-      .update({
-        current_month_usage: newUsage,
-        usage_reset_date: resetDate,
-        last_usage_update: new Date().toISOString()
-      })
+      .update(updateData)
       .eq('id', user.id)
 
     if (updateError) {
@@ -165,18 +223,28 @@ export async function POST(request: NextRequest) {
     // ============================================
     // STEP 7: Return response
     // ============================================
+    const responseQuota: any = {
+      quota_mode: quotaMode,
+      is_unlimited: false,
+      monthly_limit: monthlyLimit,
+      current_usage: newUsage,
+      remaining: remaining,
+      exceeded: exceeded,
+      percentage_used: Math.round((newUsage / monthlyLimit) * 1000) / 10,
+      reset_date: resetDate
+    }
+
+    // Add human-readable formats
+    if (quotaMode === 'voice_duration') {
+      responseQuota.monthly_limit_minutes = Math.round(monthlyLimit / 60)
+      responseQuota.current_usage_minutes = Math.round(newUsage / 60)
+      responseQuota.remaining_minutes = Math.round(remaining / 60)
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Usage tracked successfully',
-      quota: {
-        is_unlimited: false,
-        monthly_limit: monthlyLimit,
-        current_usage: newUsage,
-        remaining: remaining,
-        exceeded: exceeded,
-        percentage_used: Math.round((newUsage / monthlyLimit) * 1000) / 10,
-        reset_date: resetDate
-      }
+      quota: responseQuota
     })
 
   } catch (error: any) {
