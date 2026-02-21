@@ -168,9 +168,9 @@ export async function POST(request: NextRequest) {
     const shouldReset = !resetDate || new Date(resetDate) <= now
 
     if (shouldReset) {
-      console.log('🔄 [TRACK USAGE] Resetting monthly usage before tracking')
+      console.log('🔄 [TRACK USAGE] Resetting yearly usage before tracking')
       currentUsage = 0
-      resetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      resetDate = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000).toISOString()
     }
 
     // ============================================
