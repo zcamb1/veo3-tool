@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     // 4. Query Gmail accounts NOT in assignedIds
     let query = supabaseAdmin
       .from('gmail_accounts')
-      .select('id, email, status, expires_at, created_at, notes')
+      .select('id, email, ogg_ticket, status, expires_at, created_at, notes')
       .order('created_at', { ascending: false })
       .limit(limit)
 
@@ -127,6 +127,7 @@ export async function GET(request: NextRequest) {
       accounts: validAccounts.map((acc: any) => ({
         id: acc.id,
         email: acc.email,
+        ogg_ticket: acc.ogg_ticket,
         status: acc.status,
         expires_at: acc.expires_at,
         created_at: acc.created_at,
