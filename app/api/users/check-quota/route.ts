@@ -108,10 +108,10 @@ export async function GET(request: NextRequest) {
       const shouldReset = !resetDate || new Date(resetDate) <= now
 
       if (shouldReset) {
-        console.log('🔄 [CHECK QUOTA] Resetting monthly usage')
+        console.log('🔄 [CHECK QUOTA] Resetting yearly usage')
         
-        // Reset usage and set next reset date (30 days from now)
-        const nextResetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+        // Reset usage and set next reset date (365 days from now)
+        const nextResetDate = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000)
         
         const updateData: any = {
           usage_reset_date: nextResetDate.toISOString()
