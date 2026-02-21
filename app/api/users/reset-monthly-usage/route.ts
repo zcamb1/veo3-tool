@@ -82,10 +82,10 @@ export async function POST(request: NextRequest) {
     console.log(`📊 [RESET USAGE] Found ${users.length} user(s) to reset`)
 
     // ============================================
-    // STEP 2: Calculate next reset date (30 days from now)
+    // STEP 2: Calculate next reset date (365 days from now)
     // ============================================
     const now = new Date()
-    const nextResetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+    const nextResetDate = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000)
 
     console.log('   Next reset date:', nextResetDate.toISOString())
 
