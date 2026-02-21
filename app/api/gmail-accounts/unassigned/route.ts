@@ -124,8 +124,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       total: validAccounts.length,
-      total_assigned: assignedIds.length,
-      total_expired_excluded: expiredCount,
       accounts: validAccounts.map((acc: any) => ({
         id: acc.id,
         email: acc.email,
