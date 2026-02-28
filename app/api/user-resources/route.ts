@@ -28,8 +28,16 @@ interface JWTPayload {
   account_type: string
 }
 
+function getClientIp(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for')
+  if (forwarded) return forwarded.split(',')[0].trim()
+  return request.headers.get('x-real-ip') || 'unknown'
+}
+
 export async function GET(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request)
+
     // 1. Get Device-ID header
     const deviceId = request.headers.get('Device-ID')
     if (!deviceId) {
@@ -152,7 +160,16 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log(`✅ [API] User ${decoded.username} (ID: ${userId}) fetched ${gmailAccounts.length} Gmail accounts`)
+    console.log(`✅ [API] User ${decoded.username} (ID: ${userId}) fetched ${gmailAccounts.length} Gmail accounts, IP: ${clientIp}`)
+
+    // Update last_ip silently (không block response nếu fail)
+    supabaseAdmin
+      .from('users')
+      .update({ last_ip: clientIp })
+      .eq('id', userId)
+      .then(({ error }) => {
+        if (error) console.error('⚠️ [API] Failed to update last_ip:', error)
+      })
 
     return NextResponse.json({
       success: true,
