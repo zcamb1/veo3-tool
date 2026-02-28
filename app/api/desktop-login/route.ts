@@ -13,12 +13,19 @@ if (!JWT_SECRET) {
   console.error('   Please add JWT_SECRET to your .env.local file')
 }
 
+function getClientIp(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for')
+  if (forwarded) return forwarded.split(',')[0].trim()
+  return request.headers.get('x-real-ip') || 'unknown'
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { username, password, device_id } = body
+    const clientIp = getClientIp(request)
 
-    console.log('🔐 [LOGIN API] Login attempt:', { username, device_id: device_id?.substring(0, 16) })
+    console.log('🔐 [LOGIN API] Login attempt:', { username, device_id: device_id?.substring(0, 16), ip: clientIp })
 
     // Validate input
     if (!username || !password) {
@@ -119,7 +126,8 @@ export async function POST(request: NextRequest) {
           .from('users')
           .update({
             device_id: device_id,
-            last_login: new Date().toISOString()
+            last_login: new Date().toISOString(),
+            last_ip: clientIp
           })
           .eq('id', user.id)
 
@@ -145,12 +153,15 @@ export async function POST(request: NextRequest) {
         )
 
       } else {
-        // Same device - update last login
+        // Same device - update last login + IP
         console.log('✅ [LOGIN API] Device verified')
         
         await supabaseAdmin
           .from('users')
-          .update({ last_login: new Date().toISOString() })
+          .update({
+            last_login: new Date().toISOString(),
+            last_ip: clientIp
+          })
           .eq('id', user.id)
       }
     }
