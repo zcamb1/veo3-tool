@@ -9,7 +9,7 @@
  * {
  *   email: "gmail@gmail.com",
  *   ogg_ticket: "new_ticket_value",
- *   expires_at?: "2025-01-03T00:00:00Z"  // Optional, defaults to +3 days
+ *   expires_at?: "2025-01-03T00:00:00Z"  // Optional, defaults to +30 days
  * }
  * 
  * Returns:
@@ -23,8 +23,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
-// Secret key for auto-refresh script (store in .env)
-const AUTO_SCRIPT_SECRET = process.env.AUTO_SCRIPT_SECRET || 'change-this-secret-key-in-production'
+// Mặc định gia hạn hiệu lực ~1 tháng mỗi lần refresh OGG (có thể override bằng body.expires_at)
+const DEFAULT_EXPIRES_MS = 30 * 24 * 60 * 60 * 1000
 
 // CORS headers
 const corsHeaders = {
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
           email: email,
           ogg_ticket: ogg_ticket,
           status: 'active',
-          expires_at: expires_at || new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+          expires_at: expires_at || new Date(Date.now() + DEFAULT_EXPIRES_MS).toISOString(),
           notes: 'Auto-created by console script'
         })
         .select()
@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
       const updateData: any = {
         ogg_ticket: ogg_ticket,
         status: 'active', // Reset status to active
-        expires_at: expires_at || new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+        expires_at: expires_at || new Date(Date.now() + DEFAULT_EXPIRES_MS).toISOString(),
       }
 
       const { data: updatedAccount, error: updateError } = await supabaseAdmin
