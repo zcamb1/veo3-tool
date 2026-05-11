@@ -2,7 +2,7 @@
  * Shared handler: GET unassigned Gmail pools (web1 | web2 | full).
  *
  * Response (tương thích client cũ): `success`, `total`, `accounts` — mỗi phần tử chỉ
- * { id, email, ogg_ticket, status, expires_at, created_at, notes } như ban đầu.
+ * { id, email, ogg_ticket, status, ogg_updated_at }.
  * Thêm: `total_web1`, `total_web2`, `accounts_web1`, `accounts_web2` (cùng shape từng phần tử).
  *
  * Hiệu lực tài khoản: ngoài `expires_at` trong DB, nếu đã refresh OGG gần đây
@@ -73,7 +73,7 @@ export async function handleUnassignedGmailGet(
 
     let query = supabaseAdmin
       .from('gmail_accounts')
-      .select('id, email, ogg_ticket, status, expires_at, created_at, last_updated, notes')
+      .select('id, email, ogg_ticket, status, expires_at, created_at, last_updated')
       .order('created_at', { ascending: false })
 
     if (limit !== null && Number.isFinite(limit) && limit > 0) {
@@ -131,15 +131,13 @@ export async function handleUnassignedGmailGet(
       status: string
       expires_at: string | null
       created_at: string
-      notes: string | null
+      last_updated: string | null
     }) => ({
       id: acc.id,
       email: acc.email,
       ogg_ticket: acc.ogg_ticket,
       status: acc.status,
-      expires_at: acc.expires_at,
-      created_at: acc.created_at,
-      notes: acc.notes || null,
+      ogg_updated_at: acc.last_updated ?? null,
     })
 
     const n = validAccounts.length
