@@ -1,6 +1,10 @@
 /**
  * Shared handler: GET unassigned Gmail pools (web1 | web2 | full).
  *
+ * Response (tương thích client cũ): `success`, `total`, `accounts` — mỗi phần tử chỉ
+ * { id, email, ogg_ticket, status, expires_at, created_at, notes } như ban đầu.
+ * Thêm: `total_web1`, `total_web2`, `accounts_web1`, `accounts_web2` (cùng shape từng phần tử).
+ *
  * Hiệu lực tài khoản: ngoài `expires_at` trong DB, nếu đã refresh OGG gần đây
  * (`last_updated` trong vòng ~30 ngày) vẫn tính là dùng được — trùng ý “1 tháng
  * đổ lại khi call API update”.
@@ -84,7 +88,7 @@ export async function handleUnassignedGmailGet(
       query = query.eq('status', 'active')
     }
 
-    const { data: accounts, error: accountsError } = await query
+    const { data: rows, error: accountsError } = await query
 
     if (accountsError) {
       console.error('❌ [UNASSIGNED] Error fetching Gmail accounts:', accountsError)
@@ -97,7 +101,7 @@ export async function handleUnassignedGmailGet(
     const now = new Date()
     const rollingCutoff = new Date(now.getTime() - ROLLING_MONTH_MS)
 
-    const validAccounts = (accounts || []).filter(
+    const validAccounts = (rows || []).filter(
       (acc: {
         expires_at: string | null
         last_updated: string | null
@@ -111,7 +115,7 @@ export async function handleUnassignedGmailGet(
       }
     )
 
-    const expiredCount = (accounts?.length || 0) - validAccounts.length
+    const expiredCount = (rows?.length || 0) - validAccounts.length
 
     console.log(`✅ [UNASSIGNED] Found ${validAccounts.length} unassigned active account(s)`)
     if (expiredCount > 0) {
@@ -120,24 +124,21 @@ export async function handleUnassignedGmailGet(
       )
     }
 
-    const mapAcc = (acc: {
+    const mapLegacy = (acc: {
       id: number
       email: string
       ogg_ticket: string
       status: string
       expires_at: string | null
       created_at: string
-      last_updated: string | null
       notes: string | null
-    }, pool: 'web1' | 'web2') => ({
-      pool,
+    }) => ({
       id: acc.id,
       email: acc.email,
       ogg_ticket: acc.ogg_ticket,
       status: acc.status,
       expires_at: acc.expires_at,
       created_at: acc.created_at,
-      ogg_updated_at: acc.last_updated ?? null,
       notes: acc.notes || null,
     })
 
@@ -145,9 +146,9 @@ export async function handleUnassignedGmailGet(
     const splitAt = Math.ceil(n / 2)
     const rawWeb1 = validAccounts.slice(0, splitAt)
     const rawWeb2 = validAccounts.slice(splitAt)
-    const accounts_web1 = rawWeb1.map((acc) => mapAcc(acc, 'web1'))
-    const accounts_web2 = rawWeb2.map((acc) => mapAcc(acc, 'web2'))
-    const accountsAll = [...accounts_web1, ...accounts_web2]
+    const accounts_web1 = rawWeb1.map(mapLegacy)
+    const accounts_web2 = rawWeb2.map(mapLegacy)
+    const accountsFull = validAccounts.map(mapLegacy)
 
     const wantWeb1 = !poolFilter || poolFilter === 'web1'
     const wantWeb2 = !poolFilter || poolFilter === 'web2'
@@ -158,21 +159,21 @@ export async function handleUnassignedGmailGet(
       )
     }
 
+    const accounts =
+      poolFilter === 'web1'
+        ? accounts_web1
+        : poolFilter === 'web2'
+          ? accounts_web2
+          : accountsFull
+
     return NextResponse.json({
       success: true,
-      total: n,
+      total: accounts.length,
+      accounts,
       total_web1: accounts_web1.length,
       total_web2: accounts_web2.length,
       accounts_web1: wantWeb1 ? accounts_web1 : [],
       accounts_web2: wantWeb2 ? accounts_web2 : [],
-      accounts:
-        poolFilter === 'web1'
-          ? accounts_web1
-          : poolFilter === 'web2'
-            ? accounts_web2
-            : accountsAll,
-      pool: poolFilter || null,
-      generated_at: new Date().toISOString(),
     })
   } catch (error: unknown) {
     console.error('💥 [UNASSIGNED] Exception:', error)
