@@ -1,11 +1,18 @@
 /**
  * Shared handler: GET unassigned Gmail pools (web1 | web2 | full).
+ *
+ * Hiệu lực tài khoản: ngoài `expires_at` trong DB, nếu đã refresh OGG gần đây
+ * (`last_updated` trong vòng ~30 ngày) vẫn tính là dùng được — trùng ý “1 tháng
+ * đổ lại khi call API update”.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export type PoolFilter = '' | 'web1' | 'web2'
+
+/** ~1 tháng: coi acc còn “sống” nếu `last_updated` nằm trong cửa sổ này */
+const ROLLING_MONTH_MS = 30 * 24 * 60 * 60 * 1000
 
 function verifyApiKey(request: NextRequest): boolean {
   const apiKey = request.headers.get('X-Api-Key')
@@ -88,16 +95,29 @@ export async function handleUnassignedGmailGet(
     }
 
     const now = new Date()
-    const validAccounts = (accounts || []).filter((acc: { expires_at: string | null }) => {
-      if (!acc.expires_at) return true
-      return new Date(acc.expires_at) > now
-    })
+    const rollingCutoff = new Date(now.getTime() - ROLLING_MONTH_MS)
+
+    const validAccounts = (accounts || []).filter(
+      (acc: {
+        expires_at: string | null
+        last_updated: string | null
+      }) => {
+        if (!acc.expires_at) return true
+        if (new Date(acc.expires_at) > now) return true
+        if (acc.last_updated && new Date(acc.last_updated) >= rollingCutoff) {
+          return true
+        }
+        return false
+      }
+    )
 
     const expiredCount = (accounts?.length || 0) - validAccounts.length
 
     console.log(`✅ [UNASSIGNED] Found ${validAccounts.length} unassigned active account(s)`)
     if (expiredCount > 0) {
-      console.log(`⚠️ [UNASSIGNED] Filtered out ${expiredCount} expired account(s)`)
+      console.log(
+        `⚠️ [UNASSIGNED] Filtered out ${expiredCount} account(s) (expires_at quá hạn và không có OGG refresh trong ~30 ngày)`
+      )
     }
 
     const mapAcc = (acc: {
