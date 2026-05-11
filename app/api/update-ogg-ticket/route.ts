@@ -26,6 +26,9 @@ import { supabaseAdmin } from '@/lib/supabase'
 // Mặc định gia hạn hiệu lực ~1 tháng mỗi lần refresh OGG (có thể override bằng body.expires_at)
 const DEFAULT_EXPIRES_MS = 30 * 24 * 60 * 60 * 1000
 
+const AUTO_SCRIPT_SECRET =
+  process.env.AUTO_SCRIPT_SECRET || 'change-this-secret-key-in-production'
+
 // CORS headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*', // Allow all origins (or specify 'https://www.minimax.io')
